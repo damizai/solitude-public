@@ -1,0 +1,591 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Serv00上搭建一个 PixPro 若梦图床 + 接入Cloudflare R2 | 东方月初</title><noscript>开启JavaScript才能访问本站哦~</noscript><link rel="icon" href="https://serv.200038.xyz/2024/11/03/775849.webp"><!-- index.css--><link rel="stylesheet" href="/css/index.css?v=2.1.10"><!-- inject head--><link rel="canonical" href="https://solitude.liuer.xin/posts/55f0.html"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"><!-- aplayer--><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aplayer/1.10.1/APlayer.min.css"><!-- swiper--><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.css"><!-- fancybox ui--><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.36/fancybox/fancybox.min.css"><!-- katex--><!-- Open Graph--><meta name="description" content="Serv00上搭建一个PixPro图床,内存太小,我们可以接入到CFR2 足够个人使用。自己有VPS的也可在宝塔上面部署 面板页 后台页 友情提示 使用Serv00搭建的好像不支持PNG格式上传 上传后会显示空白不显示图片 Serv00图床 PNG上传空白 解决办法 复制以下代码 替换到 conf"><!-- pwa--><meta name="theme-color" content="#006a73"><meta name="apple-mobile-web-app-status-bar-style" content="#006a73"><link rel="manifest" href="/manifest.json"><meta name="msapplication-TileColor" content="#006a73"><link rel="mask-icon" href="/img/pwa/favicon.png" color="#006a73"><link rel="apple-touch-icon" sizes="180x180" href="/img/pwa/favicon.png"><link rel="icon" type="image/png" sizes="16x16" href="/img/pwa/favicon_16.png"><link rel="icon" type="image/png" sizes="32x32" href="/img/pwa/favicon_32.png"><link rel="bookmark" href="/img/pwa/favicon.png"><script>console.log(' %c Solitude %c ' + '2.1.10' + ' %c https://github.com/everfu/hexo-theme-solitude',
+    'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+    'background:#ff9a9a ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+    'background:unset ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff')
+</script><link rel="stylesheet" href="/css/cebianlan.css"><script>(()=>{
+        const saveToLocal = {
+            set: function setWithExpiry(key, value, ttl) {
+                if (ttl === 0)
+                    return
+                const now = new Date()
+                const expiryDay = ttl * 86400000
+                const item = {
+                    value: value,
+                    expiry: now.getTime() + expiryDay
+                }
+                localStorage.setItem(key, JSON.stringify(item))
+            },
+            get: function getWithExpiry(key) {
+                const itemStr = localStorage.getItem(key)
+
+                if (!itemStr) {
+                    return undefined
+                }
+                const item = JSON.parse(itemStr)
+                const now = new Date()
+
+                if (now.getTime() > item.expiry) {
+                    localStorage.removeItem(key)
+                    return undefined
+                }
+                return item.value
+            }
+        };
+        window.utils = {
+            saveToLocal: saveToLocal,
+            getCSS: (url, id = false) => new Promise((resolve, reject) => {
+              const link = document.createElement('link')
+              link.rel = 'stylesheet'
+              link.href = url
+              if (id) link.id = id
+              link.onerror = reject
+              link.onload = link.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                link.onload = link.onreadystatechange = null
+                resolve()
+              }
+              document.head.appendChild(link)
+            }),
+            getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+              const script = document.createElement('script')
+              script.src = url
+              script.async = true
+              script.onerror = reject
+              script.onload = script.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                script.onload = script.onreadystatechange = null
+                resolve()
+              }
+
+              Object.keys(attr).forEach(key => {
+                script.setAttribute(key, attr[key])
+              })
+
+              document.head.appendChild(script)
+            }),
+            addGlobalFn: (key, fn, name = false, parent = window) => {
+                const globalFn = parent.globalFn || {}
+                const keyObj = globalFn[key] || {}
+
+                if (name && keyObj[name]) return
+
+                name = name || Object.keys(keyObj).length
+                keyObj[name] = fn
+                globalFn[key] = keyObj
+                parent.globalFn = globalFn
+            },
+            addEventListenerPjax: (ele, event, fn, option = false) => {
+              ele.addEventListener(event, fn, option)
+              utils.addGlobalFn('pjax', () => {
+                  ele.removeEventListener(event, fn, option)
+              })
+          },
+        }
+    })()</script><!-- theme--><script>initTheme = () => {
+    const cachedMode = utils.saveToLocal.get('theme');
+    if (cachedMode === undefined)
+        document.documentElement.setAttribute('data-theme', 'dark');
+    else
+        document.documentElement.setAttribute('data-theme', cachedMode);
+    typeof rm === 'object' && rm.mode(cachedMode === undefined || cachedMode === 'dark')
+}
+initTheme()</script><!-- global head--><script>const GLOBAL_CONFIG = {
+    root: '/',
+    algolia: undefined,
+    localsearch: {"preload":false,"path":"/search.xml"},
+    runtime: '2024-11-26 00:00:00',
+    lazyload: {
+        enable: true,
+        error: 'https://serv.200038.xyz/2024/11/25/895800.webp'
+    },
+    copyright: {"limit":50,"author":"作者: 东方月初","link":"链接: ","source":"来源: 东方月初","info":"著作权归作者所有。 商业转载请联系作者获得授权，非商业转载请注明出处。"},
+    highlight: {"limit":200,"expand":true,"copy":true,"syntax":"highlight.js"},
+    randomlink: true,
+    lang: {"theme":{"dark":"已切换至深色模式","light":"已切换至浅色模式"},"copy":{"success":"复制成功","error":"复制失败"},"backtop":"返回顶部","time":{"day":"天前","hour":"小时前","just":"刚刚","min":"分钟前","month":"个月前"},"day":" 天","f12":"开发者模式已打开，请遵循GPL协议。","totalk":"无需删除空行，直接输入评论即可","search":{"empty":"找不到你查询的内容：${query}","hit":"找到 ${hits} 条结果，用时 ${time} 毫秒","placeholder":"输入关键词快速查找","count":"共 <b>${count}</b> 条结果。","loading":"搜索中..."},"barrage":{"title":"热评"}},
+    aside: {
+        sayhello: {
+            morning: "✨ 早上好，新的一天开始了",
+            noon: "🍲 午餐时间",
+            afternoon: "🌞 下午好",
+            night: "早点休息",
+            goodnight: "晚安 😴",
+        },
+        sayhello2: ["你可以的","你一定可以的","祝你好运，陌生人"],
+        sayhello3: {
+            prefix: '好久不见，',
+            back: '欢迎再次回来，',
+        },
+    },
+    covercolor: {
+        enable: true
+    },
+    comment: {"avatar":"https://gravatar.com/avatar","commentBarrage":true},
+    lightbox: 'fancybox',
+    post_ai: false,
+    right_menu: {"mode":{"dark":"深色模式","light":"浅色模式"},"img_error":"此图片无法复制与下载","music":{"start":"播放音乐","stop":"暂停音乐"},"barrage":{"open":"显示热评","close":"关闭热评"},"translate":true},
+    translate: {"translateDelay":0,"defaultEncoding":2},
+    lure: {"jump":"👀跑哪里去了~","back":"🐖抓到你啦～'"},
+    expire: {"time":365,"position":"top","text_prev":"本篇文章距离创建时间已过 ","text_next":" 天,不保证内容可用性."},
+};</script><!-- page-config head--><script id="config-diff">var PAGE_CONFIG = {
+    is_post: true,
+    is_page: false,
+    is_home: false,
+    page: '',
+    toc: true,
+    comment: true,
+    ai_text: false,
+    color: false,
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="东方月初" type="application/atom+xml">
+</head><body id="body"><!-- universe--><!-- background img--><div id="global_bg"></div><!-- loading--><div id="loading-box" onclick="preloader.endLoading();" style="zoom:1"><div class="loading-bg"><img class="loading-img nolazyload" src="https://serv.200038.xyz/2024/11/06/027080.gif" alt="loading image"></div></div><script>const preloader = {
+    isLoaded: false,
+    endLoading: () => {
+        if (!preloader.isLoaded) {
+            document.getElementById('loading-box').classList.add('loaded');
+            preloader.isLoaded = true;
+            preloader.togglePaceDone();
+        }
+    },
+    initLoading: () => {
+        document.getElementById('loading-box').classList.remove('loaded');
+        preloader.isLoaded = false;
+        preloader.togglePaceDone();
+    },
+    togglePaceDone: () => {
+        document.getElementById('body').className = preloader.isLoaded ? 'pace-done' : '';
+    }
+}
+
+window.addEventListener('load', () => {
+    preloader.endLoading();
+});
+
+window.addEventListener('pjax:send', () => {
+    preloader.initLoading();
+});
+
+document.addEventListener('pjax:complete', () => {
+    preloader.endLoading();
+});
+
+setTimeout(() => {
+    preloader.endLoading();
+}, 5000);</script><!-- console--><div id="console"><div class="close-btn" onclick="sco.hideConsole()"><i class="solitude fa-solid fa-xmark"></i></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments" onclick="sco.hideConsole()"><div class="card-content"><div class="author-content-item-tips">互动</div><div class="author-content-item-title">最新评论<a class="recent-comment-more" href="/recentcomments/" title="最近评论"><i class="solitude fa-solid fa-circle-chevron-right"></i></a></div></div><div class="console_recentcomments"><script pjax="">(async () => {
+    document.querySelector('.console-card .console_recentcomments').textContent = `加载中...`
+    const emojiReg = /<img class="tk-owo-emotion" [^>]+>/g
+    let cache = utils.saveToLocal.get('twikoo-recent-comments-console')
+    if (cache) {
+        setHtml(document.querySelector('.console-card .console_recentcomments'), cache)
+        return
+    }
+    let ls = []
+
+    await fetch('https://twikoo.200038.xyz/.netlify/functions/twikoo', {
+        method: "POST",
+        body: JSON.stringify({
+            "event": "GET_RECENT_COMMENTS",
+            "includeReply": true,
+            "pageSize": 6
+        }),
+        headers: {'Content-Type': 'application/json'}
+    }).then(res => res.json()).then(async ({data}) => {
+        for (const i of data) {
+            if (i.avatar === undefined) i.avatar = '/avatar/d615d5793929e8c7d70eab5f00f7f5f1?d=mp'
+            let title = ''
+            if (i.url) {
+                await fetch(i.url).then(res => res.text()).then(html => {
+                    const parser = new DOMParser()
+                    const doc = parser.parseFromString(html, 'text/html')
+                    title = doc.querySelector('title').innerText
+                }).catch(() => {
+                    title = i.url
+                })
+            }
+            if (title.indexOf('|') > 0) {
+                title = title.split('|')[0]
+            }
+            ls.push({
+                avatar: i.avatar,
+                nick: i.nick,
+                title: title,
+                content: i.comment,
+                url: i.url + '#' + i.id,
+                time: i.created
+            })
+        }
+        setHtml(document.querySelector('.console-card .console_recentcomments'), ls)
+        utils.saveToLocal.set('twikoo-recent-comments-console', ls, 0.2)
+    });
+
+    function setHtml(el, data) {
+        el.innerHTML = data.map(i => `
+            <div class="comment-card" title="${i.title}" onclick="pjax.loadUrl('${i.url}')">
+                <div class="comment-info">
+                    <img src="${i.avatar}" class="nolazyload" alt="${i.nick}">
+                    <div>
+                        <span class="comment-user">${i.nick}</span>
+                    </div>
+                    <time class="comment-time" datetime="${new Date(i.time)}"></time>
+                </div>
+                <div class="comment-content">${formatContent(i.content)}</div>
+                <div class="comment-title">
+                <i class="solitude fa-solid fa-comment"></i>
+                ${i.title}</div>
+            </div>
+        `).join('')
+        if (typeof sco !== 'undefined') sco.changeTimeFormat(document.querySelectorAll('.comment-time'))
+        else {
+            document.addEventListener('pjax:complete', () => sco.changeTimeFormat(document.querySelectorAll('.comment-time')))
+            document.addEventListener('DOMContentLoaded', () => sco.changeTimeFormat(document.querySelectorAll('.comment-time')))
+        }
+    }
+
+    function formatContent(content) {
+        content = content.replace(emojiReg, '表情')
+        content = content.replace(/<\/*br>|[\s\uFEFF\xA0]+/g, '');
+        content = content.replace(/<img.*?>/g, '[图片]');
+        content = content.replace(/<a.*?>.*?<\/a>/g, '[链接]');
+        content = content.replace(/<pre.*?>.*?<\/pre>/g, '[代码]');
+        content = content.replace(/<.*?>/g, '');
+        return content
+    }
+})()</script></div></div></div><div class="console-card-group-right"><div class="console-card tags" onclick="sco.hideConsole()"><div class="card-content"><div class="author-content-item-tips">标签</div><div class="author-content-item-title">寻找感兴趣的领域</div></div><div class="card-tag-cloud"><a href="/tags/wroker/">wroker<sup>1</sup></a><a href="/tags/Cloudflare-pages/">Cloudflare pages<sup>6</sup></a><a href="/tags/Hexo/">Hexo<sup>4</sup></a><a href="/tags/Github/">Github<sup>1</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">个人博客<sup>1</sup></a><a href="/tags/Noge-js/">Noge.js<sup>1</sup></a><a href="/tags/Git/">Git<sup>1</sup></a><a href="/tags/Markdown/">Markdown<sup>1</sup></a><a href="/tags/%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99/">静态网站<sup>1</sup></a><a href="/tags/Serv00/">Serv00<sup>7</sup></a><a href="/tags/%E5%9B%BE%E5%BA%8A/">图床<sup>1</sup></a><a href="/tags/Rin/">Rin<sup>1</sup></a><a href="/tags/D1-R2/">D1 + R2<sup>1</sup></a><a href="/tags/%E5%8D%9A%E5%AE%A2/">博客<sup>1</sup></a><a href="/tags/GitHub/">GitHub<sup>1</sup></a><a href="/tags/Vercel/">Vercel<sup>1</sup></a><a href="/tags/%E4%B8%80%E9%94%AE%E5%93%AA%E5%90%92%E8%84%9A%E6%9C%AC/">一键哪吒脚本<sup>1</sup></a><a href="/tags/%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E5%93%AA%E5%90%92%E6%95%99%E7%A8%8B/">最简单的哪吒教程<sup>1</sup></a><a href="/tags/%E5%BD%B1%E8%A7%86%E7%AB%99%E6%90%AD%E5%BB%BA/">影视站搭建<sup>1</sup></a><a href="/tags/%E7%BD%91%E7%AB%99%E7%9B%91%E6%8E%A7/">网站监控<sup>1</sup></a><a href="/tags/VPS%E5%91%BD%E4%BB%A4%E6%93%8D%E4%BD%9C/">VPS命令操作<sup>1</sup></a><a href="/tags/VPS%E8%84%9A%E6%9C%AC/">VPS脚本<sup>2</sup></a><a href="/tags/VPSX-UI/">VPSX-UI<sup>1</sup></a><a href="/tags/VPS%E5%B7%A5%E5%85%B7%E7%AE%B1/">VPS工具箱<sup>1</sup></a><a href="/tags/Fastly-CDN/">Fastly CDN<sup>1</sup></a><a href="/tags/Cloudflare-R2/">Cloudflare R2<sup>1</sup></a><a href="/tags/PicGo-WebP-Cloud/">PicGo+WebP Cloud<sup>1</sup></a><a href="/tags/%E5%9C%B0%E5%9D%80%E7%94%9F%E6%88%90%E5%99%A8/">地址生成器<sup>1</sup></a><a href="/tags/%E8%B5%B7%E5%A7%8B%E9%A1%B5/">起始页<sup>1</sup></a><a href="/tags/nyc-mn/">nyc.mn<sup>1</sup></a><a href="/tags/%E7%BD%91%E9%A1%B5/">网页<sup>1</sup></a><a href="/tags/Alist/">Alist<sup>1</sup></a><a href="/tags/%E4%BA%91%E7%9B%98/">云盘<sup>1</sup></a><a href="/tags/%E5%A4%96%E6%8C%82%E6%A0%87%E7%AD%BE/">外挂标签<sup>1</sup></a><a href="/tags/Umami/">Umami<sup>1</sup></a><a href="/tags/Cloudflare-Worker/">Cloudflare + Worker<sup>1</sup></a><a href="/tags/Hexo%E7%BE%8E%E5%8C%96/">Hexo美化<sup>1</sup></a><a href="/tags/%E7%94%B5%E8%A7%86%E5%89%A7%E5%A4%A7%E5%85%A8/">电视剧大全<sup>1</sup></a><a href="/tags/%E7%94%B5%E5%BD%B1%E5%A4%A7%E5%85%A8/">电影大全<sup>1</sup></a><a href="/tags/%E5%BD%B1%E8%A7%86%E6%8E%A8%E8%8D%90%E5%A4%A7%E5%85%A8/">影视推荐大全<sup>1</sup></a><a href="/tags/%E5%8A%A8%E6%BC%AB%E5%A4%A7%E5%85%A8/">动漫大全<sup>1</sup></a><a href="/tags/%E5%BD%B1%E8%A7%86%E7%AB%99%E6%8E%A8%E8%8D%90%E5%90%88%E9%9B%86/">影视站推荐合集<sup>1</sup></a><a href="/tags/%E5%B0%8F%E9%9B%85Alist/">小雅Alist<sup>1</sup></a><a href="/tags/X-ui/">X-ui<sup>1</sup></a><a href="/tags/%E7%95%99%E8%A8%80%E6%9D%BF/">留言板<sup>1</sup></a><a href="/tags/%E5%85%A8%E9%9D%A2%E5%BC%B9%E5%B9%95/">全面弹幕<sup>1</sup></a><a href="/tags/%E6%98%BE%E7%A4%BA%E5%85%B3%E9%97%AD%E5%BC%B9%E5%B9%95/">显示关闭弹幕<sup>1</sup></a></div></div><div class="console-card history" onclick="sco.hideConsole()"><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/11/"><span class="card-archive-list-date">2024/11</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span class="card-archive-list-count-unit">篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/10/"><span class="card-archive-list-date">2024/10</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span class="card-archive-list-count-unit">篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/09/"><span class="card-archive-list-date">2024/09</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">3</span><span class="card-archive-list-count-unit">篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/08/"><span class="card-archive-list-date">2024/08</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">5</span><span class="card-archive-list-count-unit">篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/07/"><span class="card-archive-list-date">2024/07</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">8</span><span class="card-archive-list-count-unit">篇</span></div></a></li></ul></div></div></div><div class="button-group"><div class="console-btn-item"><span class="darkmode_switchbutton" onclick="sco.switchDarkMode()" title="昼夜切换"><i class="solitude fa-solid fa-circle-half-stroke"></i></span></div><div class="console-btn-item" id="consoleHideAside"><span class="asideSwitch" onclick="sco.switchHideAside()" title="边栏显示控制"><i class="solitude fas fa-arrows-left-right-to-line"></i></span></div><div class="console-btn-item" id="consoleMusic" onclick="sco.musicToggle()"><span class="music-switch" title="音乐开关"><i class="solitude fa-solid fa-compact-disc"></i></span></div><div class="console-btn-item on" id="consoleCommentBarrage" onclick="sco.switchCommentBarrage()"><span class="commentBarrage"><i class="solitude fa-solid fa-comment"></i></span></div></div><div class="console-mask" onclick="sco.hideConsole()"></div></div><!-- sidebar--><div id="sidebar" style="zoom: 1;"><div id="menu-mask" style="display: none;"></div><div id="sidebar-menus"><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">47</div></a></div></div></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><span class="darkmode_switchbutton menu-child" onclick="sco.switchDarkMode()"><i class="solitude fa-solid fa-circle-half-stroke"></i><span>显示模式</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文库</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>全部分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>全部标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/moments/"><i class="solitude  fas fa-wifi"></i><span>朋友圈</span></a></li><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li><li><a class="site-page child" href="javascript:travelling()"><i class="solitude  fas fa-gift"></i><span>宝藏博主</span></a></li><li><a class="site-page child" href="/message/"><i class="solitude  fas fa-user-group"></i><span>留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>关于</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="solitude  fas fa-music"></i><span>音乐馆</span></a></li><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user"></i><span>关于本站</span></a></li><li><a class="site-page child" href="/collect/"><i class="solitude  fas fa-user"></i><span>藏宝阁</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-widget card-tags card-archives card-webinfo card-allinfo"><div class="card-tag-cloud"><a href="/tags/wroker/">wroker<sup>1</sup></a><a href="/tags/Cloudflare-pages/">Cloudflare pages<sup>6</sup></a><a href="/tags/Hexo/">Hexo<sup>4</sup></a><a href="/tags/Github/">Github<sup>1</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">个人博客<sup>1</sup></a><a href="/tags/Noge-js/">Noge.js<sup>1</sup></a><a href="/tags/Git/">Git<sup>1</sup></a><a href="/tags/Markdown/">Markdown<sup>1</sup></a><a href="/tags/%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99/">静态网站<sup>1</sup></a><a href="/tags/Serv00/">Serv00<sup>7</sup></a><a href="/tags/%E5%9B%BE%E5%BA%8A/">图床<sup>1</sup></a><a href="/tags/Rin/">Rin<sup>1</sup></a><a href="/tags/D1-R2/">D1 + R2<sup>1</sup></a><a href="/tags/%E5%8D%9A%E5%AE%A2/">博客<sup>1</sup></a><a href="/tags/GitHub/">GitHub<sup>1</sup></a><a href="/tags/Vercel/">Vercel<sup>1</sup></a><a href="/tags/%E4%B8%80%E9%94%AE%E5%93%AA%E5%90%92%E8%84%9A%E6%9C%AC/">一键哪吒脚本<sup>1</sup></a><a href="/tags/%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E5%93%AA%E5%90%92%E6%95%99%E7%A8%8B/">最简单的哪吒教程<sup>1</sup></a><a href="/tags/%E5%BD%B1%E8%A7%86%E7%AB%99%E6%90%AD%E5%BB%BA/">影视站搭建<sup>1</sup></a><a href="/tags/%E7%BD%91%E7%AB%99%E7%9B%91%E6%8E%A7/">网站监控<sup>1</sup></a><a href="/tags/VPS%E5%91%BD%E4%BB%A4%E6%93%8D%E4%BD%9C/">VPS命令操作<sup>1</sup></a><a href="/tags/VPS%E8%84%9A%E6%9C%AC/">VPS脚本<sup>2</sup></a><a href="/tags/VPSX-UI/">VPSX-UI<sup>1</sup></a><a href="/tags/VPS%E5%B7%A5%E5%85%B7%E7%AE%B1/">VPS工具箱<sup>1</sup></a><a href="/tags/Fastly-CDN/">Fastly CDN<sup>1</sup></a><a href="/tags/Cloudflare-R2/">Cloudflare R2<sup>1</sup></a><a href="/tags/PicGo-WebP-Cloud/">PicGo+WebP Cloud<sup>1</sup></a><a href="/tags/%E5%9C%B0%E5%9D%80%E7%94%9F%E6%88%90%E5%99%A8/">地址生成器<sup>1</sup></a><a href="/tags/%E8%B5%B7%E5%A7%8B%E9%A1%B5/">起始页<sup>1</sup></a><a href="/tags/nyc-mn/">nyc.mn<sup>1</sup></a><a href="/tags/%E7%BD%91%E9%A1%B5/">网页<sup>1</sup></a><a href="/tags/Alist/">Alist<sup>1</sup></a><a href="/tags/%E4%BA%91%E7%9B%98/">云盘<sup>1</sup></a><a href="/tags/%E5%A4%96%E6%8C%82%E6%A0%87%E7%AD%BE/">外挂标签<sup>1</sup></a><a href="/tags/Umami/">Umami<sup>1</sup></a><a href="/tags/Cloudflare-Worker/">Cloudflare + Worker<sup>1</sup></a><a href="/tags/Hexo%E7%BE%8E%E5%8C%96/">Hexo美化<sup>1</sup></a><a href="/tags/%E7%94%B5%E8%A7%86%E5%89%A7%E5%A4%A7%E5%85%A8/">电视剧大全<sup>1</sup></a><a href="/tags/%E7%94%B5%E5%BD%B1%E5%A4%A7%E5%85%A8/">电影大全<sup>1</sup></a><a href="/tags/%E5%BD%B1%E8%A7%86%E6%8E%A8%E8%8D%90%E5%A4%A7%E5%85%A8/">影视推荐大全<sup>1</sup></a><a href="/tags/%E5%8A%A8%E6%BC%AB%E5%A4%A7%E5%85%A8/">动漫大全<sup>1</sup></a><a href="/tags/%E5%BD%B1%E8%A7%86%E7%AB%99%E6%8E%A8%E8%8D%90%E5%90%88%E9%9B%86/">影视站推荐合集<sup>1</sup></a><a href="/tags/%E5%B0%8F%E9%9B%85Alist/">小雅Alist<sup>1</sup></a><a href="/tags/X-ui/">X-ui<sup>1</sup></a><a href="/tags/%E7%95%99%E8%A8%80%E6%9D%BF/">留言板<sup>1</sup></a><a href="/tags/%E5%85%A8%E9%9D%A2%E5%BC%B9%E5%B9%95/">全面弹幕<sup>1</sup></a><a href="/tags/%E6%98%BE%E7%A4%BA%E5%85%B3%E9%97%AD%E5%BC%B9%E5%B9%95/">显示关闭弹幕<sup>1</sup></a></div></div><span class="sidebar-menu-item-title">网站信息</span><div class="webinfo"><div class="webinfo-item"><div class="webinfo-item-title"><i class="item-icon solitude fa-solid fa-file-word"></i><div class="item-name">全站字数 :</div></div><div class="item-count">23.2k</div></div></div></div></div><!-- keyboard--><!-- righhtside--><div id="rightside"><div class="rs_hide"><button class="translate" type="button" title="简繁转换">简</button><button class="mode" type="button" title="显示模式切换" onclick="sco.switchDarkMode()"><i class="fas fa-circle-half-stroke"></i></button><button class="aside pc" type="button" title="侧边栏" onclick="sco.switchHideAside()"><i class="fas fa-arrows-alt-h"></i></button></div><div class="rs_show"><button class="config" type="button" title="扩展" onclick="document.querySelector(&quot;.rs_hide&quot;).classList.toggle(&quot;show&quot;)"><i class="fas fa-gear fa-spin"></i></button><button class="mobile toc" type="button" title="目录" onclick="document.querySelector('#card-toc').classList.toggle('open')"><i class="fas fa-list"></i></button><button class="comment" type="button" title="评论" onclick="sco.scrollTo('post-comment')"><i class="fas fa-comment"></i></button><button class="barrage pc" type="button" title="弹" onclick="sco.switchCommentBarrage()"><span>弹</span></button><button class="top" type="button" title="返回顶部" onclick="sco.toTop()"><i class="fas fa-arrow-up"></i><span id="percent">0</span></button></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav class="show" id="nav"><div id="nav-group"><div id="blog_name"><a id="site-name" href="/" title="返回博客主页"><span class="title">东方月初</span><i class="solitude fa-solid fa-home"></i></a></div><div id="page-name-mask"><div id="page-name"><a id="page-name-text" onclick="sco.toTop()">Serv00上搭建一个 PixPro 若梦图床 + 接入Cloudflare R2</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文库</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>全部分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>全部标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/moments/"><i class="solitude  fas fa-wifi"></i><span>朋友圈</span></a></li><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li><li><a class="site-page child" href="javascript:travelling()"><i class="solitude  fas fa-gift"></i><span>宝藏博主</span></a></li><li><a class="site-page child" href="/message/"><i class="solitude  fas fa-user-group"></i><span>留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>关于</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="solitude  fas fa-music"></i><span>音乐馆</span></a></li><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user"></i><span>关于本站</span></a></li><li><a class="site-page child" href="/collect/"><i class="solitude  fas fa-user"></i><span>藏宝阁</span></a></li></ul></div></div></div><div id="nav-left"></div><div id="nav-right"><div class="nav-button" id="travellings_button"><a class="site-page" target="_blank" rel="noopener" href="https://www.travellings.cn/go.html" title=""><i class="solitude fas fa-train"></i></a></div><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机一篇文章" href="javascript:void(0);"><i class="solitude fa-solid fa-dice-d6"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索"><i class="solitude fa-solid fa-magnifying-glass"></i></a></div><div class="nav-button" id="nav-console"><a class="console_switchbutton" onclick="sco.showConsole()" title="中控台" href="javascript:void(0);"><label><i class="left"></i><i class="center"></i><i class="right"></i></label></a></div><div id="toggle-menu"><a class="site-page"><i class="solitude fa-solid fa-bars"></i></a></div></div></div></nav><div class="coverdiv" id="coverdiv"><img class="nolazyload" id="post-cover" src="https://serv.200038.xyz/2024/09/19/052317.webp" alt="Serv00上搭建一个 PixPro 若梦图床 + 接入Cloudflare R2"></div><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original" title="该文章为原创文章，注意版权协议">原创</a><span class="post-meta-categories"><a class="post-meta-categories" href="/categories/Serv00/">Serv00</a></span><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Serv00/"><span class="tags-name tags-punctuation"><i class="solitude fa-solid fa-hashtag"></i>Serv00</span></a><a class="post-meta__tags" href="/tags/%E5%9B%BE%E5%BA%8A/"><span class="tags-name tags-punctuation"><i class="solitude fa-solid fa-hashtag"></i>图床</span></a></div></div></div></div><h1 class="post-title">Serv00上搭建一个 PixPro 若梦图床 + 接入Cloudflare R2</h1><div id="post-meta"><div class="meta-secondline"><span class="post-meta-date" title="发布于 2024-09-10 12:00:57"><i class="post-meta-icon solitude fas fa-calendar-days"></i><time datetime="2024-09-10T04:00:57.000Z">2024-09-10T04:00:57.000Z</time></span><span class="post-meta-date" title="最后更新于 2024-09-19 00:00:00"><i class="post-meta-icon solitude fa-solid fa-arrows-rotate"></i><time datetime="2024-09-18T16:00:00.000Z">2024-09-18T16:00:00.000Z</time></span><span class="post-meta-wordcount"><i class="post-meta-icon solitude fa-solid fa-file-word" title="文章字数"></i><span class="word-count">1.3k</span><span class="post-meta-separator"></span><i class="post-meta-icon solitude fa-solid fa-clock" title="阅读耗时"></i><span>5 min</span></span><a class="post-meta-pv" href="/posts/55f0.html" title="文章热度"><i class="post-meta-icon solitude fa-solid fa-fire-flame-curved"></i></a><span class="post-meta-commentcount" title="评论数" onclick="sco.scrollTo('post-comment')"><i class="solitude fa-solid fa-comment"></i><a href="/posts/55f0.html#post-comment"><span class="twikoo-count"><i class="solitude fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section></header><main class="layout" id="content-inner"><div id="post"><article class="post-content article-container"><h2 id="Serv00上搭建一个PixPro图床-内存太小-我们可以接入到CFR2-足够个人使用。自己有VPS的也可在宝塔上面部署"><a href="#Serv00上搭建一个PixPro图床-内存太小-我们可以接入到CFR2-足够个人使用。自己有VPS的也可在宝塔上面部署" class="headerlink" title="Serv00上搭建一个PixPro图床,内存太小,我们可以接入到CFR2 足够个人使用。自己有VPS的也可在宝塔上面部署"></a>Serv00上搭建一个PixPro图床,内存太小,我们可以接入到CFR2 足够个人使用。自己有VPS的也可在宝塔上面部署</h2><hr>
+<h3 id="面板页"><a href="#面板页" class="headerlink" title="面板页"></a>面板页</h3><p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/203343.webp" alt="203343.webp"></p>
+<h3 id="后台页"><a href="#后台页" class="headerlink" title="后台页"></a>后台页</h3><p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/820520.webp" alt="820520.webp"></p>
+<p><strong>友情提示 使用Serv00搭建的好像不支持PNG格式上传 上传后会显示空白不显示图片</strong></p>
+<h3 id="Serv00图床-PNG上传空白-解决办法-复制以下代码-替换到-config-image-processing-php"><a href="#Serv00图床-PNG上传空白-解决办法-复制以下代码-替换到-config-image-processing-php" class="headerlink" title="Serv00图床 PNG上传空白 解决办法  复制以下代码 替换到 config/image_processing.php"></a>Serv00图床 <code>PNG上传空白</code> 解决办法  复制以下代码 替换到 <code>config/image_processing.php</code></h3><figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 将JPEG图片转换为WebP格式</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">convertToWebp</span>(<span class="params"><span class="variable">$source</span>, <span class="variable">$destination</span>, <span class="variable">$quality</span> = <span class="number">60</span></span>) </span>{</span><br><span class="line">    <span class="variable">$info</span> = <span class="title function_ invoke__">getimagesize</span>(<span class="variable">$source</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$info</span>[<span class="string">'mime'</span>] == <span class="string">'image/jpeg'</span>) {</span><br><span class="line">        <span class="variable">$image</span> = <span class="title function_ invoke__">imagecreatefromjpeg</span>(<span class="variable">$source</span>);</span><br><span class="line">    } <span class="keyword">elseif</span> (<span class="variable">$info</span>[<span class="string">'mime'</span>] == <span class="string">'image/gif'</span>) {</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    } <span class="keyword">else</span> {</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="variable">$width</span> = <span class="title function_ invoke__">imagesx</span>(<span class="variable">$image</span>);</span><br><span class="line">    <span class="variable">$height</span> = <span class="title function_ invoke__">imagesy</span>(<span class="variable">$image</span>);</span><br><span class="line">    <span class="variable">$maxWidth</span> = <span class="number">2500</span>;</span><br><span class="line">    <span class="variable">$maxHeight</span> = <span class="number">1600</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$width</span> &gt; <span class="variable">$maxWidth</span> || <span class="variable">$height</span> &gt; <span class="variable">$maxHeight</span>) {</span><br><span class="line">        <span class="variable">$ratio</span> = <span class="title function_ invoke__">min</span>(<span class="variable">$maxWidth</span> / <span class="variable">$width</span>, <span class="variable">$maxHeight</span> / <span class="variable">$height</span>);</span><br><span class="line">        <span class="variable">$newWidth</span> = <span class="title function_ invoke__">round</span>(<span class="variable">$width</span> * <span class="variable">$ratio</span>);</span><br><span class="line">        <span class="variable">$newHeight</span> = <span class="title function_ invoke__">round</span>(<span class="variable">$height</span> * <span class="variable">$ratio</span>);</span><br><span class="line">        <span class="variable">$newImage</span> = <span class="title function_ invoke__">imagecreatetruecolor</span>(<span class="variable">$newWidth</span>, <span class="variable">$newHeight</span>);</span><br><span class="line">        <span class="title function_ invoke__">imagecopyresampled</span>(<span class="variable">$newImage</span>, <span class="variable">$image</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="variable">$newWidth</span>, <span class="variable">$newHeight</span>, <span class="variable">$width</span>, <span class="variable">$height</span>);</span><br><span class="line">        <span class="title function_ invoke__">imagedestroy</span>(<span class="variable">$image</span>);</span><br><span class="line">        <span class="variable">$image</span> = <span class="variable">$newImage</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="variable">$result</span> = <span class="title function_ invoke__">imagewebp</span>(<span class="variable">$image</span>, <span class="variable">$destination</span>, <span class="variable">$quality</span>);</span><br><span class="line">    <span class="title function_ invoke__">imagedestroy</span>(<span class="variable">$image</span>);</span><br><span class="line">    <span class="title function_ invoke__">gc_collect_cycles</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$result</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用Imagick将PNG图片转换为WebP格式</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">convertPngWithImagick</span>(<span class="params"><span class="variable">$source</span>, <span class="variable">$destination</span>, <span class="variable">$quality</span> = <span class="number">60</span></span>) </span>{</span><br><span class="line">    <span class="keyword">try</span> {</span><br><span class="line">        <span class="variable">$image</span> = <span class="keyword">new</span> <span class="title class_">Imagick</span>(<span class="variable">$source</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 检查是否包含透明通道</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$image</span>-&gt;<span class="title function_ invoke__">getImageAlphaChannel</span>()) {</span><br><span class="line">            <span class="comment">// 设置背景颜色为透明</span></span><br><span class="line">            <span class="variable">$image</span>-&gt;<span class="title function_ invoke__">setImageBackgroundColor</span>(<span class="keyword">new</span> <span class="title class_">ImagickPixel</span>(<span class="string">'transparent'</span>));</span><br><span class="line">            <span class="variable">$image</span>-&gt;<span class="title function_ invoke__">setImageAlphaChannel</span>(<span class="title class_">Imagick</span>::<span class="variable constant_">ALPHACHANNEL_ACTIVATE</span>);</span><br><span class="line">            <span class="variable">$image</span> = <span class="variable">$image</span>-&gt;<span class="title function_ invoke__">mergeImageLayers</span>(<span class="title class_">Imagick</span>::<span class="variable constant_">LAYERMETHOD_FLATTEN</span>);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="variable">$image</span>-&gt;<span class="title function_ invoke__">setImageFormat</span>(<span class="string">'webp'</span>);</span><br><span class="line">        <span class="variable">$image</span>-&gt;<span class="title function_ invoke__">setImageCompressionQuality</span>(<span class="variable">$quality</span>);</span><br><span class="line"></span><br><span class="line">        <span class="variable">$width</span> = <span class="variable">$image</span>-&gt;<span class="title function_ invoke__">getImageWidth</span>();</span><br><span class="line">        <span class="variable">$height</span> = <span class="variable">$image</span>-&gt;<span class="title function_ invoke__">getImageHeight</span>();</span><br><span class="line">        <span class="variable">$maxWidth</span> = <span class="number">2500</span>;</span><br><span class="line">        <span class="variable">$maxHeight</span> = <span class="number">1600</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$width</span> &gt; <span class="variable">$maxWidth</span> || <span class="variable">$height</span> &gt; <span class="variable">$maxHeight</span>) {</span><br><span class="line">            <span class="variable">$ratio</span> = <span class="title function_ invoke__">min</span>(<span class="variable">$maxWidth</span> / <span class="variable">$width</span>, <span class="variable">$maxHeight</span> / <span class="variable">$height</span>);</span><br><span class="line">            <span class="variable">$newWidth</span> = <span class="title function_ invoke__">round</span>(<span class="variable">$width</span> * <span class="variable">$ratio</span>);</span><br><span class="line">            <span class="variable">$newHeight</span> = <span class="title function_ invoke__">round</span>(<span class="variable">$height</span> * <span class="variable">$ratio</span>);</span><br><span class="line">            <span class="variable">$image</span>-&gt;<span class="title function_ invoke__">resizeImage</span>(<span class="variable">$newWidth</span>, <span class="variable">$newHeight</span>, <span class="title class_">Imagick</span>::<span class="variable constant_">FILTER_LANCZOS</span>, <span class="number">1</span>);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="variable">$result</span> = <span class="variable">$image</span>-&gt;<span class="title function_ invoke__">writeImage</span>(<span class="variable">$destination</span>);</span><br><span class="line">        <span class="variable">$image</span>-&gt;<span class="title function_ invoke__">clear</span>();</span><br><span class="line">        <span class="variable">$image</span>-&gt;<span class="title function_ invoke__">destroy</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$result</span>;</span><br><span class="line">    } <span class="keyword">catch</span> (<span class="built_in">Exception</span> <span class="variable">$e</span>) {</span><br><span class="line">        <span class="title function_ invoke__">logMessage</span>(<span class="string">'Imagick转换PNG失败: '</span> . <span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getMessage</span>());</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用Imagick将GIF图片转换为WebP格式</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">convertGifToWebp</span>(<span class="params"><span class="variable">$source</span>, <span class="variable">$destination</span>, <span class="variable">$quality</span> = <span class="number">60</span></span>) </span>{</span><br><span class="line">    <span class="keyword">try</span> {</span><br><span class="line">        <span class="variable">$image</span> = <span class="keyword">new</span> <span class="title class_">Imagick</span>();</span><br><span class="line">        <span class="variable">$image</span>-&gt;<span class="title function_ invoke__">readImage</span>(<span class="variable">$source</span>);</span><br><span class="line">        <span class="variable">$image</span> = <span class="variable">$image</span>-&gt;<span class="title function_ invoke__">coalesceImages</span>();</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="variable">$image</span> <span class="keyword">as</span> <span class="variable">$frame</span>) {</span><br><span class="line">            <span class="variable">$frame</span>-&gt;<span class="title function_ invoke__">setImageFormat</span>(<span class="string">'webp'</span>);</span><br><span class="line">            <span class="variable">$frame</span>-&gt;<span class="title function_ invoke__">setImageCompressionQuality</span>(<span class="variable">$quality</span>);</span><br><span class="line">        }</span><br><span class="line">        <span class="variable">$image</span> = <span class="variable">$image</span>-&gt;<span class="title function_ invoke__">optimizeImageLayers</span>();</span><br><span class="line">        <span class="variable">$result</span> = <span class="variable">$image</span>-&gt;<span class="title function_ invoke__">writeImages</span>(<span class="variable">$destination</span>, <span class="literal">true</span>);</span><br><span class="line">        <span class="variable">$image</span>-&gt;<span class="title function_ invoke__">clear</span>();</span><br><span class="line">        <span class="variable">$image</span>-&gt;<span class="title function_ invoke__">destroy</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$result</span>;</span><br><span class="line">    } <span class="keyword">catch</span> (<span class="built_in">Exception</span> <span class="variable">$e</span>) {</span><br><span class="line">        <span class="title function_ invoke__">logMessage</span>(<span class="string">'GIF转换WebP失败: '</span> . <span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getMessage</span>());</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 处理图片压缩</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">processImageCompression</span>(<span class="params"><span class="variable">$fileMimeType</span>, <span class="variable">$newFilePath</span>, <span class="variable">$newFilePathWithoutExt</span>, <span class="variable">$quality</span></span>) </span>{</span><br><span class="line">    <span class="variable">$convertSuccess</span> = <span class="literal">true</span>;</span><br><span class="line">    <span class="variable">$finalFilePath</span> = <span class="variable">$newFilePath</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$fileMimeType</span> === <span class="string">'image/png'</span>) {</span><br><span class="line">        <span class="variable">$convertSuccess</span> = <span class="title function_ invoke__">convertPngWithImagick</span>(<span class="variable">$newFilePath</span>, <span class="variable">$newFilePathWithoutExt</span> . <span class="string">'.webp'</span>, <span class="variable">$quality</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$convertSuccess</span>) {</span><br><span class="line">            <span class="variable">$finalFilePath</span> = <span class="variable">$newFilePathWithoutExt</span> . <span class="string">'.webp'</span>;</span><br><span class="line">            <span class="title function_ invoke__">unlink</span>(<span class="variable">$newFilePath</span>);</span><br><span class="line">        }</span><br><span class="line">    } <span class="keyword">elseif</span> (<span class="variable">$fileMimeType</span> === <span class="string">'image/gif'</span>) {</span><br><span class="line">        <span class="variable">$convertSuccess</span> = <span class="title function_ invoke__">convertGifToWebp</span>(<span class="variable">$newFilePath</span>, <span class="variable">$newFilePathWithoutExt</span> . <span class="string">'.webp'</span>, <span class="variable">$quality</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$convertSuccess</span>) {</span><br><span class="line">            <span class="variable">$finalFilePath</span> = <span class="variable">$newFilePathWithoutExt</span> . <span class="string">'.webp'</span>;</span><br><span class="line">            <span class="title function_ invoke__">unlink</span>(<span class="variable">$newFilePath</span>);</span><br><span class="line">        }</span><br><span class="line">    } <span class="keyword">elseif</span> (<span class="variable">$fileMimeType</span> !== <span class="string">'image/webp'</span> &amp;&amp; <span class="variable">$fileMimeType</span> !== <span class="string">'image/svg+xml'</span>) {</span><br><span class="line">        <span class="variable">$convertSuccess</span> = <span class="title function_ invoke__">convertToWebp</span>(<span class="variable">$newFilePath</span>, <span class="variable">$newFilePathWithoutExt</span> . <span class="string">'.webp'</span>, <span class="variable">$quality</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$convertSuccess</span>) {</span><br><span class="line">            <span class="variable">$finalFilePath</span> = <span class="variable">$newFilePathWithoutExt</span> . <span class="string">'.webp'</span>;</span><br><span class="line">            <span class="title function_ invoke__">unlink</span>(<span class="variable">$newFilePath</span>);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> [<span class="variable">$convertSuccess</span>, <span class="variable">$finalFilePath</span>];</span><br><span class="line">}</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="也可下载-PixPin-截图软件试试"><a href="#也可下载-PixPin-截图软件试试" class="headerlink" title="也可下载 PixPin  截图软件试试"></a>也可下载 <a target="_blank" rel="noopener" href="https://pixpinapp.com/">PixPin</a>  截图软件试试</h3><h3 id="安装前准备"><a href="#安装前准备" class="headerlink" title="安装前准备"></a>安装前准备</h3><p><strong><a target="_blank" rel="noopener" href="https://www.serv00.com/">Serv00账号注册</a></strong></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/JLinMr/PixPro/">Github,PixPro项目地址</a></p>
+</blockquote>
+<h2 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h2><ol>
+<li>注册好Serv00账号打开网页进入到面板端添加域名或者用自己的域名都行，这里我用别的网站注册的二级域名。如下图添加</li>
+</ol>
+<p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/421389.webp" alt="421389.webp"></p>
+<ol start="2">
+<li>把里面的A记录解析你托管到CF的域名或者别的地方申请的</li>
+</ol>
+<p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/834605.webp" alt="img"><br><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/656582.webp" alt="656582.webp"></p>
+<ol start="3">
+<li>按照下图打开域名的权限</li>
+</ol>
+<p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/819094.webp" alt="819094.webp"><br><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/793403.webp" alt="793403.webp"></p>
+<p>点击Save等待成功</p>
+<ol start="4">
+<li>创建MySQL数据库（保存账号及地址）</li>
+</ol>
+<p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/038596.webp" alt="038596.webp"><br><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/586826.webp" alt="586826.webp"></p>
+<ol start="5">
+<li><p><a target="_blank" rel="noopener" href="https://github.com/JLinMr/PixPro/releases/tag/v1.7.6">下载ZIP文件</a></p>
+</li>
+<li><p>上传安装包并解压进入文件管理器</p>
+</li>
+</ol>
+<p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/697100.webp" alt="697100.webp"></p>
+<ol start="7">
+<li>进入public_html文件夹删除其下所有文件</li>
+</ol>
+<p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/614301.webp" alt="614301.webp"></p>
+<ol start="8">
+<li>上传安装包到你添加的域名或者Serv00自带域名下</li>
+</ol>
+<p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/580611.webp" alt="580611.webp"><br><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/820811.webp" alt="820811.webp"></p>
+<ol start="9">
+<li>选择你们下载文件的路径上传好如下图</li>
+</ol>
+<p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/149843.webp" alt="149843.webp"><br><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/398462.webp" alt="398462.webp"><br><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/804764.webp" alt="804764.webp"></p>
+<h3 id="和上一步一样"><a href="#和上一步一样" class="headerlink" title="和上一步一样"></a>和上一步一样</h3><ol start="10">
+<li>进去后如下图所以我们<code>Shift</code>建一直按着然后点击鼠标左键全选</li>
+</ol>
+<p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/682386.webp" alt="682386.webp"></p>
+<ol start="11">
+<li>移动到我们开始创建域名目录下的<code>public_html</code></li>
+</ol>
+<p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/423644.webp" alt="423644.webp"></p>
+<ol start="12">
+<li>修改PHP版本 在域名目录下创建一个文本，名为：<code>.htaccess</code></li>
+</ol>
+<p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/640505.png" alt="640505.png"><br><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/558279.png" alt="558279.png"></p>
+<ol start="13">
+<li>添加PHP版本</li>
+</ol>
+<p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/959842.webp" alt="959842.webp"></p>
+<p><strong>选择<code>Text Editor</code> 添加以下代码</strong></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddType application/x-httpd-php81 .php</span><br></pre></td></tr></tbody></table></figure>
+<p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/422637.webp" alt="422637.webp"></p>
+<ol start="14">
+<li>访问你的域名开始安装系统，管理员账户和密码自己设置 ，如果要接入<code>CFR2</code>我们存储选择 <code>S3</code> 下面我会写<code>S3</code>安装方式</li>
+</ol>
+<p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/393893.webp" alt="393893.webp"><br><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/107337.webp" alt="107337.webp"><br><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/633055.webp" alt="633055.webp"></p>
+<ol start="15">
+<li>点击回到首页就可以上传图片了</li>
+</ol>
+<p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/336663.webp" alt="336663.webp"></p>
+<hr>
+<h3 id="接入R2-前提-已开通-Cloudflare-R2"><a href="#接入R2-前提-已开通-Cloudflare-R2" class="headerlink" title="接入R2 前提 已开通 Cloudflare R2"></a>接入R2 前提 已开通 Cloudflare R2</h3><h3 id="进入到-Cloudflare-面板-找到-R2-右边有一个管理-R2API-令牌点击创建-API令牌-，创建好后里面有我们需要的访问密钥和机密访问密钥"><a href="#进入到-Cloudflare-面板-找到-R2-右边有一个管理-R2API-令牌点击创建-API令牌-，创建好后里面有我们需要的访问密钥和机密访问密钥" class="headerlink" title="进入到 Cloudflare 面板 找到 R2 右边有一个管理 R2API 令牌点击创建 API令牌 ，创建好后里面有我们需要的访问密钥和机密访问密钥"></a>进入到 Cloudflare 面板 找到 R2 右边有一个管理 R2API 令牌点击创建 API令牌 ，创建好后里面有我们需要的访问密钥和机密访问密钥</h3><p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/647479.webp" alt="647479.webp"></p>
+<h3 id="1-进入到-Cloudflare-面板-找到-R2-点击创建存储桶"><a href="#1-进入到-Cloudflare-面板-找到-R2-点击创建存储桶" class="headerlink" title="1. 进入到 Cloudflare 面板 找到 R2 点击创建存储桶"></a>1. 进入到 Cloudflare 面板 找到 R2 点击创建存储桶</h3><p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/100791.webp" alt="100791.webp"></p>
+<h3 id="2-进入后名称随便写。位置选择亚太地区后点击创建存储桶"><a href="#2-进入后名称随便写。位置选择亚太地区后点击创建存储桶" class="headerlink" title="2. 进入后名称随便写。位置选择亚太地区后点击创建存储桶"></a>2. 进入后名称随便写。位置选择亚太地区后点击创建存储桶</h3><p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/301200.png" alt="301200.png"></p>
+<h3 id="3-创建好后点击设置拉到下面看到-R2-dev-子域点击后面的允许访问-，-连接域需要添加你托管到CF上面域名"><a href="#3-创建好后点击设置拉到下面看到-R2-dev-子域点击后面的允许访问-，-连接域需要添加你托管到CF上面域名" class="headerlink" title="3. 创建好后点击设置拉到下面看到 R2.dev 子域点击后面的允许访问 ， 连接域需要添加你托管到CF上面域名"></a>3. 创建好后点击设置拉到下面看到 R2.dev 子域点击后面的允许访问 ， 连接域需要添加你托管到CF上面域名</h3><p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/456191.webp" alt="456191.webp"></p>
+<h3 id="4-14-步我们安装选择S3后看到下图"><a href="#4-14-步我们安装选择S3后看到下图" class="headerlink" title="4. 14 步我们安装选择S3后看到下图"></a>4. 14 步我们安装选择<code>S3</code>后看到下图</h3><p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/120536.png" alt="120536.png"></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>S3 Region</td>
+<td>auto</td>
+</tr>
+<tr>
+<td>S3 Bucket</td>
+<td>你的存储桶名称</td>
+</tr>
+<tr>
+<td>S3 Endpoint</td>
+<td>你的S3API 后面不要加你的存储桶名称</td>
+</tr>
+<tr>
+<td>S3 Access Key ID</td>
+<td>R2API令牌访问密钥</td>
+</tr>
+<tr>
+<td>S3 Access Key Secret</td>
+<td>R2API令牌机密访问密钥</td>
+</tr>
+<tr>
+<td>S3 自定义域名</td>
+<td>R2.dev 添加的自定义域 或 R2 分配的域名</td>
+</tr>
+</tbody></table>
+<h3 id="5-点击完成安装即可。这是我们上传好的图片-我下面的域名就是我们-R2-分配的域名"><a href="#5-点击完成安装即可。这是我们上传好的图片-我下面的域名就是我们-R2-分配的域名" class="headerlink" title="5. 点击完成安装即可。这是我们上传好的图片 我下面的域名就是我们 R2 分配的域名"></a>5. 点击完成安装即可。这是我们上传好的图片 我下面的域名就是我们 R2 分配的域名</h3><p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/922653.png" alt="922653.png"></p>
+<h3 id="6-我们回到-Cloudflare-R2-就会看到刚刚上传的图片"><a href="#6-我们回到-Cloudflare-R2-就会看到刚刚上传的图片" class="headerlink" title="6. 我们回到 Cloudflare R2 就会看到刚刚上传的图片"></a>6. 我们回到 Cloudflare R2 就会看到刚刚上传的图片</h3><p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://i1.wp.com/img.000.pe/i/2024/11/23/042938.png" alt="042938.png"></p>
+<blockquote>
+<p>在给大家推荐一个的在线生成封面网站，专为博客、短视频、社交媒体等生成个性化封面.<a target="_blank" rel="noopener" href="https://github.com/JLinMr/Mini-Cover">GitHub,项目地址</a>.这个封面可以和图床结合。 封面做好后我们不用去上传到图床直接点击封面网站的外链即可,前提已部署<code>PixPro</code> 图床</p>
+</blockquote>
+<h3 id="感谢作者梦爱吃鱼，欢迎大家去预览、哈哈哈"><a href="#感谢作者梦爱吃鱼，欢迎大家去预览、哈哈哈" class="headerlink" title="感谢作者梦爱吃鱼，欢迎大家去预览、哈哈哈"></a>感谢作者<a target="_blank" rel="noopener" href="https://blog.bsgun.cn/">梦爱吃鱼</a>，欢迎大家去预览、哈哈哈</h3></article><div class="post-copyright"><div class="post-copyright__author_group"><a class="post-copyright__author_img" href="/about/"><img class="post-copyright__author_img_front" src="https://serv.200038.xyz/2024/11/03/775849.webp"></a><div class="post-copyright__author_name">东方月初</div><div class="post-copyright__author_desc">涂山红红</div></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div id="quit-box" onclick="RemoveRewardMask()"></div><div class="post-reward"><div class="reward-button" title="赞赏作者" onclick="AddRewardMask()"><i class="solitude fa-solid fa-heart"></i>赞赏作者</div><div class="reward-main"><ul class="reward-all"><span class="reward-title">感谢您的赞赏</span><ul class="reward-group"><li class="reward-item"><a target="_blank" rel="noopener" href="https://serv.200038.xyz/2024/10/30/531638.webp"><img class="post-qr-code-img nolazyload" src="https://serv.200038.xyz/2024/10/30/531638.webp" alt="微信" style="border-color: var(--efu-green)"></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a target="_blank" rel="noopener" href="https://serv.200038.xyz/2024/10/30/185281.webp"><img class="post-qr-code-img nolazyload" src="https://serv.200038.xyz/2024/10/30/185281.webp" alt="支付宝" style="border-color: var(--efu-blue)"></a><div class="post-qr-code-desc">支付宝</div></li></ul><a class="reward-main-btn" href="/about/"><div class="reward-text">赞赏名单</div><div class="reward-dec">感谢您的支持。</div></a></ul></div></div><script>function RemoveRewardMask() {
+    let rewardMainElements = document.querySelectorAll(".reward-main");
+    let quitBoxElement = document.querySelector("#quit-box");
+
+    rewardMainElements.forEach(element => {
+        element.style.display = "none";
+    });
+
+    if (quitBoxElement) {
+        quitBoxElement.style.display = "none";
+    }
+}
+
+function AddRewardMask() {
+    let rewardMainElements = document.querySelectorAll(".reward-main");
+    let quitBoxElement = document.querySelector("#quit-box");
+
+    rewardMainElements.forEach(element => {
+        element.style.display = "flex";
+    });
+
+    if (quitBoxElement) {
+        quitBoxElement.style.display = "flex";
+    }
+}</script><div class="reward-link mode"><a class="reward-link-button" href="/atom.xml"><i class="solitude fa-solid fa-seedling"></i>订阅</a></div></div></div><div class="social-share"><a class="social-share-ico icon-qq" target="_blank" rel="noopener" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fsolitude.liuer.xin%2Fposts%2F55f0.html&amp;title=Serv00%E4%B8%8A%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%20PixPro%20%E8%8B%A5%E6%A2%A6%E5%9B%BE%E5%BA%8A%20%2B%20%E6%8E%A5%E5%85%A5Cloudflare%20R2&amp;desc=undefined&amp;summary=undefined&amp;site=Serv00%E4%B8%8A%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%20PixPro%20%E8%8B%A5%E6%A2%A6%E5%9B%BE%E5%BA%8A%20%2B%20%E6%8E%A5%E5%85%A5Cloudflare%20R2&amp;pics=https%3A%2F%2Fserv.200038.xyz%2F2024%2F09%2F19%2F052317.webp" title="分享到QQ"><i class="solitude fab fa-qq"></i></a><a class="social-share-ico icon-weibo" target="_blank" rel="noopener" href="http://service.weibo.com/share/share.php?url=https%3A%2F%2Fsolitude.liuer.xin%2Fposts%2F55f0.html&amp;title=Serv00%E4%B8%8A%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%20PixPro%20%E8%8B%A5%E6%A2%A6%E5%9B%BE%E5%BA%8A%20%2B%20%E6%8E%A5%E5%85%A5Cloudflare%20R2&amp;pic=https%3A%2F%2Fserv.200038.xyz%2F2024%2F09%2F19%2F052317.webp" title="分享到微博"><i class="solitude fab fa-weibo"></i></a><a class="social-share-ico icon-twitter" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fsolitude.liuer.xin%2Fposts%2F55f0.html&amp;text=Serv00%E4%B8%8A%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%20PixPro%20%E8%8B%A5%E6%A2%A6%E5%9B%BE%E5%BA%8A%20%2B%20%E6%8E%A5%E5%85%A5Cloudflare%20R2" title="分享到Twitter"><i class="solitude fab fa-twitter"></i></a><a class="social-share-ico icon-facebook" target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsolitude.liuer.xin%2Fposts%2F55f0.html" title="分享到Facebook"><i class="solitude fab fa-facebook"></i></a><a class="social-share-ico icon-telegram" target="_blank" rel="noopener" href="https://t.me/share/url?url=https%3A%2F%2Fsolitude.liuer.xin%2Fposts%2F55f0.html&amp;text=Serv00%E4%B8%8A%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%20PixPro%20%E8%8B%A5%E6%A2%A6%E5%9B%BE%E5%BA%8A%20%2B%20%E6%8E%A5%E5%85%A5Cloudflare%20R2" title="分享到Telegram"><i class="solitude fab fa-telegram"></i></a><a class="social-share-ico icon-whatsapp" target="_blank" rel="noopener" href="https://api.whatsapp.com/send?text=Serv00%E4%B8%8A%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%20PixPro%20%E8%8B%A5%E6%A2%A6%E5%9B%BE%E5%BA%8A%20%2B%20%E6%8E%A5%E5%85%A5Cloudflare%20R2 https%3A%2F%2Fsolitude.liuer.xin%2Fposts%2F55f0.html" title="分享到WhatsApp"><i class="solitude fab fa-whatsapp"></i></a><a class="social-share-ico icon-linkedin" target="_blank" rel="noopener" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fsolitude.liuer.xin%2Fposts%2F55f0.html&amp;title=Serv00%E4%B8%8A%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%20PixPro%20%E8%8B%A5%E6%A2%A6%E5%9B%BE%E5%BA%8A%20%2B%20%E6%8E%A5%E5%85%A5Cloudflare%20R2&amp;summary=undefined&amp;source=Serv00%E4%B8%8A%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%20PixPro%20%E8%8B%A5%E6%A2%A6%E5%9B%BE%E5%BA%8A%20%2B%20%E6%8E%A5%E5%85%A5Cloudflare%20R2" title="分享到LinkedIn"><i class="solitude fab fa-linkedin"></i></a><div class="social-share-ico icon-link" onclick="utils.copy(&quot;https://solitude.liuer.xin/posts/55f0.html&quot;)" title="复制文章链接"><i class="solitude fas fa-link"></i></div><div class="social-share-ico icon-qrcode" title="使用手机扫码阅读这篇文章"><i class="solitude fas fa-qrcode"></i><div class="share-main"><div class="share-main-all"><div id="qrcode"></div><div class="reward-dec">使用手机扫码阅读这篇文章</div></div></div><script pjax="">typeof QRCode === 'function' && new QRCode(document.getElementById("qrcode"), 'https://solitude.liuer.xin/posts/55f0.html');
+window.addEventListener('DOMContentLoaded', () => {
+    new QRCode(document.getElementById("qrcode"), 'https://solitude.liuer.xin/posts/55f0.html');
+});
+</script></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本文是原创文章，采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>协议，完整转载请注明来自<a href="/">东方月初</a></span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Serv00/"><span class="tags-punctuation"><i class="solitude fa-solid fa-hashtag"></i>Serv00<span class="tagsPageCount">7</span></span></a><a class="post-meta__tags" href="/tags/%E5%9B%BE%E5%BA%8A/"><span class="tags-punctuation"><i class="solitude fa-solid fa-hashtag"></i>图床<span class="tagsPageCount">1</span></span></a></div></div></div><nav class="needEndHide pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/e6b7.html"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Rin 是一个基于 Cloudflare Pages + Workers + D1 + R2 的博客，只需要一个解析到CF的域名即可部署</div></div></a></div><div class="next-post pull-right"><a href="/posts/6213.html"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">大家都申请了nyc.mn 这个域名吧,看说明需要一个活动状态，下来教大家部署一个简单的网页,起始页</div></div></a></div></nav>
+        <div class="relatedPosts">
+            <div class="headline">
+                <i class="solitude fa-solid fa-star"></i>
+                <span>喜欢这篇的人也看了</span>
+                <div class="relatedPosts-link">
+                    <a onclick="event.preventDefault(); toRandomPost();" href="javascript:void(0);" rel="external nofollow" data-pjax-state="">随便逛逛</a>
+                </div>
+            </div>
+            <div class="relatedPosts-list">
+            <div>
+                <a href="/posts/bcd2.html" title="使用带有PHP的主机 + Cloudflare + Worker 搭建一个Umami API">
+                    <img class="cover" src="https://serv.200038.xyz/2024/10/29/089211.webp" alt="cover">
+                    <div class="content is-center">
+                        <div class="title">使用带有PHP的主机 + Cloudflare + Worker 搭建一个Umami API</div>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="/posts/6317.html" title="Serv00 搭建网站监控 Uptime-Kuma">
+                    <img class="cover" src="https://serv.200038.xyz/2024/09/18/623949.webp" alt="cover">
+                    <div class="content is-center">
+                        <div class="title">Serv00 搭建网站监控 Uptime-Kuma</div>
+                    </div>
+                </a>
+            </div>
+            </div>
+        </div><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="solitude fa-solid fa-comment"></i><span> 评论</span><span class="count"> (<span class="twikoo-count"><i class="solitude fa-solid fa-spinner fa-spin"></i></span>)</span></div></div><div class="comment-wrap"><div id="twikoo-wrap"></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-bg-top"><div class="is-center"><div class="author-info__top-group"><div class="author-info__sayhi" id="author-info__sayhi" onclick="sco.changeSayHelloText()">sayhello.morning</div></div></div></div><a class="card-info-avatar" href="/about/" title="头像"><div class="avatar-img"><img src="https://serv.200038.xyz/2024/11/06/027080.gif" alt="头像"></div></a><div class="card-info__desc_group"><div class="author-info__name">东方月初</div><div class="author-info__desc">涂山红红</div><div class="card-info__data is-center"><a href="/archives/" title="累计文章数:21"><div class="length-num">21</div><div class="headline">文章</div></a><a href="/tags/" title="标签总数:47"><div class="length-num">47</div><div class="headline">标签</div></a><a href="/categories/" title="分类总数:5"><div class="length-num">5</div><div class="headline">分类</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" target="_blank" rel="noopener" href="https://github.com/damizai" title="Github"><i class="solitude  fab fa-github"></i></a><a class="social-icon" target="_blank" rel="noopener" href="https://space.bilibili.com/294669683" title="Bilibili"><i class="solitude  fab fa-bilibili"></i></a></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="solitude fa-solid fa-bars"></i><span>文章目录</span></div><div class="toc-content" id="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Serv00%E4%B8%8A%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAPixPro%E5%9B%BE%E5%BA%8A-%E5%86%85%E5%AD%98%E5%A4%AA%E5%B0%8F-%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E6%8E%A5%E5%85%A5%E5%88%B0CFR2-%E8%B6%B3%E5%A4%9F%E4%B8%AA%E4%BA%BA%E4%BD%BF%E7%94%A8%E3%80%82%E8%87%AA%E5%B7%B1%E6%9C%89VPS%E7%9A%84%E4%B9%9F%E5%8F%AF%E5%9C%A8%E5%AE%9D%E5%A1%94%E4%B8%8A%E9%9D%A2%E9%83%A8%E7%BD%B2"><span class="toc-text">Serv00上搭建一个PixPro图床,内存太小,我们可以接入到CFR2 足够个人使用。自己有VPS的也可在宝塔上面部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%A2%E6%9D%BF%E9%A1%B5"><span class="toc-text">面板页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0%E9%A1%B5"><span class="toc-text">后台页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Serv00%E5%9B%BE%E5%BA%8A-PNG%E4%B8%8A%E4%BC%A0%E7%A9%BA%E7%99%BD-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95-%E5%A4%8D%E5%88%B6%E4%BB%A5%E4%B8%8B%E4%BB%A3%E7%A0%81-%E6%9B%BF%E6%8D%A2%E5%88%B0-config-image-processing-php"><span class="toc-text">Serv00图床 PNG上传空白 解决办法  复制以下代码 替换到 config/image_processing.php</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%9F%E5%8F%AF%E4%B8%8B%E8%BD%BD-PixPin-%E6%88%AA%E5%9B%BE%E8%BD%AF%E4%BB%B6%E8%AF%95%E8%AF%95"><span class="toc-text">也可下载 PixPin  截图软件试试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%89%8D%E5%87%86%E5%A4%87"><span class="toc-text">安装前准备</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="toc-text">安装步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%92%8C%E4%B8%8A%E4%B8%80%E6%AD%A5%E4%B8%80%E6%A0%B7"><span class="toc-text">和上一步一样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%85%A5R2-%E5%89%8D%E6%8F%90-%E5%B7%B2%E5%BC%80%E9%80%9A-Cloudflare-R2"><span class="toc-text">接入R2 前提 已开通 Cloudflare R2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E5%85%A5%E5%88%B0-Cloudflare-%E9%9D%A2%E6%9D%BF-%E6%89%BE%E5%88%B0-R2-%E5%8F%B3%E8%BE%B9%E6%9C%89%E4%B8%80%E4%B8%AA%E7%AE%A1%E7%90%86-R2API-%E4%BB%A4%E7%89%8C%E7%82%B9%E5%87%BB%E5%88%9B%E5%BB%BA-API%E4%BB%A4%E7%89%8C-%EF%BC%8C%E5%88%9B%E5%BB%BA%E5%A5%BD%E5%90%8E%E9%87%8C%E9%9D%A2%E6%9C%89%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E7%9A%84%E8%AE%BF%E9%97%AE%E5%AF%86%E9%92%A5%E5%92%8C%E6%9C%BA%E5%AF%86%E8%AE%BF%E9%97%AE%E5%AF%86%E9%92%A5"><span class="toc-text">进入到 Cloudflare 面板 找到 R2 右边有一个管理 R2API 令牌点击创建 API令牌 ，创建好后里面有我们需要的访问密钥和机密访问密钥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%BF%9B%E5%85%A5%E5%88%B0-Cloudflare-%E9%9D%A2%E6%9D%BF-%E6%89%BE%E5%88%B0-R2-%E7%82%B9%E5%87%BB%E5%88%9B%E5%BB%BA%E5%AD%98%E5%82%A8%E6%A1%B6"><span class="toc-text">1. 进入到 Cloudflare 面板 找到 R2 点击创建存储桶</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%BF%9B%E5%85%A5%E5%90%8E%E5%90%8D%E7%A7%B0%E9%9A%8F%E4%BE%BF%E5%86%99%E3%80%82%E4%BD%8D%E7%BD%AE%E9%80%89%E6%8B%A9%E4%BA%9A%E5%A4%AA%E5%9C%B0%E5%8C%BA%E5%90%8E%E7%82%B9%E5%87%BB%E5%88%9B%E5%BB%BA%E5%AD%98%E5%82%A8%E6%A1%B6"><span class="toc-text">2. 进入后名称随便写。位置选择亚太地区后点击创建存储桶</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%88%9B%E5%BB%BA%E5%A5%BD%E5%90%8E%E7%82%B9%E5%87%BB%E8%AE%BE%E7%BD%AE%E6%8B%89%E5%88%B0%E4%B8%8B%E9%9D%A2%E7%9C%8B%E5%88%B0-R2-dev-%E5%AD%90%E5%9F%9F%E7%82%B9%E5%87%BB%E5%90%8E%E9%9D%A2%E7%9A%84%E5%85%81%E8%AE%B8%E8%AE%BF%E9%97%AE-%EF%BC%8C-%E8%BF%9E%E6%8E%A5%E5%9F%9F%E9%9C%80%E8%A6%81%E6%B7%BB%E5%8A%A0%E4%BD%A0%E6%89%98%E7%AE%A1%E5%88%B0CF%E4%B8%8A%E9%9D%A2%E5%9F%9F%E5%90%8D"><span class="toc-text">3. 创建好后点击设置拉到下面看到 R2.dev 子域点击后面的允许访问 ， 连接域需要添加你托管到CF上面域名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-14-%E6%AD%A5%E6%88%91%E4%BB%AC%E5%AE%89%E8%A3%85%E9%80%89%E6%8B%A9S3%E5%90%8E%E7%9C%8B%E5%88%B0%E4%B8%8B%E5%9B%BE"><span class="toc-text">4. 14 步我们安装选择S3后看到下图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E7%82%B9%E5%87%BB%E5%AE%8C%E6%88%90%E5%AE%89%E8%A3%85%E5%8D%B3%E5%8F%AF%E3%80%82%E8%BF%99%E6%98%AF%E6%88%91%E4%BB%AC%E4%B8%8A%E4%BC%A0%E5%A5%BD%E7%9A%84%E5%9B%BE%E7%89%87-%E6%88%91%E4%B8%8B%E9%9D%A2%E7%9A%84%E5%9F%9F%E5%90%8D%E5%B0%B1%E6%98%AF%E6%88%91%E4%BB%AC-R2-%E5%88%86%E9%85%8D%E7%9A%84%E5%9F%9F%E5%90%8D"><span class="toc-text">5. 点击完成安装即可。这是我们上传好的图片 我下面的域名就是我们 R2 分配的域名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%88%91%E4%BB%AC%E5%9B%9E%E5%88%B0-Cloudflare-R2-%E5%B0%B1%E4%BC%9A%E7%9C%8B%E5%88%B0%E5%88%9A%E5%88%9A%E4%B8%8A%E4%BC%A0%E7%9A%84%E5%9B%BE%E7%89%87"><span class="toc-text">6. 我们回到 Cloudflare R2 就会看到刚刚上传的图片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%84%9F%E8%B0%A2%E4%BD%9C%E8%80%85%E6%A2%A6%E7%88%B1%E5%90%83%E9%B1%BC%EF%BC%8C%E6%AC%A2%E8%BF%8E%E5%A4%A7%E5%AE%B6%E5%8E%BB%E9%A2%84%E8%A7%88%E3%80%81%E5%93%88%E5%93%88%E5%93%88"><span class="toc-text">感谢作者梦爱吃鱼，欢迎大家去预览、哈哈哈</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="solitude fa-solid fa-map"></i><span>最近发布</span></div><div class="aside-list"><a class="aside-list-item" href="/posts/6054.html" title="追剧必备 - 免费在线观看国内电影/电视剧/综艺的网站"><div class="thumbnail"><img alt="追剧必备 - 免费在线观看国内电影/电视剧/综艺的网站" src="https://serv.200038.xyz/2024/11/11/157295.webp"></div><div class="content"><span class="title" href="/posts/6054.html" title="追剧必备 - 免费在线观看国内电影/电视剧/综艺的网站">追剧必备 - 免费在线观看国内电影/电视剧/综艺的网站</span><span class="article-recent_post_categories" href="/posts/6054.html">学习中</span></div></a><a class="aside-list-item" href="/posts/bcd2.html" title="使用带有PHP的主机 + Cloudflare + Worker 搭建一个Umami API"><div class="thumbnail"><img alt="使用带有PHP的主机 + Cloudflare + Worker 搭建一个Umami API" src="https://serv.200038.xyz/2024/10/29/089211.webp"></div><div class="content"><span class="title" href="/posts/bcd2.html" title="使用带有PHP的主机 + Cloudflare + Worker 搭建一个Umami API">使用带有PHP的主机 + Cloudflare + Worker 搭建一个Umami API</span><span class="article-recent_post_categories" href="/posts/bcd2.html">Serv00</span></div></a><a class="aside-list-item" href="/posts/af99.html" title="使用 FastyCDN 加速 Cloudflare + pages 部署的博客项目"><div class="thumbnail"><img alt="使用 FastyCDN 加速 Cloudflare + pages 部署的博客项目" src="https://serv.200038.xyz/2024/09/19/993800.webp"></div><div class="content"><span class="title" href="/posts/af99.html" title="使用 FastyCDN 加速 Cloudflare + pages 部署的博客项目">使用 FastyCDN 加速 Cloudflare + pages 部署的博客项目</span><span class="article-recent_post_categories" href="/posts/af99.html">Cloudflare</span></div></a><a class="aside-list-item" href="/posts/f199.html" title="基于IP地址的真实地址生成器"><div class="thumbnail"><img alt="基于IP地址的真实地址生成器" src="https://serv.200038.xyz/2024/10/12/850208.webp"></div><div class="content"><span class="title" href="/posts/f199.html" title="基于IP地址的真实地址生成器">基于IP地址的真实地址生成器</span><span class="article-recent_post_categories" href="/posts/f199.html">Cloudflare</span></div></a><a class="aside-list-item" href="/posts/6702.html" title="主题外挂标签使用"><div class="thumbnail"><img alt="主题外挂标签使用" src="https://serv.200038.xyz/2024/11/25/895800.webp"></div><div class="content"><span class="title" href="/posts/6702.html" title="主题外挂标签使用">主题外挂标签使用</span><span class="article-recent_post_categories" href="/posts/6702.html">我的项目</span></div></a></div></div></div></div></main><footer id="footer"><div id="st-footer-bar"><div class="footer-logo"><span>东方月初</span></div><div class="footer-bar-description"></div><a class="footer-bar-link" href="/about/"></a></div><div id="footer_deal"><a class="deal_link" target="_blank" rel="noopener" href="https://github.com/damizai" title="Github"><i class="solitude  fab fa-github"></i></a><a class="deal_link" href="/jinxcose@gmail.com" title="Mail"><i class="solitude  fab fa-envelope"></i></a><div class="nolazyload footer_mini_logo" id="footer_mini_logo" title="返回顶部" onclick="sco.toTop()"><img src="https://serv.200038.xyz/2024/11/06/027080.gif" alt="返回顶部"></div><a class="deal_link" target="_blank" rel="noopener" href="https://space.bilibili.com/294669683" title="Bilibili"><i class="solitude  fab fa-bilibili"></i></a><a class="deal_link" target="_blank" rel="noopener" href="https://v.douyin.com/iJsLc8jt/" title="Douyin"><i class="solitude  fab fa-tiktok"></i></a></div><div id="st-footer"><div class="footer-group"><h3 class="footer-title">导航</h3><div class="footer-links"><a class="footer-item" href="/archives/" title="归档">归档</a><a class="footer-item" href="/categories/" title="分类">分类</a><a class="footer-item" href="/tags/" title="标签">标签</a></div></div><div class="footer-group"><h3 class="footer-title">服务</h3><div class="footer-links"><a class="footer-item" target="_blank" rel="noopener" href="https://aliyun.com/" title="阿里云">阿里云</a><a class="footer-item" target="_blank" rel="noopener" href="https://v6.51.la/" title="51la统计">51la统计</a><a class="footer-item" target="_blank" rel="noopener" href="https://tongji.baidu.com/" title="百度统计">百度统计</a></div></div><div class="footer-group"><h3 class="footer-title">支持</h3><div class="footer-links"><a class="footer-item" href="/about/" title="打赏记录">打赏记录</a><a class="footer-item" href="/update/" title="建站日志">建站日志</a></div></div><div class="footer-group"><h3 class="footer-title">协议</h3><div class="footer-links"><a class="footer-item" href="/privacy/" title="用户协议">用户协议</a></div></div><div class="footer-group"><div class="footer-title-group"><h3 class="footer-title">友链</h3><button class="random-friends-btn" onclick="randomLinksList()" title="友链"><i class="solitude fa-solid fa-arrows-rotate"></i></button></div><div class="footer-links" id="friend-links-in-footer"></div></div></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div class="copyright">© 2024 By&nbsp;<a class="footer-bar-link" href="/"><img class="author-avatar" src="https://serv.200038.xyz/2024/11/03/775849.webp">东方月初</a></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" alt="Theme">Theme</a><a class="footer-bar-link" href="/atom.xml" alt="RSS">RSS</a><a class="footer-bar-link cc" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"><i class="solitude fa-solid fa-copyright"></i><i class="solitude fa-brands fa-creative-commons-by"></i><i class="solitude fa-brands fa-creative-commons-nc"></i><i class="solitude fa-brands fa-creative-commons-nd"></i></a></div></div></div><div class="comment-barrage needEndHide"></div></footer></div><!-- right_menu--><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="solitude fa-solid fa-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="solitude fa-solid fa-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="solitude fa-solid fa-arrows-rotate"></i></div><div class="rightMenu-item" id="menu-top"><i class="solitude fa-solid fa-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="solitude fa-solid fa-clone"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="solitude fa-solid fa-clipboard"></i><span>粘贴文本</span></div><div class="rightMenu-item" id="menu-commenttext"><i class="solitude fa-solid fa-comment-medical"></i><span>引用到评论</span></div><div class="rightMenu-item" id="menu-newwindow"><i class="solitude fa-regular fa-window-maximize"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="solitude fa-solid fa-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="solitude fa-solid fa-clone"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="solitude fa-solid fa-cloud-arrow-down"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-search"><i class="solitude fa-solid fa-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="solitude fa-solid fa-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="solitude fa-solid fa-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="solitude fa-solid fa-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="solitude fa-solid fa-clone"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><div class="rightMenu-item" id="menu-randomPost" onclick="toRandomPost()||rm.hideRightMenu()"><i class="solitude fas fa-tower-broadcast"></i><span>随机文章</span></div><div class="rightMenu-item" onclick="pjax.loadUrl('/categories/')||rm.hideRightMenu()"><i class="solitude fas fa-clone"></i><span>全部分类</span></div><div class="rightMenu-item" onclick="pjax.loadUrl('/tags/')||rm.hideRightMenu()"><i class="solitude fas fa-tags"></i><span>全部标签</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><div class="rightMenu-item" id="menu-commentBarrage" onclick="sco.switchCommentBarrage()"><i class="solitude fa-solid fa-comment"></i><span class="menu-commentBarrage-text">关闭热评</span></div><div class="rightMenu-item" id="menu-darkmode" onclick="sco.switchDarkMode()"><i class="solitude fa-solid fa-circle-half-stroke"></i><span class="menu-darkmode-text">浅色模式</span></div><div class="rightMenu-item" id="menu-translate"><i class="solitude fa-solid fa-language"></i><span>轉為繁體</span></div></div></div><div id="rightmenu-mask"></div><!-- inject body--><div><script src="/js/utils.js?v=2.1.10"></script><script src="/js/main.js?v=2.1.10"></script><script src="/js/third_party/waterfall.min.js?v=2.1.10"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/pjax/0.2.8/pjax.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script><script src="/js/tw_cn.js?v=2.1.10"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/19.1.3/lazyload.iife.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/node-snackbar/0.1.16/snackbar.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.36/fancybox/fancybox.umd.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script><script>var meting_api = 'https://meting.everfu.cn/?server=:server&type=:type&id=:id&auth=:auth&r=:r';</script><script src="https://cdnjs.cloudflare.com/ajax/libs/aplayer/1.10.1/APlayer.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/meting/2.0.1/Meting.min.js"></script><script>const coverColorConfig = {
+  api: 'https://api.qjqq.cn/api/Imgcolor?img=',
+  time: 43200000
+}</script><script src="/js/covercolor/api.js?v=2.1.10"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js"></script><script src="/js/right_menu.js?v=2.1.10"></script><script src="/js/cebianlan.js"></script><script defer="" pjax="" src="/js/custom.js"></script><script src="https://open.lightxi.com/unpkg/chinese-lunar@0.1.4/lib/chinese-lunar.js"></script><div class="js-pjax"><script>(() => {
+    const getCount = () => {
+        const ele = document.querySelectorAll('.twikoo-count')
+        if (!ele) return
+        twikoo.getCommentsCount({
+            envId: 'https://twikoo.200038.xyz/.netlify/functions/twikoo',
+            region: '',
+            urls: [window.location.pathname],
+            includeReply: false
+        }).then(res => {
+            ele.forEach(item => item.textContent = res[0].count)
+        }).catch(err => {
+            console.error(err)
+        })
+    }
+    const init = () => {
+        twikoo.init(Object.assign({
+            el: '#twikoo-wrap',
+            envId: 'https://twikoo.200038.xyz/.netlify/functions/twikoo',
+            region: '',
+            path: window.location.pathname,
+            onCommentLoaded: () => {
+                GLOBAL_CONFIG.lightbox && utils.lightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+                const processLinks = () => {
+                    const container = document.querySelector('#twikoo .tk-comments-container');
+                    if (!container) return;
+
+                    const links = container.querySelectorAll('a');
+                    links.forEach((link) => {
+                        const href = link.getAttribute('href');
+                        if (!href) return;
+
+                        if (!href.startsWith(window.location.origin) && !link.hasAttribute('data-fancybox')) {
+                            const encodedHref = btoa(href);
+                            const newHref = `/go.html?i=${encodedHref}`;
+                            link.setAttribute('href', newHref);
+                            link.setAttribute('rel', 'external nofollow noopener noreferrer');
+                            link.setAttribute('target', '_blank');
+                        }
+                    });
+                };
+                processLinks();
+            }
+        }, null))
+
+         && getCount()
+        sco.owoBig({
+            body: '.OwO-body',
+            item: '.OwO-items li'
+        })
+
+        true && barrageTwikoo()
+    }
+
+    const loadTwikoo = () => {
+        if (typeof twikoo === 'object') setTimeout(init,0)
+        else utils.getScript('https://cdnjs.cloudflare.com/ajax/libs/twikoo/1.6.40/twikoo.all.min.js').then(init)
+    }
+
+    if ('Twikoo' === 'Twikoo' || true) {
+        if (true) utils.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+        else loadTwikoo()
+    } else {
+        window.loadTwoComment = loadTwikoo
+    }
+})()
+</script><script>async function barrageTwikoo() {
+    await fetch("https://twikoo.200038.xyz/.netlify/functions/twikoo", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            event: "COMMENT_GET",
+            accessToken: "",
+            url: window.location.pathname
+        })
+    }).then(async res => {
+        if (!res.ok) throw new Error("HTTP error! status: " + res.status)
+        const data = await res.json();
+        const init = () => {
+            initializeCommentBarrage((data.data).map(item => Object.assign({
+                content: item.comment,
+                nick: item.nick,
+                mailMd5: item.mailMd5,
+                id: item.id
+            })))
+        }
+        if (typeof initializeCommentBarrage === "undefined") await utils.getScript('/js/third_party/barrage.min.js?v=2.1.10').then(init)
+        else init()
+    }).catch(error => console.error("An error occurred while fetching comments: ", error))
+}</script></div></div><script>const links = [{"name":"伍十七","link":"/"},{"name":"东方月初","link":"https://blog.liuer.xin/"},{"name":"葱苓sama","link":"https://blog.ciraos.top"},{"name":"梦爱吃鱼","link":"https://blog.bsgun.cn/"},{"name":"Naokuo","link":"https://www.naokuo.top"},{"name":"CMLiusss","link":"https://blog.cmliussss.com"},{"name":"一粒微尘","link":"https://blog.667408.xyz"},{"name":"清羽飞扬","link":"https://blog.liushen.fun/"},{"name":"❖星港◎Star☆","link":"https://blog.starsharbor.com"},{"name":"煮雪话河山","link":"https://blog.cent1pedee.top/"},{"name":"前尘小筑","link":"https://mnchen.cn/"},{"name":"唐志远","link":"https://fe32.top/"},{"name":"Akilarの糖果屋","link":"https://akilar.top/"},{"name":"铭心石刻","link":"https://blog.kouseki.cn/"},{"name":"小旦","link":"https://satera.cn"},{"name":"Leonus","link":"https://blog.leonus.cn/"},{"name":"小植同学","link":"https://blog.xiaoztx.top"},{"name":"Fomalhaut🥝","link":"https://www.fomal.cc/"},{"name":"茗辰原 の 异世界","link":"https://h.liyy.us.kg/"},{"name":"小智の空间站","link":"https://blog.cuixinyu.com"},{"name":"百里飞扬","link":"https://blog.meta-code.top"},{"name":"山岳库博","link":"https://kmar.top/"},{"name":"轻笑Chuckle","link":"https://www.qcqx.cn"},{"name":"isYangs Blog","link":"https://isyangs.cn"},{"name":"Spark の Blog","link":"https://www.aspark.cc"},{"name":"杜老师说","link":"https://dusays.com"},{"name":"凌尘K-Blog","link":"https://blog.lck68.xyz/"},{"name":"别亦难","link":"https://lazyingman.cn"},{"name":"Nuyoah","link":"https://262259.xyz/"},{"name":"無名小栈","link":"https://blog.imsyy.top/"},{"name":"GanSer","link":"https://www.gan1ser.top/"},{"name":"cosの博客","link":"https://ysx.cosine.ren/"},{"name":"随风起","link":"https://blog.bywind.xyz/"},{"name":"Tianli","link":"https://tianli-blog.club/"},{"name":"王貔貅","link":"https://blog.wpixiu.cn/"},{"name":"Revincx","link":"https://blog.revincx.icu/"},{"name":"Calyee","link":"https://blog.calyee.top/"},{"name":"小冰博客","link":"https://zfe.space/"},{"name":"IMyself","link":"https://blog.lmyself.top/"},{"name":"polar-bear～Blog","link":"https://polar-bear.eu.org/"},{"name":"青云志","link":"https://blog.811520.xyz/"},{"name":"周润发","link":"https://blog.aizrf.com/"},{"name":"古明地こいし的小屋","link":"https://hlo.7374520.xyz"},{"name":"又见苍岚","link":"https://www.zywvvd.com"},{"name":"chfychin","link":"https://blog.chfychin.cn"},{"name":"Eurkon","link":"https://blog.eurkon.com"},{"name":"GnaixEuy","link":"https://blog.gnaixeuy.cn/"},{"name":"爱吃肉的猫","link":"https://meuicat.com/"},{"name":"李小白","link":"https://blog.lxb.icu/"},{"name":"青稚の空间","link":"https://blog.linux-qitong.top/"},{"name":"TWindyの小站","link":"https://www.twindy.top/"},{"name":"XingJiのBlog","link":"https://love.xingji.fun/"},{"name":"Imz’s Blog","link":"https://blog.imz.me/"},{"name":"OvO","link":"https://www.qqe4.com"},{"name":"KasumiTech","link":"https://sakurablogs.top/"},{"name":"胜天半子","link":"https://blog.291055.xyz/"}]
+const randomText = '点击前往按钮进入随机一个友链，不保证跳转网站的安全性和可用性。本次随机到的是本站友链：⌈ ${name} ⌋'
+function travelling() {
+    const link = links[utils.randomNum(links.length)];
+    Snackbar.show({
+        text: randomText.replace(/\$\{name}/,link.name),
+        duration: 8000,
+        pos: 'top-center',
+        actionText: '前往',
+        onActionClick: function(element) {
+            element.style.opacity = 0;
+            window.open(link.link, '_blank');
+        }
+    });
+}
+</script><script>function randomLinksList() {
+    const linkcard = document.getElementById('friend-links-in-footer');
+    if (linkcard == null) return;
+
+    let data = '';
+    let linksCopy = [...links];
+    let count = Math.min(3, linksCopy.length);
+
+    for (let i = 0; i < count; i++) {
+        let index = utils.randomNum(linksCopy.length);
+        const {link, name} = linksCopy[index];
+        data += `<a class="footer-item" href="${link}" target="_blank" rel="noopener noreferrer nofollow">${name}</a>`;
+        linksCopy.splice(index, 1);
+    }
+
+    linkcard.innerHTML = data + '<a class="footer-item" href="/links/">更多</a>';
+}</script><!-- pjax--><script>const pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: ["title","#body-wrap","#site-config","meta[name=\"description\"]",".js-pjax","meta[property^=\"og:\"]","#config-diff",".rs_show",".rs_hide"],
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+})
+
+document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+})
+
+document.addEventListener('pjax:complete', () => {
+    window.refreshFn()
+
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+        const newScript = document.createElement('script')
+        const content = item.text || item.textContent || item.innerHTML || ""
+        Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+        newScript.appendChild(document.createTextNode(content))
+        item.parentNode.replaceChild(newScript, item)
+    })
+
+    GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+})
+
+document.addEventListener('pjax:error', (e) => {
+    if (e.request.status === 404) {
+        pjax.loadUrl('/404.html')
+    }
+})</script><!-- google adsense--><!-- search--><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><button class="search-close-button"><i class="solitude fa-solid fa-xmark"></i></button></nav><div class="search-wrap"><div class="search-box"><input class="search-box-input" id="search-input" type="text" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off" placeholder="输入关键词快速查找"></div><div id="search-results"><div id="search-hits"></div></div><div id="search-pagination"></div><div id="search-tips"></div></div></div><div id="search-mask"></div></div><script src="/js/search/local.js?v=2.1.10"></script><!-- Tianli-Talk--><!-- music--><div class="needEndHide" id="nav-music"><div id="nav-music-hoverTips" onclick="sco.musicToggle()">音乐已暂停</div><meting-js id="8407304077" server="netease" type="playlist" mutex="true" preload="none" theme="var(--efu-main)" data-lrctype="0" order="random" volume="0.8"></meting-js></div></body></html>
+        <script>
+            const posts = ["posts/6054.html","posts/bcd2.html","posts/af99.html","posts/f199.html","posts/6702.html","posts/e6b7.html","posts/55f0.html","posts/6213.html","posts/655f.html","posts/285c.html","posts/9231.html","posts/bdbd.html","posts/6317.html","posts/f219.html","posts/4729.html","posts/2ede.html","posts/78c2.html","posts/4618.html","posts/21c2.html","posts/86e1.html","posts/624d.html"];
+            function toRandomPost() {
+                const randomPost = posts[Math.floor(Math.random() * posts.length)];
+                pjax.loadUrl(GLOBAL_CONFIG.root + randomPost);
+            }
+        </script>

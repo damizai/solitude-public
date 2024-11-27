@@ -1,0 +1,834 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>主题外挂标签使用 | 东方月初</title><noscript>开启JavaScript才能访问本站哦~</noscript><link rel="icon" href="https://serv.200038.xyz/2024/11/03/775849.webp"><!-- index.css--><link rel="stylesheet" href="/css/index.css?v=2.1.10"><!-- inject head--><link rel="canonical" href="https://solitude.liuer.xin/posts/6702.html"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"><!-- aplayer--><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aplayer/1.10.1/APlayer.min.css"><!-- swiper--><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.css"><!-- fancybox ui--><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.36/fancybox/fancybox.min.css"><!-- katex--><!-- Open Graph--><meta name="description" content="内置的外挂标签满足大部分用户的需求，不需要额外安装插件。插件的外挂标签需要安装对应的插件，满足部分用户的特殊需求。 内置标签Article文章列表标签，用于显示文章列表。 语法参数示例效果1&amp;#123;% article %&amp;#125; 参数 说明 默认值 path 文章路径 无 1&amp;amp;"><!-- pwa--><meta name="theme-color" content="#006a73"><meta name="apple-mobile-web-app-status-bar-style" content="#006a73"><link rel="manifest" href="/manifest.json"><meta name="msapplication-TileColor" content="#006a73"><link rel="mask-icon" href="/img/pwa/favicon.png" color="#006a73"><link rel="apple-touch-icon" sizes="180x180" href="/img/pwa/favicon.png"><link rel="icon" type="image/png" sizes="16x16" href="/img/pwa/favicon_16.png"><link rel="icon" type="image/png" sizes="32x32" href="/img/pwa/favicon_32.png"><link rel="bookmark" href="/img/pwa/favicon.png"><script>console.log(' %c Solitude %c ' + '2.1.10' + ' %c https://github.com/everfu/hexo-theme-solitude',
+    'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+    'background:#ff9a9a ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+    'background:unset ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff')
+</script><link rel="stylesheet" href="/css/cebianlan.css"><script>(()=>{
+        const saveToLocal = {
+            set: function setWithExpiry(key, value, ttl) {
+                if (ttl === 0)
+                    return
+                const now = new Date()
+                const expiryDay = ttl * 86400000
+                const item = {
+                    value: value,
+                    expiry: now.getTime() + expiryDay
+                }
+                localStorage.setItem(key, JSON.stringify(item))
+            },
+            get: function getWithExpiry(key) {
+                const itemStr = localStorage.getItem(key)
+
+                if (!itemStr) {
+                    return undefined
+                }
+                const item = JSON.parse(itemStr)
+                const now = new Date()
+
+                if (now.getTime() > item.expiry) {
+                    localStorage.removeItem(key)
+                    return undefined
+                }
+                return item.value
+            }
+        };
+        window.utils = {
+            saveToLocal: saveToLocal,
+            getCSS: (url, id = false) => new Promise((resolve, reject) => {
+              const link = document.createElement('link')
+              link.rel = 'stylesheet'
+              link.href = url
+              if (id) link.id = id
+              link.onerror = reject
+              link.onload = link.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                link.onload = link.onreadystatechange = null
+                resolve()
+              }
+              document.head.appendChild(link)
+            }),
+            getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+              const script = document.createElement('script')
+              script.src = url
+              script.async = true
+              script.onerror = reject
+              script.onload = script.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                script.onload = script.onreadystatechange = null
+                resolve()
+              }
+
+              Object.keys(attr).forEach(key => {
+                script.setAttribute(key, attr[key])
+              })
+
+              document.head.appendChild(script)
+            }),
+            addGlobalFn: (key, fn, name = false, parent = window) => {
+                const globalFn = parent.globalFn || {}
+                const keyObj = globalFn[key] || {}
+
+                if (name && keyObj[name]) return
+
+                name = name || Object.keys(keyObj).length
+                keyObj[name] = fn
+                globalFn[key] = keyObj
+                parent.globalFn = globalFn
+            },
+            addEventListenerPjax: (ele, event, fn, option = false) => {
+              ele.addEventListener(event, fn, option)
+              utils.addGlobalFn('pjax', () => {
+                  ele.removeEventListener(event, fn, option)
+              })
+          },
+        }
+    })()</script><!-- theme--><script>initTheme = () => {
+    const cachedMode = utils.saveToLocal.get('theme');
+    if (cachedMode === undefined)
+        document.documentElement.setAttribute('data-theme', 'dark');
+    else
+        document.documentElement.setAttribute('data-theme', cachedMode);
+    typeof rm === 'object' && rm.mode(cachedMode === undefined || cachedMode === 'dark')
+}
+initTheme()</script><!-- global head--><script>const GLOBAL_CONFIG = {
+    root: '/',
+    algolia: undefined,
+    localsearch: {"preload":false,"path":"/search.xml"},
+    runtime: '2024-11-26 00:00:00',
+    lazyload: {
+        enable: true,
+        error: 'https://serv.200038.xyz/2024/11/25/895800.webp'
+    },
+    copyright: {"limit":50,"author":"作者: 东方月初","link":"链接: ","source":"来源: 东方月初","info":"著作权归作者所有。 商业转载请联系作者获得授权，非商业转载请注明出处。"},
+    highlight: {"limit":200,"expand":true,"copy":true,"syntax":"highlight.js"},
+    randomlink: true,
+    lang: {"theme":{"dark":"已切换至深色模式","light":"已切换至浅色模式"},"copy":{"success":"复制成功","error":"复制失败"},"backtop":"返回顶部","time":{"day":"天前","hour":"小时前","just":"刚刚","min":"分钟前","month":"个月前"},"day":" 天","f12":"开发者模式已打开，请遵循GPL协议。","totalk":"无需删除空行，直接输入评论即可","search":{"empty":"找不到你查询的内容：${query}","hit":"找到 ${hits} 条结果，用时 ${time} 毫秒","placeholder":"输入关键词快速查找","count":"共 <b>${count}</b> 条结果。","loading":"搜索中..."},"barrage":{"title":"热评"}},
+    aside: {
+        sayhello: {
+            morning: "✨ 早上好，新的一天开始了",
+            noon: "🍲 午餐时间",
+            afternoon: "🌞 下午好",
+            night: "早点休息",
+            goodnight: "晚安 😴",
+        },
+        sayhello2: ["你可以的","你一定可以的","祝你好运，陌生人"],
+        sayhello3: {
+            prefix: '好久不见，',
+            back: '欢迎再次回来，',
+        },
+    },
+    covercolor: {
+        enable: true
+    },
+    comment: {"avatar":"https://gravatar.com/avatar","commentBarrage":true},
+    lightbox: 'fancybox',
+    post_ai: false,
+    right_menu: {"mode":{"dark":"深色模式","light":"浅色模式"},"img_error":"此图片无法复制与下载","music":{"start":"播放音乐","stop":"暂停音乐"},"barrage":{"open":"显示热评","close":"关闭热评"},"translate":true},
+    translate: {"translateDelay":0,"defaultEncoding":2},
+    lure: {"jump":"👀跑哪里去了~","back":"🐖抓到你啦～'"},
+    expire: {"time":365,"position":"top","text_prev":"本篇文章距离创建时间已过 ","text_next":" 天,不保证内容可用性."},
+};</script><!-- page-config head--><script id="config-diff">var PAGE_CONFIG = {
+    is_post: true,
+    is_page: false,
+    is_home: false,
+    page: '',
+    toc: true,
+    comment: true,
+    ai_text: false,
+    color: false,
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="东方月初" type="application/atom+xml">
+</head><body id="body"><!-- universe--><!-- background img--><div id="global_bg"></div><!-- loading--><div id="loading-box" onclick="preloader.endLoading();" style="zoom:1"><div class="loading-bg"><img class="loading-img nolazyload" src="https://serv.200038.xyz/2024/11/06/027080.gif" alt="loading image"></div></div><script>const preloader = {
+    isLoaded: false,
+    endLoading: () => {
+        if (!preloader.isLoaded) {
+            document.getElementById('loading-box').classList.add('loaded');
+            preloader.isLoaded = true;
+            preloader.togglePaceDone();
+        }
+    },
+    initLoading: () => {
+        document.getElementById('loading-box').classList.remove('loaded');
+        preloader.isLoaded = false;
+        preloader.togglePaceDone();
+    },
+    togglePaceDone: () => {
+        document.getElementById('body').className = preloader.isLoaded ? 'pace-done' : '';
+    }
+}
+
+window.addEventListener('load', () => {
+    preloader.endLoading();
+});
+
+window.addEventListener('pjax:send', () => {
+    preloader.initLoading();
+});
+
+document.addEventListener('pjax:complete', () => {
+    preloader.endLoading();
+});
+
+setTimeout(() => {
+    preloader.endLoading();
+}, 5000);</script><!-- console--><div id="console"><div class="close-btn" onclick="sco.hideConsole()"><i class="solitude fa-solid fa-xmark"></i></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments" onclick="sco.hideConsole()"><div class="card-content"><div class="author-content-item-tips">互动</div><div class="author-content-item-title">最新评论<a class="recent-comment-more" href="/recentcomments/" title="最近评论"><i class="solitude fa-solid fa-circle-chevron-right"></i></a></div></div><div class="console_recentcomments"><script pjax="">(async () => {
+    document.querySelector('.console-card .console_recentcomments').textContent = `加载中...`
+    const emojiReg = /<img class="tk-owo-emotion" [^>]+>/g
+    let cache = utils.saveToLocal.get('twikoo-recent-comments-console')
+    if (cache) {
+        setHtml(document.querySelector('.console-card .console_recentcomments'), cache)
+        return
+    }
+    let ls = []
+
+    await fetch('https://twikoo.200038.xyz/.netlify/functions/twikoo', {
+        method: "POST",
+        body: JSON.stringify({
+            "event": "GET_RECENT_COMMENTS",
+            "includeReply": true,
+            "pageSize": 6
+        }),
+        headers: {'Content-Type': 'application/json'}
+    }).then(res => res.json()).then(async ({data}) => {
+        for (const i of data) {
+            if (i.avatar === undefined) i.avatar = '/avatar/d615d5793929e8c7d70eab5f00f7f5f1?d=mp'
+            let title = ''
+            if (i.url) {
+                await fetch(i.url).then(res => res.text()).then(html => {
+                    const parser = new DOMParser()
+                    const doc = parser.parseFromString(html, 'text/html')
+                    title = doc.querySelector('title').innerText
+                }).catch(() => {
+                    title = i.url
+                })
+            }
+            if (title.indexOf('|') > 0) {
+                title = title.split('|')[0]
+            }
+            ls.push({
+                avatar: i.avatar,
+                nick: i.nick,
+                title: title,
+                content: i.comment,
+                url: i.url + '#' + i.id,
+                time: i.created
+            })
+        }
+        setHtml(document.querySelector('.console-card .console_recentcomments'), ls)
+        utils.saveToLocal.set('twikoo-recent-comments-console', ls, 0.2)
+    });
+
+    function setHtml(el, data) {
+        el.innerHTML = data.map(i => `
+            <div class="comment-card" title="${i.title}" onclick="pjax.loadUrl('${i.url}')">
+                <div class="comment-info">
+                    <img src="${i.avatar}" class="nolazyload" alt="${i.nick}">
+                    <div>
+                        <span class="comment-user">${i.nick}</span>
+                    </div>
+                    <time class="comment-time" datetime="${new Date(i.time)}"></time>
+                </div>
+                <div class="comment-content">${formatContent(i.content)}</div>
+                <div class="comment-title">
+                <i class="solitude fa-solid fa-comment"></i>
+                ${i.title}</div>
+            </div>
+        `).join('')
+        if (typeof sco !== 'undefined') sco.changeTimeFormat(document.querySelectorAll('.comment-time'))
+        else {
+            document.addEventListener('pjax:complete', () => sco.changeTimeFormat(document.querySelectorAll('.comment-time')))
+            document.addEventListener('DOMContentLoaded', () => sco.changeTimeFormat(document.querySelectorAll('.comment-time')))
+        }
+    }
+
+    function formatContent(content) {
+        content = content.replace(emojiReg, '表情')
+        content = content.replace(/<\/*br>|[\s\uFEFF\xA0]+/g, '');
+        content = content.replace(/<img.*?>/g, '[图片]');
+        content = content.replace(/<a.*?>.*?<\/a>/g, '[链接]');
+        content = content.replace(/<pre.*?>.*?<\/pre>/g, '[代码]');
+        content = content.replace(/<.*?>/g, '');
+        return content
+    }
+})()</script></div></div></div><div class="console-card-group-right"><div class="console-card tags" onclick="sco.hideConsole()"><div class="card-content"><div class="author-content-item-tips">标签</div><div class="author-content-item-title">寻找感兴趣的领域</div></div><div class="card-tag-cloud"><a href="/tags/wroker/">wroker<sup>1</sup></a><a href="/tags/Cloudflare-pages/">Cloudflare pages<sup>6</sup></a><a href="/tags/Hexo/">Hexo<sup>4</sup></a><a href="/tags/Github/">Github<sup>1</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">个人博客<sup>1</sup></a><a href="/tags/Noge-js/">Noge.js<sup>1</sup></a><a href="/tags/Git/">Git<sup>1</sup></a><a href="/tags/Markdown/">Markdown<sup>1</sup></a><a href="/tags/%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99/">静态网站<sup>1</sup></a><a href="/tags/Serv00/">Serv00<sup>7</sup></a><a href="/tags/%E5%9B%BE%E5%BA%8A/">图床<sup>1</sup></a><a href="/tags/Rin/">Rin<sup>1</sup></a><a href="/tags/D1-R2/">D1 + R2<sup>1</sup></a><a href="/tags/%E5%8D%9A%E5%AE%A2/">博客<sup>1</sup></a><a href="/tags/GitHub/">GitHub<sup>1</sup></a><a href="/tags/Vercel/">Vercel<sup>1</sup></a><a href="/tags/%E4%B8%80%E9%94%AE%E5%93%AA%E5%90%92%E8%84%9A%E6%9C%AC/">一键哪吒脚本<sup>1</sup></a><a href="/tags/%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E5%93%AA%E5%90%92%E6%95%99%E7%A8%8B/">最简单的哪吒教程<sup>1</sup></a><a href="/tags/%E5%BD%B1%E8%A7%86%E7%AB%99%E6%90%AD%E5%BB%BA/">影视站搭建<sup>1</sup></a><a href="/tags/%E7%BD%91%E7%AB%99%E7%9B%91%E6%8E%A7/">网站监控<sup>1</sup></a><a href="/tags/VPS%E5%91%BD%E4%BB%A4%E6%93%8D%E4%BD%9C/">VPS命令操作<sup>1</sup></a><a href="/tags/VPS%E8%84%9A%E6%9C%AC/">VPS脚本<sup>2</sup></a><a href="/tags/VPSX-UI/">VPSX-UI<sup>1</sup></a><a href="/tags/VPS%E5%B7%A5%E5%85%B7%E7%AE%B1/">VPS工具箱<sup>1</sup></a><a href="/tags/Fastly-CDN/">Fastly CDN<sup>1</sup></a><a href="/tags/Cloudflare-R2/">Cloudflare R2<sup>1</sup></a><a href="/tags/PicGo-WebP-Cloud/">PicGo+WebP Cloud<sup>1</sup></a><a href="/tags/%E5%9C%B0%E5%9D%80%E7%94%9F%E6%88%90%E5%99%A8/">地址生成器<sup>1</sup></a><a href="/tags/%E8%B5%B7%E5%A7%8B%E9%A1%B5/">起始页<sup>1</sup></a><a href="/tags/nyc-mn/">nyc.mn<sup>1</sup></a><a href="/tags/%E7%BD%91%E9%A1%B5/">网页<sup>1</sup></a><a href="/tags/Alist/">Alist<sup>1</sup></a><a href="/tags/%E4%BA%91%E7%9B%98/">云盘<sup>1</sup></a><a href="/tags/%E5%A4%96%E6%8C%82%E6%A0%87%E7%AD%BE/">外挂标签<sup>1</sup></a><a href="/tags/Umami/">Umami<sup>1</sup></a><a href="/tags/Cloudflare-Worker/">Cloudflare + Worker<sup>1</sup></a><a href="/tags/Hexo%E7%BE%8E%E5%8C%96/">Hexo美化<sup>1</sup></a><a href="/tags/%E7%94%B5%E8%A7%86%E5%89%A7%E5%A4%A7%E5%85%A8/">电视剧大全<sup>1</sup></a><a href="/tags/%E7%94%B5%E5%BD%B1%E5%A4%A7%E5%85%A8/">电影大全<sup>1</sup></a><a href="/tags/%E5%BD%B1%E8%A7%86%E6%8E%A8%E8%8D%90%E5%A4%A7%E5%85%A8/">影视推荐大全<sup>1</sup></a><a href="/tags/%E5%8A%A8%E6%BC%AB%E5%A4%A7%E5%85%A8/">动漫大全<sup>1</sup></a><a href="/tags/%E5%BD%B1%E8%A7%86%E7%AB%99%E6%8E%A8%E8%8D%90%E5%90%88%E9%9B%86/">影视站推荐合集<sup>1</sup></a><a href="/tags/%E5%B0%8F%E9%9B%85Alist/">小雅Alist<sup>1</sup></a><a href="/tags/X-ui/">X-ui<sup>1</sup></a><a href="/tags/%E7%95%99%E8%A8%80%E6%9D%BF/">留言板<sup>1</sup></a><a href="/tags/%E5%85%A8%E9%9D%A2%E5%BC%B9%E5%B9%95/">全面弹幕<sup>1</sup></a><a href="/tags/%E6%98%BE%E7%A4%BA%E5%85%B3%E9%97%AD%E5%BC%B9%E5%B9%95/">显示关闭弹幕<sup>1</sup></a></div></div><div class="console-card history" onclick="sco.hideConsole()"><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/11/"><span class="card-archive-list-date">2024/11</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span class="card-archive-list-count-unit">篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/10/"><span class="card-archive-list-date">2024/10</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span class="card-archive-list-count-unit">篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/09/"><span class="card-archive-list-date">2024/09</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">3</span><span class="card-archive-list-count-unit">篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/08/"><span class="card-archive-list-date">2024/08</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">5</span><span class="card-archive-list-count-unit">篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/07/"><span class="card-archive-list-date">2024/07</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">8</span><span class="card-archive-list-count-unit">篇</span></div></a></li></ul></div></div></div><div class="button-group"><div class="console-btn-item"><span class="darkmode_switchbutton" onclick="sco.switchDarkMode()" title="昼夜切换"><i class="solitude fa-solid fa-circle-half-stroke"></i></span></div><div class="console-btn-item" id="consoleHideAside"><span class="asideSwitch" onclick="sco.switchHideAside()" title="边栏显示控制"><i class="solitude fas fa-arrows-left-right-to-line"></i></span></div><div class="console-btn-item" id="consoleMusic" onclick="sco.musicToggle()"><span class="music-switch" title="音乐开关"><i class="solitude fa-solid fa-compact-disc"></i></span></div><div class="console-btn-item on" id="consoleCommentBarrage" onclick="sco.switchCommentBarrage()"><span class="commentBarrage"><i class="solitude fa-solid fa-comment"></i></span></div></div><div class="console-mask" onclick="sco.hideConsole()"></div></div><!-- sidebar--><div id="sidebar" style="zoom: 1;"><div id="menu-mask" style="display: none;"></div><div id="sidebar-menus"><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">47</div></a></div></div></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><span class="darkmode_switchbutton menu-child" onclick="sco.switchDarkMode()"><i class="solitude fa-solid fa-circle-half-stroke"></i><span>显示模式</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文库</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>全部分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>全部标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/moments/"><i class="solitude  fas fa-wifi"></i><span>朋友圈</span></a></li><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li><li><a class="site-page child" href="javascript:travelling()"><i class="solitude  fas fa-gift"></i><span>宝藏博主</span></a></li><li><a class="site-page child" href="/message/"><i class="solitude  fas fa-user-group"></i><span>留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>关于</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="solitude  fas fa-music"></i><span>音乐馆</span></a></li><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user"></i><span>关于本站</span></a></li><li><a class="site-page child" href="/collect/"><i class="solitude  fas fa-user"></i><span>藏宝阁</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-widget card-tags card-archives card-webinfo card-allinfo"><div class="card-tag-cloud"><a href="/tags/wroker/">wroker<sup>1</sup></a><a href="/tags/Cloudflare-pages/">Cloudflare pages<sup>6</sup></a><a href="/tags/Hexo/">Hexo<sup>4</sup></a><a href="/tags/Github/">Github<sup>1</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">个人博客<sup>1</sup></a><a href="/tags/Noge-js/">Noge.js<sup>1</sup></a><a href="/tags/Git/">Git<sup>1</sup></a><a href="/tags/Markdown/">Markdown<sup>1</sup></a><a href="/tags/%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99/">静态网站<sup>1</sup></a><a href="/tags/Serv00/">Serv00<sup>7</sup></a><a href="/tags/%E5%9B%BE%E5%BA%8A/">图床<sup>1</sup></a><a href="/tags/Rin/">Rin<sup>1</sup></a><a href="/tags/D1-R2/">D1 + R2<sup>1</sup></a><a href="/tags/%E5%8D%9A%E5%AE%A2/">博客<sup>1</sup></a><a href="/tags/GitHub/">GitHub<sup>1</sup></a><a href="/tags/Vercel/">Vercel<sup>1</sup></a><a href="/tags/%E4%B8%80%E9%94%AE%E5%93%AA%E5%90%92%E8%84%9A%E6%9C%AC/">一键哪吒脚本<sup>1</sup></a><a href="/tags/%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E5%93%AA%E5%90%92%E6%95%99%E7%A8%8B/">最简单的哪吒教程<sup>1</sup></a><a href="/tags/%E5%BD%B1%E8%A7%86%E7%AB%99%E6%90%AD%E5%BB%BA/">影视站搭建<sup>1</sup></a><a href="/tags/%E7%BD%91%E7%AB%99%E7%9B%91%E6%8E%A7/">网站监控<sup>1</sup></a><a href="/tags/VPS%E5%91%BD%E4%BB%A4%E6%93%8D%E4%BD%9C/">VPS命令操作<sup>1</sup></a><a href="/tags/VPS%E8%84%9A%E6%9C%AC/">VPS脚本<sup>2</sup></a><a href="/tags/VPSX-UI/">VPSX-UI<sup>1</sup></a><a href="/tags/VPS%E5%B7%A5%E5%85%B7%E7%AE%B1/">VPS工具箱<sup>1</sup></a><a href="/tags/Fastly-CDN/">Fastly CDN<sup>1</sup></a><a href="/tags/Cloudflare-R2/">Cloudflare R2<sup>1</sup></a><a href="/tags/PicGo-WebP-Cloud/">PicGo+WebP Cloud<sup>1</sup></a><a href="/tags/%E5%9C%B0%E5%9D%80%E7%94%9F%E6%88%90%E5%99%A8/">地址生成器<sup>1</sup></a><a href="/tags/%E8%B5%B7%E5%A7%8B%E9%A1%B5/">起始页<sup>1</sup></a><a href="/tags/nyc-mn/">nyc.mn<sup>1</sup></a><a href="/tags/%E7%BD%91%E9%A1%B5/">网页<sup>1</sup></a><a href="/tags/Alist/">Alist<sup>1</sup></a><a href="/tags/%E4%BA%91%E7%9B%98/">云盘<sup>1</sup></a><a href="/tags/%E5%A4%96%E6%8C%82%E6%A0%87%E7%AD%BE/">外挂标签<sup>1</sup></a><a href="/tags/Umami/">Umami<sup>1</sup></a><a href="/tags/Cloudflare-Worker/">Cloudflare + Worker<sup>1</sup></a><a href="/tags/Hexo%E7%BE%8E%E5%8C%96/">Hexo美化<sup>1</sup></a><a href="/tags/%E7%94%B5%E8%A7%86%E5%89%A7%E5%A4%A7%E5%85%A8/">电视剧大全<sup>1</sup></a><a href="/tags/%E7%94%B5%E5%BD%B1%E5%A4%A7%E5%85%A8/">电影大全<sup>1</sup></a><a href="/tags/%E5%BD%B1%E8%A7%86%E6%8E%A8%E8%8D%90%E5%A4%A7%E5%85%A8/">影视推荐大全<sup>1</sup></a><a href="/tags/%E5%8A%A8%E6%BC%AB%E5%A4%A7%E5%85%A8/">动漫大全<sup>1</sup></a><a href="/tags/%E5%BD%B1%E8%A7%86%E7%AB%99%E6%8E%A8%E8%8D%90%E5%90%88%E9%9B%86/">影视站推荐合集<sup>1</sup></a><a href="/tags/%E5%B0%8F%E9%9B%85Alist/">小雅Alist<sup>1</sup></a><a href="/tags/X-ui/">X-ui<sup>1</sup></a><a href="/tags/%E7%95%99%E8%A8%80%E6%9D%BF/">留言板<sup>1</sup></a><a href="/tags/%E5%85%A8%E9%9D%A2%E5%BC%B9%E5%B9%95/">全面弹幕<sup>1</sup></a><a href="/tags/%E6%98%BE%E7%A4%BA%E5%85%B3%E9%97%AD%E5%BC%B9%E5%B9%95/">显示关闭弹幕<sup>1</sup></a></div></div><span class="sidebar-menu-item-title">网站信息</span><div class="webinfo"><div class="webinfo-item"><div class="webinfo-item-title"><i class="item-icon solitude fa-solid fa-file-word"></i><div class="item-name">全站字数 :</div></div><div class="item-count">23.2k</div></div></div></div></div><!-- keyboard--><!-- righhtside--><div id="rightside"><div class="rs_hide"><button class="translate" type="button" title="简繁转换">简</button><button class="mode" type="button" title="显示模式切换" onclick="sco.switchDarkMode()"><i class="fas fa-circle-half-stroke"></i></button><button class="aside pc" type="button" title="侧边栏" onclick="sco.switchHideAside()"><i class="fas fa-arrows-alt-h"></i></button></div><div class="rs_show"><button class="config" type="button" title="扩展" onclick="document.querySelector(&quot;.rs_hide&quot;).classList.toggle(&quot;show&quot;)"><i class="fas fa-gear fa-spin"></i></button><button class="mobile toc" type="button" title="目录" onclick="document.querySelector('#card-toc').classList.toggle('open')"><i class="fas fa-list"></i></button><button class="comment" type="button" title="评论" onclick="sco.scrollTo('post-comment')"><i class="fas fa-comment"></i></button><button class="barrage pc" type="button" title="弹" onclick="sco.switchCommentBarrage()"><span>弹</span></button><button class="top" type="button" title="返回顶部" onclick="sco.toTop()"><i class="fas fa-arrow-up"></i><span id="percent">0</span></button></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav class="show" id="nav"><div id="nav-group"><div id="blog_name"><a id="site-name" href="/" title="返回博客主页"><span class="title">东方月初</span><i class="solitude fa-solid fa-home"></i></a></div><div id="page-name-mask"><div id="page-name"><a id="page-name-text" onclick="sco.toTop()">主题外挂标签使用</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文库</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>全部分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>全部标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/moments/"><i class="solitude  fas fa-wifi"></i><span>朋友圈</span></a></li><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li><li><a class="site-page child" href="javascript:travelling()"><i class="solitude  fas fa-gift"></i><span>宝藏博主</span></a></li><li><a class="site-page child" href="/message/"><i class="solitude  fas fa-user-group"></i><span>留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>关于</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="solitude  fas fa-music"></i><span>音乐馆</span></a></li><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user"></i><span>关于本站</span></a></li><li><a class="site-page child" href="/collect/"><i class="solitude  fas fa-user"></i><span>藏宝阁</span></a></li></ul></div></div></div><div id="nav-left"></div><div id="nav-right"><div class="nav-button" id="travellings_button"><a class="site-page" target="_blank" rel="noopener" href="https://www.travellings.cn/go.html" title=""><i class="solitude fas fa-train"></i></a></div><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机一篇文章" href="javascript:void(0);"><i class="solitude fa-solid fa-dice-d6"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索"><i class="solitude fa-solid fa-magnifying-glass"></i></a></div><div class="nav-button" id="nav-console"><a class="console_switchbutton" onclick="sco.showConsole()" title="中控台" href="javascript:void(0);"><label><i class="left"></i><i class="center"></i><i class="right"></i></label></a></div><div id="toggle-menu"><a class="site-page"><i class="solitude fa-solid fa-bars"></i></a></div></div></div></nav><div class="coverdiv" id="coverdiv"><img class="nolazyload" id="post-cover" src="https://serv.200038.xyz/2024/11/25/895800.webp" alt="主题外挂标签使用"></div><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original" title="该文章为原创文章，注意版权协议">原创</a><span class="post-meta-categories"><a class="post-meta-categories" href="/categories/%E6%88%91%E7%9A%84%E9%A1%B9%E7%9B%AE/">我的项目</a></span><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%A4%96%E6%8C%82%E6%A0%87%E7%AD%BE/"><span class="tags-name tags-punctuation"><i class="solitude fa-solid fa-hashtag"></i>外挂标签</span></a></div></div></div></div><h1 class="post-title">主题外挂标签使用</h1><div id="post-meta"><div class="meta-secondline"><span class="post-meta-date" title="发布于 2024-10-08 00:00:00"><i class="post-meta-icon solitude fas fa-calendar-days"></i><time datetime="2024-10-07T16:00:00.000Z">2024-10-07T16:00:00.000Z</time></span><span class="post-meta-date" title="最后更新于 2024-10-08 00:00:00"><i class="post-meta-icon solitude fa-solid fa-arrows-rotate"></i><time datetime="2024-10-07T16:00:00.000Z">2024-10-07T16:00:00.000Z</time></span><span class="post-meta-wordcount"><i class="post-meta-icon solitude fa-solid fa-file-word" title="文章字数"></i><span class="word-count">1.4k</span><span class="post-meta-separator"></span><i class="post-meta-icon solitude fa-solid fa-clock" title="阅读耗时"></i><span>6 min</span></span><a class="post-meta-pv" href="/posts/6702.html" title="文章热度"><i class="post-meta-icon solitude fa-solid fa-fire-flame-curved"></i></a><span class="post-meta-commentcount" title="评论数" onclick="sco.scrollTo('post-comment')"><i class="solitude fa-solid fa-comment"></i><a href="/posts/6702.html#post-comment"><span class="twikoo-count"><i class="solitude fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section></header><main class="layout" id="content-inner"><div id="post"><article class="post-content article-container"><div class="note danger modern no-icon"><p>内置的外挂标签满足大部分用户的需求，不需要额外安装插件。<br>插件的外挂标签需要安装对应的插件，满足部分用户的特殊需求。</p></div>
+
+<h1 id="内置标签"><a href="#内置标签" class="headerlink" title="内置标签"></a>内置标签</h1><h2 id="Article"><a href="#Article" class="headerlink" title="Article"></a>Article</h2><p>文章列表标签，用于显示文章列表。</p>
+<div class="tabs" id="article"><ul class="nav-tabs"><li class="tab active"><button type="button" data-href="#article-0">语法</button></li><li class="tab"><button type="button" data-href="#article-1">参数</button></li><li class="tab"><button type="button" data-href="#article-2">示例</button></li><li class="tab"><button type="button" data-href="#article-3">效果</button></li></ul><div class="tab-contents"><div class="tab-item-content active" id="article-0"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% article %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="article-1"><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>path</td>
+<td>文章路径</td>
+<td>无</td>
+</tr>
+</tbody></table><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="article-2"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% article 'p/8f9926b7.html' %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="article-3"><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div></div></div>
+
+<h2 id="Chart"><a href="#Chart" class="headerlink" title="Chart"></a>Chart</h2><p>图表标签，用于显示图表。<br>打开配置文件中开关</p>
+<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">chart:</span> <span class="literal">true</span></span><br></pre></td></tr></tbody></table></figure>
+
+<div class="tabs" id="chart"><ul class="nav-tabs"><li class="tab active"><button type="button" data-href="#chart-0">语法</button></li><li class="tab"><button type="button" data-href="#chart-1">参数</button></li><li class="tab"><button type="button" data-href="#chart-2">示例</button></li><li class="tab"><button type="button" data-href="#chart-3">效果</button></li></ul><div class="tab-contents"><div class="tab-item-content active" id="chart-0"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% chart %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="chart-1"><p>不需要参数。</p><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="chart-2"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">{% chart %}</span><br><span class="line">{% endchart %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="chart-3"><div class="chart">
+    <canvas id="chart-5j2i4g74g"></canvas>
+    <script>
+    !function() {
+      const chart = () => {
+        const canvas = document.getElementById("chart-5j2i4g74g");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        new Chart(ctx, {type: 'bar',
+data: {
+    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    datasets: [{
+      label: '# of Votes',
+      data: [12, 19, 3, 5, 2, 3],
+      borderWidth: 1
+    }]
+},
+options: {
+    scales: {
+        y: {
+            beginAtZero: true,
+        }
+    }
+}});
+      };
+      document.addEventListener("DOMContentLoaded", chart);
+      utils.addEventListenerPjax(document, "pjax:complete", chart);
+    }()
+    </script>
+  </div><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div></div></div>
+
+<h2 id="Gallery"><a href="#Gallery" class="headerlink" title="Gallery"></a>Gallery</h2><p>图片列表标签，用于显示图片列表。</p>
+<div class="tabs" id="gallery"><ul class="nav-tabs"><li class="tab active"><button type="button" data-href="#gallery-0">语法</button></li><li class="tab"><button type="button" data-href="#gallery-1">示例</button></li><li class="tab"><button type="button" data-href="#gallery-2">效果</button></li></ul><div class="tab-contents"><div class="tab-item-content active" id="gallery-0"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">{% gallery %}</span><br><span class="line">{% endgallery %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="gallery-1"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">{% gallery %}</span><br><span class="line">![<span class="string">image</span>](<span class="link">https://ui.everfu.cn/c5ba10122f00a2b320661872d392fe98.webp/cover</span>)</span><br><span class="line">{% endgallery %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="gallery-2"><div class="gallery-container waterfall">
+        <div class="gallery-item"><img class="nolazyload" src="https://ui.everfu.cn/c5ba10122f00a2b320661872d392fe98.webp/cover" alt="image"></div><div class="gallery-item"><img class="nolazyload" src="https://ui.everfu.cn/6569e625863863d8da51bf33ef9969d4.png/cover" alt="i"></div><div class="gallery-item"><img class="nolazyload" src="https://ui.everfu.cn/dc0b30a14e9c0af1f4702029a4ac7af4.png/cover" alt="1"></div><div class="gallery-item"><img class="nolazyload" src="https://ui.everfu.cn/7acf4eff2c1d16dbfba9567c9bbc943d.png/cover" alt="2"></div><div class="gallery-item"><img class="nolazyload" src="https://ui.everfu.cn/b378a1834320883d710ec3cb7b3569b5.png/cover" alt="3"></div>
+      </div><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div></div></div>
+
+<h2 id="GalleryGroup"><a href="#GalleryGroup" class="headerlink" title="GalleryGroup"></a>GalleryGroup</h2><p>图片组标签，用于显示图片组。</p>
+<div class="tabs" id="gallerygroup"><ul class="nav-tabs"><li class="tab active"><button type="button" data-href="#gallerygroup-0">语法</button></li><li class="tab"><button type="button" data-href="#gallerygroup-1">参数</button></li><li class="tab"><button type="button" data-href="#gallerygroup-2">示例</button></li><li class="tab"><button type="button" data-href="#gallerygroup-3">效果</button></li></ul><div class="tab-contents"><div class="tab-item-content active" id="gallerygroup-0"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% galleryGroup 'name' 'desc' 'url' 'img' %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="gallerygroup-1"><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>name</td>
+<td>图片组名称</td>
+<td>无</td>
+</tr>
+<tr>
+<td>desc</td>
+<td>图片组描述</td>
+<td>无</td>
+</tr>
+<tr>
+<td>url</td>
+<td>图片组链接</td>
+<td>无</td>
+</tr>
+<tr>
+<td>img</td>
+<td>图片组预览图</td>
+<td>无</td>
+</tr>
+</tbody></table><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="gallerygroup-2"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">'gallery-group-main'</span>&gt;</span></span></span><br><span class="line">{% galleryGroup '旅行' '出行拍摄的杂七杂八' 'https://solitude.js.org' 'https://ui.everfu.cn/1dc1f7593d718c12d06ed210d9f28f0c.webp/cover' %}</span><br><span class="line">{% galleryGroup '旅行' '出行拍摄的杂七杂八' 'https://solitude.js.org' 'https://ui.everfu.cn/1dc1f7593d718c12d06ed210d9f28f0c.webp/cover' %}</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="gallerygroup-3"><div class="gallery-group-main">
+<figure class="gallery-group">
+  <img class="gallery-group-img no-lightbox" src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://ui.everfu.cn/1dc1f7593d718c12d06ed210d9f28f0c.webp/cover" alt="Group Image Gallery">
+  <figcaption>
+  <div class="gallery-group-name">旅行</div>
+  <p>出行拍摄的杂七杂八</p>
+  <a target="_blank" rel="noopener" href="https://solitude.js.org"></a>
+  </figcaption>
+  </figure>
+  
+<figure class="gallery-group">
+  <img class="gallery-group-img no-lightbox" src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://ui.everfu.cn/1dc1f7593d718c12d06ed210d9f28f0c.webp/cover" alt="Group Image Gallery">
+  <figcaption>
+  <div class="gallery-group-name">旅行</div>
+  <p>出行拍摄的杂七杂八</p>
+  <a target="_blank" rel="noopener" href="https://solitude.js.org"></a>
+  </figcaption>
+  </figure>
+  
+</div><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div></div></div>
+
+<h2 id="Mermaid"><a href="#Mermaid" class="headerlink" title="Mermaid"></a>Mermaid</h2><p>Mermaid 标签，用于显示 Mermaid 图表。</p>
+<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mermaid:</span> <span class="literal">true</span></span><br></pre></td></tr></tbody></table></figure>
+
+<div class="tabs" id="mermaid"><ul class="nav-tabs"><li class="tab active"><button type="button" data-href="#mermaid-0">语法</button></li><li class="tab"><button type="button" data-href="#mermaid-1">示例</button></li><li class="tab"><button type="button" data-href="#mermaid-2">效果</button></li></ul><div class="tab-contents"><div class="tab-item-content active" id="mermaid-0"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">{% mermaid %}</span><br><span class="line">content</span><br><span class="line">{% endmermaid %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="mermaid-1"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">{% mermaid %}</span><br><span class="line">pie</span><br><span class="line">title Key elements in Product X</span><br><span class="line">"Calcium" : 42.96</span><br><span class="line">"Potassium" : 50.05</span><br><span class="line">"Magnesium" : 10.01</span><br><span class="line">"Iron" : 5</span><br><span class="line">{% endmermaid %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="mermaid-2"><p><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://ui.everfu.cn/fe76bd087af1202f0076b71d7d860676.png/cover" alt="效果"></p><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div></div></div>
+
+<h2 id="Typeit"><a href="#Typeit" class="headerlink" title="Typeit"></a>Typeit</h2><p>Typeit 标签，用于显示 Typeit 动画。</p>
+<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">typeit:</span> <span class="literal">true</span></span><br></pre></td></tr></tbody></table></figure>
+
+<div class="tabs" id="typeit"><ul class="nav-tabs"><li class="tab active"><button type="button" data-href="#typeit-0">语法</button></li><li class="tab"><button type="button" data-href="#typeit-1">参数</button></li><li class="tab"><button type="button" data-href="#typeit-2">示例</button></li><li class="tab"><button type="button" data-href="#typeit-3">效果</button></li></ul><div class="tab-contents"><div class="tab-item-content active" id="typeit-0"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">{% typeit 'div' %}</span><br><span class="line">options</span><br><span class="line">{% endtypeit %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="typeit-1"><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>div</td>
+<td>标签名</td>
+<td>无</td>
+</tr>
+</tbody></table><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="typeit-2"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">{% typeit 'div' }</span><br><span class="line">waitUntilVisible: true,</span><br><span class="line">strings: "Alex MacArthur",</span><br><span class="line">{% endtypeit %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="typeit-3"><div class="typeit">
+    <div id="typeit-6g6tdm8z3"></div>
+    <script>
+    !function() {
+      const typeit = () => {
+        const ctx = document.getElementById("typeit-6g6tdm8z3");
+        if (!ctx) return;
+        new TypeIt("#typeit-6g6tdm8z3", {waitUntilVisible: true,
+strings: "Alex MacArthur"})
+          .go();
+      }
+      document.addEventListener("DOMContentLoaded", typeit);
+      utils.addEventListenerPjax(document, "pjax:complete", typeit);
+    }()
+    </script>
+  </div><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div></div></div>
+
+<h2 id="Tabs"><a href="#Tabs" class="headerlink" title="Tabs"></a>Tabs</h2><p>标签页标签，用于显示标签页。</p>
+<div class="tabs" id="tabs"><ul class="nav-tabs"><li class="tab active"><button type="button" data-href="#tabs-0">语法</button></li><li class="tab"><button type="button" data-href="#tabs-1">示例</button></li><li class="tab"><button type="button" data-href="#tabs-2">效果</button></li></ul><div class="tab-contents"><div class="tab-item-content active" id="tabs-0"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">{% tabs 唯一名称, [index] %}</span><br><span class="line"></span><br><span class="line">&lt;!-- tab [唯一Tab] [@icon] --&gt;</span><br><span class="line"></span><br><span class="line">任何内容（也支持内联标签）。</span><br><span class="line"></span><br><span class="line">&lt;!-- endtab --&gt;</span><br><span class="line"></span><br><span class="line">{% endtabs %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="tabs-1"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">{% tabs test1 %}</span><br><span class="line"></span><br><span class="line">&lt;!-- tab --&gt;</span><br><span class="line"></span><br><span class="line"><span class="strong">**This is Tab 1.**</span></span><br><span class="line"></span><br><span class="line">&lt;!-- endtab --&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- tab --&gt;</span><br><span class="line"></span><br><span class="line"><span class="strong">**This is Tab 2.**</span></span><br><span class="line"></span><br><span class="line">&lt;!-- endtab --&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- tab --&gt;</span><br><span class="line"></span><br><span class="line"><span class="strong">**This is Tab 3.**</span></span><br><span class="line"></span><br><span class="line">&lt;!-- endtab --&gt;</span><br><span class="line"></span><br><span class="line">{% endtabs %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="tabs-2"><div class="note primary flat"><i class="solitude fas fa-wand-magic-sparkles"></i><p>基础</p></div>
+
+<div class="tabs" id="test1"><ul class="nav-tabs"><li class="tab active"><button type="button" data-href="#test1-0">test1 0</button></li><li class="tab"><button type="button" data-href="#test1-1">test1 1</button></li><li class="tab"><button type="button" data-href="#test1-2">test1 2</button></li></ul><div class="tab-contents"><div class="tab-item-content active" id="test1-0"><p><strong>This is Tab 1.</strong></p><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="test1-1"><p><strong>This is Tab 2.</strong></p><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="test1-2"><p><strong>This is Tab 3.</strong></p><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div></div></div>
+
+<div class="note primary flat"><i class="solitude fas fa-wand-magic-sparkles"></i><p>预选择tab</p></div>
+
+<div class="tabs" id="test2"><ul class="nav-tabs"><li class="tab"><button type="button" data-href="#test2-0">test2 0</button></li><li class="tab"><button type="button" data-href="#test2-1">test2 1</button></li><li class="tab active"><button type="button" data-href="#test2-2">test2 2</button></li></ul><div class="tab-contents"><div class="tab-item-content" id="test2-0"><p><strong>This is Tab 1.</strong></p><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="test2-1"><p><strong>This is Tab 2.</strong></p><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content active" id="test2-2"><p><strong>This is Tab 3.</strong></p><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div></div></div><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div></div></div>
+
+<h1 id="插件标签"><a href="#插件标签" class="headerlink" title="插件标签"></a>插件标签</h1><p>安装插件</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i hexo-solitude-tag</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="Youtube"><a href="#Youtube" class="headerlink" title="Youtube"></a>Youtube</h2><p>Youtube 标签，用于显示 Youtube 视频。</p>
+<div class="tabs" id="youtube"><ul class="nav-tabs"><li class="tab active"><button type="button" data-href="#youtube-0">语法</button></li><li class="tab"><button type="button" data-href="#youtube-1">参数</button></li><li class="tab"><button type="button" data-href="#youtube-2">示例</button></li><li class="tab"><button type="button" data-href="#youtube-3">效果</button></li></ul><div class="tab-contents"><div class="tab-item-content active" id="youtube-0"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% youtube video<span class="emphasis">_id [type] [cookie] %}</span></span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="youtube-1"><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>video_id</td>
+<td>视频 ID</td>
+<td>无</td>
+</tr>
+<tr>
+<td>type</td>
+<td>视频类型</td>
+<td>video</td>
+</tr>
+<tr>
+<td>cookie</td>
+<td>是否使用 cookie</td>
+<td>false</td>
+</tr>
+</tbody></table><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="youtube-2"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% youtube 'dQw4w9WgXcQ' %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="youtube-3"><div class="video-container"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" loading="lazy" allowfullscreen=""></iframe></div><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div></div></div>
+
+<h2 id="Bilibili"><a href="#Bilibili" class="headerlink" title="Bilibili"></a>Bilibili</h2><p>Bilibili 标签，用于显示 Bilibili 视频。</p>
+<div class="tabs" id="bilibili"><ul class="nav-tabs"><li class="tab active"><button type="button" data-href="#bilibili-0">语法</button></li><li class="tab"><button type="button" data-href="#bilibili-1">参数</button></li><li class="tab"><button type="button" data-href="#bilibili-2">示例</button></li><li class="tab"><button type="button" data-href="#bilibili-3">效果</button></li></ul><div class="tab-contents"><div class="tab-item-content active" id="bilibili-0"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% bvideo video<span class="emphasis">_id %}</span></span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="bilibili-1"><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>video_id</td>
+<td>视频 ID</td>
+<td>无</td>
+</tr>
+</tbody></table><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="bilibili-2"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% bvideo 'BV1B9W6eaEX1' %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="bilibili-3"><div class="video-container"><iframe src="//player.bilibili.com/player.html?autoplay=0&amp;bvid=BV1B9W6eaEX1" frameborder="0" loading="lazy" allowfullscreen=""></iframe></div><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div></div></div>
+
+<h2 id="Audio"><a href="#Audio" class="headerlink" title="Audio"></a>Audio</h2><p>Audio 标签，用于显示音频。</p>
+<div class="tabs" id="audio"><ul class="nav-tabs"><li class="tab active"><button type="button" data-href="#audio-0">语法</button></li><li class="tab"><button type="button" data-href="#audio-1">参数</button></li><li class="tab"><button type="button" data-href="#audio-2">示例</button></li><li class="tab"><button type="button" data-href="#audio-3">效果</button></li></ul><div class="tab-contents"><div class="tab-item-content active" id="audio-0"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% audio url %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="audio-1"><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>url</td>
+<td>音频链接</td>
+<td>无</td>
+</tr>
+</tbody></table><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="audio-2"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% audio 'https://music.163.com/song/media/outer/url?id=1436709407.mp3' %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="audio-3"><div class="audio"><audio controls="" preload=""><source src="https://music.163.com/song/media/outer/url?id=1436709407.mp3" type="audio/mp3">Your browser does not support the audio tag.</audio></div><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div></div></div>
+
+<h2 id="Video"><a href="#Video" class="headerlink" title="Video"></a>Video</h2><p>Video 标签，用于显示视频。</p>
+<div class="tabs" id="video"><ul class="nav-tabs"><li class="tab active"><button type="button" data-href="#video-0">语法</button></li><li class="tab"><button type="button" data-href="#video-1">参数</button></li><li class="tab"><button type="button" data-href="#video-2">示例</button></li><li class="tab"><button type="button" data-href="#video-3">效果</button></li></ul><div class="tab-contents"><div class="tab-item-content active" id="video-0"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% video url %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="video-1"><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>url</td>
+<td>视频链接</td>
+<td>无</td>
+</tr>
+</tbody></table><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="video-2"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% video 'https://media.w3.org/2010/05/sintel/trailer.mp4' %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="video-3"><div class="video"><video controls="" preload=""><source src="https://media.w3.org/2010/05/sintel/trailer.mp4" type="video/mp4">Your browser does not support the video tag.</video></div><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div></div></div>
+
+<h2 id="Videos"><a href="#Videos" class="headerlink" title="Videos"></a>Videos</h2><p>Videos 标签，用于显示视频列表。</p>
+<div class="tabs" id="videos"><ul class="nav-tabs"><li class="tab active"><button type="button" data-href="#videos-0">语法</button></li><li class="tab"><button type="button" data-href="#videos-1">参数</button></li><li class="tab"><button type="button" data-href="#videos-2">示例</button></li><li class="tab"><button type="button" data-href="#videos-3">效果</button></li></ul><div class="tab-contents"><div class="tab-item-content active" id="videos-0"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">{% videos [col] %}</span><br><span class="line">{% endvideos %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="videos-1"><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>col</td>
+<td>列数</td>
+<td>1</td>
+</tr>
+</tbody></table><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="videos-2"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">{% videos 2 %}</span><br><span class="line">{% video 'https://media.w3.org/2010/05/sintel/trailer.mp4' %}</span><br><span class="line">{% video 'https://media.w3.org/2010/05/bunny/trailer.mp4' %}</span><br><span class="line">{% endvideos %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="videos-3"><div class="videos" col="2"><div class="video"><video controls="" preload=""><source src="https://media.w3.org/2010/05/sintel/trailer.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>
+<div class="video"><video controls="" preload=""><source src="https://media.w3.org/2010/05/bunny/trailer.mp4" type="video/mp4">Your browser does not support the video tag.</video></div></div><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div></div></div>
+
+<h2 id="P"><a href="#P" class="headerlink" title="P"></a>P</h2><p>没错，就是 P 标签。</p>
+<div class="tabs" id="p"><ul class="nav-tabs"><li class="tab active"><button type="button" data-href="#p-0">语法</button></li><li class="tab"><button type="button" data-href="#p-1">参数</button></li><li class="tab"><button type="button" data-href="#p-2">示例</button></li><li class="tab"><button type="button" data-href="#p-3">效果</button></li></ul><div class="tab-contents"><div class="tab-item-content active" id="p-0"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% p [cls] [content] %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="p-1"><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>cls</td>
+<td>类名</td>
+<td>无</td>
+</tr>
+<tr>
+<td>content</td>
+<td>内容</td>
+<td>无</td>
+</tr>
+</tbody></table>
+<p>cls: center, left, right, h1, h2, h3, h4, h5, h6, red, green, blue, yellow, purple, orange, gray</p><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="p-2"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% p 'center h2' 'Hello World!' %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="p-3"><p class="center h2">Hello World!</p><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div></div></div>
+
+<h2 id="Span"><a href="#Span" class="headerlink" title="Span"></a>Span</h2><p>没错，就是 Span 标签。</p>
+<div class="tabs" id="span"><ul class="nav-tabs"><li class="tab active"><button type="button" data-href="#span-0">语法</button></li><li class="tab"><button type="button" data-href="#span-1">参数</button></li><li class="tab"><button type="button" data-href="#span-2">示例</button></li><li class="tab"><button type="button" data-href="#span-3">效果</button></li></ul><div class="tab-contents"><div class="tab-item-content active" id="span-0"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% span [cls] [content] %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="span-1"><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>cls</td>
+<td>类名</td>
+<td>无</td>
+</tr>
+<tr>
+<td>content</td>
+<td>内容</td>
+<td>无</td>
+</tr>
+</tbody></table><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="span-2"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% span 'red h2' 'Hello World!' %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="span-3"><p><span class="red h2">Hello World!</span></p><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div></div></div>
+
+<h2 id="Fold"><a href="#Fold" class="headerlink" title="Fold"></a>Fold</h2><p>折叠标签，用于显示折叠内容。</p>
+<div class="tabs" id="fold"><ul class="nav-tabs"><li class="tab active"><button type="button" data-href="#fold-0">语法</button></li><li class="tab"><button type="button" data-href="#fold-1">参数</button></li><li class="tab"><button type="button" data-href="#fold-2">示例</button></li><li class="tab"><button type="button" data-href="#fold-3">效果</button></li></ul><div class="tab-contents"><div class="tab-item-content active" id="fold-0"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">{% fold 'title' open %}</span><br><span class="line">content</span><br><span class="line">{% endfold %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="fold-1"><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>title</td>
+<td>标题</td>
+<td>无</td>
+</tr>
+<tr>
+<td>open</td>
+<td>是否展开</td>
+<td>不填不显示</td>
+</tr>
+</tbody></table><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="fold-2"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">{% fold 'title' open %}</span><br><span class="line">content</span><br><span class="line">{% endfold %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="fold-3"><details open=""><summary>title</summary><p>content</p></details><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div></div></div>
+
+<h2 id="Img"><a href="#Img" class="headerlink" title="Img"></a>Img</h2><p>图片标签，用于显示图片。</p>
+<div class="tabs" id="img"><ul class="nav-tabs"><li class="tab active"><button type="button" data-href="#img-0">语法</button></li><li class="tab"><button type="button" data-href="#img-1">参数</button></li><li class="tab"><button type="button" data-href="#img-2">示例</button></li><li class="tab"><button type="button" data-href="#img-3">效果</button></li></ul><div class="tab-contents"><div class="tab-item-content active" id="img-0"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% img url [alt] [style] %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="img-1"><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>url</td>
+<td>图片链接</td>
+<td>无</td>
+</tr>
+<tr>
+<td>alt</td>
+<td>图片描述</td>
+<td>无</td>
+</tr>
+<tr>
+<td>style</td>
+<td>图片样式</td>
+<td>无</td>
+</tr>
+</tbody></table><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="img-2"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% img 'https://ui.everfu.cn/5e27069a26f95747442594647fc7d8b9.png/cover' 'cover' 'width: 200px' %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="img-3"><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://ui.everfu.cn/5e27069a26f95747442594647fc7d8b9.png/cover" alt="cover" style="width: 200px"><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div></div></div>
+
+<h2 id="Inline-Img"><a href="#Inline-Img" class="headerlink" title="Inline Img"></a>Inline Img</h2><p>内联图片标签，用于显示内联图片。</p>
+<div class="tabs" id="inlineimg"><ul class="nav-tabs"><li class="tab active"><button type="button" data-href="#inlineimg-0">语法</button></li><li class="tab"><button type="button" data-href="#inlineimg-1">参数</button></li><li class="tab"><button type="button" data-href="#inlineimg-2">示例</button></li><li class="tab"><button type="button" data-href="#inlineimg-3">效果</button></li></ul><div class="tab-contents"><div class="tab-item-content active" id="inlineimg-0"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% inline<span class="emphasis">_img url [alt] [style] %}</span></span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="inlineimg-1"><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>url</td>
+<td>图片链接</td>
+<td>无</td>
+</tr>
+<tr>
+<td>alt</td>
+<td>图片描述</td>
+<td>无</td>
+</tr>
+<tr>
+<td>style</td>
+<td>图片样式</td>
+<td>无</td>
+</tr>
+</tbody></table><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="inlineimg-2"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% inline<span class="emphasis">_img 'https://ui.everfu.cn/5e27069a26f95747442594647fc7d8b9.png/cover' 'cover' '20px' %}</span></span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="inlineimg-3"><img src="https://serv.200038.xyz/2024/10/27/723764.gif" data-lazy-src="https://ui.everfu.cn/5e27069a26f95747442594647fc7d8b9.png/cover" title="cover" height="20px" class="inline-img"><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div></div></div>
+
+<h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><p>Note 标签，用于显示提示。</p>
+<div class="tabs" id="note"><ul class="nav-tabs"><li class="tab active"><button type="button" data-href="#note-0">语法</button></li><li class="tab"><button type="button" data-href="#note-1">参数</button></li><li class="tab"><button type="button" data-href="#note-2">示例</button></li><li class="tab"><button type="button" data-href="#note-3">效果</button></li></ul><div class="tab-contents"><div class="tab-item-content active" id="note-0"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">{% note 'type' 'icon' %}</span><br><span class="line">content</span><br><span class="line">{% endnote %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="note-1"><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>type</td>
+<td>类型</td>
+<td>无</td>
+</tr>
+<tr>
+<td>icon</td>
+<td>图标</td>
+<td>无</td>
+</tr>
+</tbody></table>
+<p>type: primary, success, warning, danger, info, modern, flat, simple<br>icon: fantawesome 图标（例如： fas fa-mail）</p><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="note-2"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">{% note 'danger modern' 'fas fa-wand-magic-sparkles' %}</span><br><span class="line">content</span><br><span class="line">{% endnote %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="note-3"><div class="note danger modern"><i class="solitude fas fa-wand-magic-sparkles"></i><p>content</p></div><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div></div></div>
+
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2></article><div class="post-copyright"><div class="post-copyright__author_group"><a class="post-copyright__author_img" href="/about/"><img class="post-copyright__author_img_front" src="https://serv.200038.xyz/2024/11/03/775849.webp"></a><div class="post-copyright__author_name">东方月初</div><div class="post-copyright__author_desc">涂山红红</div></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div id="quit-box" onclick="RemoveRewardMask()"></div><div class="post-reward"><div class="reward-button" title="赞赏作者" onclick="AddRewardMask()"><i class="solitude fa-solid fa-heart"></i>赞赏作者</div><div class="reward-main"><ul class="reward-all"><span class="reward-title">感谢您的赞赏</span><ul class="reward-group"><li class="reward-item"><a target="_blank" rel="noopener" href="https://serv.200038.xyz/2024/10/30/531638.webp"><img class="post-qr-code-img nolazyload" src="https://serv.200038.xyz/2024/10/30/531638.webp" alt="微信" style="border-color: var(--efu-green)"></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a target="_blank" rel="noopener" href="https://serv.200038.xyz/2024/10/30/185281.webp"><img class="post-qr-code-img nolazyload" src="https://serv.200038.xyz/2024/10/30/185281.webp" alt="支付宝" style="border-color: var(--efu-blue)"></a><div class="post-qr-code-desc">支付宝</div></li></ul><a class="reward-main-btn" href="/about/"><div class="reward-text">赞赏名单</div><div class="reward-dec">感谢您的支持。</div></a></ul></div></div><script>function RemoveRewardMask() {
+    let rewardMainElements = document.querySelectorAll(".reward-main");
+    let quitBoxElement = document.querySelector("#quit-box");
+
+    rewardMainElements.forEach(element => {
+        element.style.display = "none";
+    });
+
+    if (quitBoxElement) {
+        quitBoxElement.style.display = "none";
+    }
+}
+
+function AddRewardMask() {
+    let rewardMainElements = document.querySelectorAll(".reward-main");
+    let quitBoxElement = document.querySelector("#quit-box");
+
+    rewardMainElements.forEach(element => {
+        element.style.display = "flex";
+    });
+
+    if (quitBoxElement) {
+        quitBoxElement.style.display = "flex";
+    }
+}</script><div class="reward-link mode"><a class="reward-link-button" href="/atom.xml"><i class="solitude fa-solid fa-seedling"></i>订阅</a></div></div></div><div class="social-share"><a class="social-share-ico icon-qq" target="_blank" rel="noopener" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fsolitude.liuer.xin%2Fposts%2F6702.html&amp;title=%E4%B8%BB%E9%A2%98%E5%A4%96%E6%8C%82%E6%A0%87%E7%AD%BE%E4%BD%BF%E7%94%A8&amp;desc=undefined&amp;summary=undefined&amp;site=%E4%B8%BB%E9%A2%98%E5%A4%96%E6%8C%82%E6%A0%87%E7%AD%BE%E4%BD%BF%E7%94%A8&amp;pics=https%3A%2F%2Fserv.200038.xyz%2F2024%2F11%2F25%2F895800.webp" title="分享到QQ"><i class="solitude fab fa-qq"></i></a><a class="social-share-ico icon-weibo" target="_blank" rel="noopener" href="http://service.weibo.com/share/share.php?url=https%3A%2F%2Fsolitude.liuer.xin%2Fposts%2F6702.html&amp;title=%E4%B8%BB%E9%A2%98%E5%A4%96%E6%8C%82%E6%A0%87%E7%AD%BE%E4%BD%BF%E7%94%A8&amp;pic=https%3A%2F%2Fserv.200038.xyz%2F2024%2F11%2F25%2F895800.webp" title="分享到微博"><i class="solitude fab fa-weibo"></i></a><a class="social-share-ico icon-twitter" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fsolitude.liuer.xin%2Fposts%2F6702.html&amp;text=%E4%B8%BB%E9%A2%98%E5%A4%96%E6%8C%82%E6%A0%87%E7%AD%BE%E4%BD%BF%E7%94%A8" title="分享到Twitter"><i class="solitude fab fa-twitter"></i></a><a class="social-share-ico icon-facebook" target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsolitude.liuer.xin%2Fposts%2F6702.html" title="分享到Facebook"><i class="solitude fab fa-facebook"></i></a><a class="social-share-ico icon-telegram" target="_blank" rel="noopener" href="https://t.me/share/url?url=https%3A%2F%2Fsolitude.liuer.xin%2Fposts%2F6702.html&amp;text=%E4%B8%BB%E9%A2%98%E5%A4%96%E6%8C%82%E6%A0%87%E7%AD%BE%E4%BD%BF%E7%94%A8" title="分享到Telegram"><i class="solitude fab fa-telegram"></i></a><a class="social-share-ico icon-whatsapp" target="_blank" rel="noopener" href="https://api.whatsapp.com/send?text=%E4%B8%BB%E9%A2%98%E5%A4%96%E6%8C%82%E6%A0%87%E7%AD%BE%E4%BD%BF%E7%94%A8 https%3A%2F%2Fsolitude.liuer.xin%2Fposts%2F6702.html" title="分享到WhatsApp"><i class="solitude fab fa-whatsapp"></i></a><a class="social-share-ico icon-linkedin" target="_blank" rel="noopener" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fsolitude.liuer.xin%2Fposts%2F6702.html&amp;title=%E4%B8%BB%E9%A2%98%E5%A4%96%E6%8C%82%E6%A0%87%E7%AD%BE%E4%BD%BF%E7%94%A8&amp;summary=undefined&amp;source=%E4%B8%BB%E9%A2%98%E5%A4%96%E6%8C%82%E6%A0%87%E7%AD%BE%E4%BD%BF%E7%94%A8" title="分享到LinkedIn"><i class="solitude fab fa-linkedin"></i></a><div class="social-share-ico icon-link" onclick="utils.copy(&quot;https://solitude.liuer.xin/posts/6702.html&quot;)" title="复制文章链接"><i class="solitude fas fa-link"></i></div><div class="social-share-ico icon-qrcode" title="使用手机扫码阅读这篇文章"><i class="solitude fas fa-qrcode"></i><div class="share-main"><div class="share-main-all"><div id="qrcode"></div><div class="reward-dec">使用手机扫码阅读这篇文章</div></div></div><script pjax="">typeof QRCode === 'function' && new QRCode(document.getElementById("qrcode"), 'https://solitude.liuer.xin/posts/6702.html');
+window.addEventListener('DOMContentLoaded', () => {
+    new QRCode(document.getElementById("qrcode"), 'https://solitude.liuer.xin/posts/6702.html');
+});
+</script></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本文是原创文章，采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>协议，完整转载请注明来自<a href="/">东方月初</a></span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%A4%96%E6%8C%82%E6%A0%87%E7%AD%BE/"><span class="tags-punctuation"><i class="solitude fa-solid fa-hashtag"></i>外挂标签<span class="tagsPageCount">1</span></span></a></div></div></div><nav class="needEndHide pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/f199.html"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">基于IP地址的真实地址生成器</div></div></a></div><div class="next-post pull-right"><a href="/posts/e6b7.html"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Rin 是一个基于 Cloudflare Pages + Workers + D1 + R2 的博客，只需要一个解析到CF的域名即可部署</div></div></a></div></nav><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="solitude fa-solid fa-comment"></i><span> 评论</span><span class="count"> (<span class="twikoo-count"><i class="solitude fa-solid fa-spinner fa-spin"></i></span>)</span></div></div><div class="comment-wrap"><div id="twikoo-wrap"></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-bg-top"><div class="is-center"><div class="author-info__top-group"><div class="author-info__sayhi" id="author-info__sayhi" onclick="sco.changeSayHelloText()">sayhello.morning</div></div></div></div><a class="card-info-avatar" href="/about/" title="头像"><div class="avatar-img"><img src="https://serv.200038.xyz/2024/11/06/027080.gif" alt="头像"></div></a><div class="card-info__desc_group"><div class="author-info__name">东方月初</div><div class="author-info__desc">涂山红红</div><div class="card-info__data is-center"><a href="/archives/" title="累计文章数:21"><div class="length-num">21</div><div class="headline">文章</div></a><a href="/tags/" title="标签总数:47"><div class="length-num">47</div><div class="headline">标签</div></a><a href="/categories/" title="分类总数:5"><div class="length-num">5</div><div class="headline">分类</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" target="_blank" rel="noopener" href="https://github.com/damizai" title="Github"><i class="solitude  fab fa-github"></i></a><a class="social-icon" target="_blank" rel="noopener" href="https://space.bilibili.com/294669683" title="Bilibili"><i class="solitude  fab fa-bilibili"></i></a></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="solitude fa-solid fa-bars"></i><span>文章目录</span></div><div class="toc-content" id="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%85%E7%BD%AE%E6%A0%87%E7%AD%BE"><span class="toc-text">内置标签</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Article"><span class="toc-text">Article</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Chart"><span class="toc-text">Chart</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gallery"><span class="toc-text">Gallery</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GalleryGroup"><span class="toc-text">GalleryGroup</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mermaid"><span class="toc-text">Mermaid</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Typeit"><span class="toc-text">Typeit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tabs"><span class="toc-text">Tabs</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8F%92%E4%BB%B6%E6%A0%87%E7%AD%BE"><span class="toc-text">插件标签</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Youtube"><span class="toc-text">Youtube</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bilibili"><span class="toc-text">Bilibili</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Audio"><span class="toc-text">Audio</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Video"><span class="toc-text">Video</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Videos"><span class="toc-text">Videos</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P"><span class="toc-text">P</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Span"><span class="toc-text">Span</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fold"><span class="toc-text">Fold</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Img"><span class="toc-text">Img</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Inline-Img"><span class="toc-text">Inline Img</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Note"><span class="toc-text">Note</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text"></span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="solitude fa-solid fa-map"></i><span>最近发布</span></div><div class="aside-list"><a class="aside-list-item" href="/posts/6054.html" title="追剧必备 - 免费在线观看国内电影/电视剧/综艺的网站"><div class="thumbnail"><img alt="追剧必备 - 免费在线观看国内电影/电视剧/综艺的网站" src="https://serv.200038.xyz/2024/11/11/157295.webp"></div><div class="content"><span class="title" href="/posts/6054.html" title="追剧必备 - 免费在线观看国内电影/电视剧/综艺的网站">追剧必备 - 免费在线观看国内电影/电视剧/综艺的网站</span><span class="article-recent_post_categories" href="/posts/6054.html">学习中</span></div></a><a class="aside-list-item" href="/posts/bcd2.html" title="使用带有PHP的主机 + Cloudflare + Worker 搭建一个Umami API"><div class="thumbnail"><img alt="使用带有PHP的主机 + Cloudflare + Worker 搭建一个Umami API" src="https://serv.200038.xyz/2024/10/29/089211.webp"></div><div class="content"><span class="title" href="/posts/bcd2.html" title="使用带有PHP的主机 + Cloudflare + Worker 搭建一个Umami API">使用带有PHP的主机 + Cloudflare + Worker 搭建一个Umami API</span><span class="article-recent_post_categories" href="/posts/bcd2.html">Serv00</span></div></a><a class="aside-list-item" href="/posts/af99.html" title="使用 FastyCDN 加速 Cloudflare + pages 部署的博客项目"><div class="thumbnail"><img alt="使用 FastyCDN 加速 Cloudflare + pages 部署的博客项目" src="https://serv.200038.xyz/2024/09/19/993800.webp"></div><div class="content"><span class="title" href="/posts/af99.html" title="使用 FastyCDN 加速 Cloudflare + pages 部署的博客项目">使用 FastyCDN 加速 Cloudflare + pages 部署的博客项目</span><span class="article-recent_post_categories" href="/posts/af99.html">Cloudflare</span></div></a><a class="aside-list-item" href="/posts/f199.html" title="基于IP地址的真实地址生成器"><div class="thumbnail"><img alt="基于IP地址的真实地址生成器" src="https://serv.200038.xyz/2024/10/12/850208.webp"></div><div class="content"><span class="title" href="/posts/f199.html" title="基于IP地址的真实地址生成器">基于IP地址的真实地址生成器</span><span class="article-recent_post_categories" href="/posts/f199.html">Cloudflare</span></div></a><a class="aside-list-item" href="/posts/6702.html" title="主题外挂标签使用"><div class="thumbnail"><img alt="主题外挂标签使用" src="https://serv.200038.xyz/2024/11/25/895800.webp"></div><div class="content"><span class="title" href="/posts/6702.html" title="主题外挂标签使用">主题外挂标签使用</span><span class="article-recent_post_categories" href="/posts/6702.html">我的项目</span></div></a></div></div></div></div></main><footer id="footer"><div id="st-footer-bar"><div class="footer-logo"><span>东方月初</span></div><div class="footer-bar-description"></div><a class="footer-bar-link" href="/about/"></a></div><div id="footer_deal"><a class="deal_link" target="_blank" rel="noopener" href="https://github.com/damizai" title="Github"><i class="solitude  fab fa-github"></i></a><a class="deal_link" href="/jinxcose@gmail.com" title="Mail"><i class="solitude  fab fa-envelope"></i></a><div class="nolazyload footer_mini_logo" id="footer_mini_logo" title="返回顶部" onclick="sco.toTop()"><img src="https://serv.200038.xyz/2024/11/06/027080.gif" alt="返回顶部"></div><a class="deal_link" target="_blank" rel="noopener" href="https://space.bilibili.com/294669683" title="Bilibili"><i class="solitude  fab fa-bilibili"></i></a><a class="deal_link" target="_blank" rel="noopener" href="https://v.douyin.com/iJsLc8jt/" title="Douyin"><i class="solitude  fab fa-tiktok"></i></a></div><div id="st-footer"><div class="footer-group"><h3 class="footer-title">导航</h3><div class="footer-links"><a class="footer-item" href="/archives/" title="归档">归档</a><a class="footer-item" href="/categories/" title="分类">分类</a><a class="footer-item" href="/tags/" title="标签">标签</a></div></div><div class="footer-group"><h3 class="footer-title">服务</h3><div class="footer-links"><a class="footer-item" target="_blank" rel="noopener" href="https://aliyun.com/" title="阿里云">阿里云</a><a class="footer-item" target="_blank" rel="noopener" href="https://v6.51.la/" title="51la统计">51la统计</a><a class="footer-item" target="_blank" rel="noopener" href="https://tongji.baidu.com/" title="百度统计">百度统计</a></div></div><div class="footer-group"><h3 class="footer-title">支持</h3><div class="footer-links"><a class="footer-item" href="/about/" title="打赏记录">打赏记录</a><a class="footer-item" href="/update/" title="建站日志">建站日志</a></div></div><div class="footer-group"><h3 class="footer-title">协议</h3><div class="footer-links"><a class="footer-item" href="/privacy/" title="用户协议">用户协议</a></div></div><div class="footer-group"><div class="footer-title-group"><h3 class="footer-title">友链</h3><button class="random-friends-btn" onclick="randomLinksList()" title="友链"><i class="solitude fa-solid fa-arrows-rotate"></i></button></div><div class="footer-links" id="friend-links-in-footer"></div></div></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div class="copyright">© 2024 By&nbsp;<a class="footer-bar-link" href="/"><img class="author-avatar" src="https://serv.200038.xyz/2024/11/03/775849.webp">东方月初</a></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" alt="Theme">Theme</a><a class="footer-bar-link" href="/atom.xml" alt="RSS">RSS</a><a class="footer-bar-link cc" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"><i class="solitude fa-solid fa-copyright"></i><i class="solitude fa-brands fa-creative-commons-by"></i><i class="solitude fa-brands fa-creative-commons-nc"></i><i class="solitude fa-brands fa-creative-commons-nd"></i></a></div></div></div><div class="comment-barrage needEndHide"></div></footer></div><!-- right_menu--><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="solitude fa-solid fa-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="solitude fa-solid fa-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="solitude fa-solid fa-arrows-rotate"></i></div><div class="rightMenu-item" id="menu-top"><i class="solitude fa-solid fa-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="solitude fa-solid fa-clone"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="solitude fa-solid fa-clipboard"></i><span>粘贴文本</span></div><div class="rightMenu-item" id="menu-commenttext"><i class="solitude fa-solid fa-comment-medical"></i><span>引用到评论</span></div><div class="rightMenu-item" id="menu-newwindow"><i class="solitude fa-regular fa-window-maximize"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="solitude fa-solid fa-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="solitude fa-solid fa-clone"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="solitude fa-solid fa-cloud-arrow-down"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-search"><i class="solitude fa-solid fa-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="solitude fa-solid fa-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="solitude fa-solid fa-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="solitude fa-solid fa-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="solitude fa-solid fa-clone"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><div class="rightMenu-item" id="menu-randomPost" onclick="toRandomPost()||rm.hideRightMenu()"><i class="solitude fas fa-tower-broadcast"></i><span>随机文章</span></div><div class="rightMenu-item" onclick="pjax.loadUrl('/categories/')||rm.hideRightMenu()"><i class="solitude fas fa-clone"></i><span>全部分类</span></div><div class="rightMenu-item" onclick="pjax.loadUrl('/tags/')||rm.hideRightMenu()"><i class="solitude fas fa-tags"></i><span>全部标签</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><div class="rightMenu-item" id="menu-commentBarrage" onclick="sco.switchCommentBarrage()"><i class="solitude fa-solid fa-comment"></i><span class="menu-commentBarrage-text">关闭热评</span></div><div class="rightMenu-item" id="menu-darkmode" onclick="sco.switchDarkMode()"><i class="solitude fa-solid fa-circle-half-stroke"></i><span class="menu-darkmode-text">浅色模式</span></div><div class="rightMenu-item" id="menu-translate"><i class="solitude fa-solid fa-language"></i><span>轉為繁體</span></div></div></div><div id="rightmenu-mask"></div><!-- inject body--><div><script src="/js/utils.js?v=2.1.10"></script><script src="/js/main.js?v=2.1.10"></script><script src="/js/third_party/waterfall.min.js?v=2.1.10"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/pjax/0.2.8/pjax.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script><script src="/js/tw_cn.js?v=2.1.10"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/19.1.3/lazyload.iife.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/node-snackbar/0.1.16/snackbar.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.36/fancybox/fancybox.umd.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script><script>var meting_api = 'https://meting.everfu.cn/?server=:server&type=:type&id=:id&auth=:auth&r=:r';</script><script src="https://cdnjs.cloudflare.com/ajax/libs/aplayer/1.10.1/APlayer.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/meting/2.0.1/Meting.min.js"></script><script>const coverColorConfig = {
+  api: 'https://api.qjqq.cn/api/Imgcolor?img=',
+  time: 43200000
+}</script><script src="/js/covercolor/api.js?v=2.1.10"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js"></script><script src="/js/right_menu.js?v=2.1.10"></script><script src="/js/cebianlan.js"></script><script defer="" pjax="" src="/js/custom.js"></script><script src="https://open.lightxi.com/unpkg/chinese-lunar@0.1.4/lib/chinese-lunar.js"></script><div class="js-pjax"><script>(() => {
+    const getCount = () => {
+        const ele = document.querySelectorAll('.twikoo-count')
+        if (!ele) return
+        twikoo.getCommentsCount({
+            envId: 'https://twikoo.200038.xyz/.netlify/functions/twikoo',
+            region: '',
+            urls: [window.location.pathname],
+            includeReply: false
+        }).then(res => {
+            ele.forEach(item => item.textContent = res[0].count)
+        }).catch(err => {
+            console.error(err)
+        })
+    }
+    const init = () => {
+        twikoo.init(Object.assign({
+            el: '#twikoo-wrap',
+            envId: 'https://twikoo.200038.xyz/.netlify/functions/twikoo',
+            region: '',
+            path: window.location.pathname,
+            onCommentLoaded: () => {
+                GLOBAL_CONFIG.lightbox && utils.lightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+                const processLinks = () => {
+                    const container = document.querySelector('#twikoo .tk-comments-container');
+                    if (!container) return;
+
+                    const links = container.querySelectorAll('a');
+                    links.forEach((link) => {
+                        const href = link.getAttribute('href');
+                        if (!href) return;
+
+                        if (!href.startsWith(window.location.origin) && !link.hasAttribute('data-fancybox')) {
+                            const encodedHref = btoa(href);
+                            const newHref = `/go.html?i=${encodedHref}`;
+                            link.setAttribute('href', newHref);
+                            link.setAttribute('rel', 'external nofollow noopener noreferrer');
+                            link.setAttribute('target', '_blank');
+                        }
+                    });
+                };
+                processLinks();
+            }
+        }, null))
+
+         && getCount()
+        sco.owoBig({
+            body: '.OwO-body',
+            item: '.OwO-items li'
+        })
+
+        true && barrageTwikoo()
+    }
+
+    const loadTwikoo = () => {
+        if (typeof twikoo === 'object') setTimeout(init,0)
+        else utils.getScript('https://cdnjs.cloudflare.com/ajax/libs/twikoo/1.6.40/twikoo.all.min.js').then(init)
+    }
+
+    if ('Twikoo' === 'Twikoo' || true) {
+        if (true) utils.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+        else loadTwikoo()
+    } else {
+        window.loadTwoComment = loadTwikoo
+    }
+})()
+</script><script>async function barrageTwikoo() {
+    await fetch("https://twikoo.200038.xyz/.netlify/functions/twikoo", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            event: "COMMENT_GET",
+            accessToken: "",
+            url: window.location.pathname
+        })
+    }).then(async res => {
+        if (!res.ok) throw new Error("HTTP error! status: " + res.status)
+        const data = await res.json();
+        const init = () => {
+            initializeCommentBarrage((data.data).map(item => Object.assign({
+                content: item.comment,
+                nick: item.nick,
+                mailMd5: item.mailMd5,
+                id: item.id
+            })))
+        }
+        if (typeof initializeCommentBarrage === "undefined") await utils.getScript('/js/third_party/barrage.min.js?v=2.1.10').then(init)
+        else init()
+    }).catch(error => console.error("An error occurred while fetching comments: ", error))
+}</script></div></div><script>const links = [{"name":"伍十七","link":"/"},{"name":"东方月初","link":"https://blog.liuer.xin/"},{"name":"葱苓sama","link":"https://blog.ciraos.top"},{"name":"梦爱吃鱼","link":"https://blog.bsgun.cn/"},{"name":"Naokuo","link":"https://www.naokuo.top"},{"name":"CMLiusss","link":"https://blog.cmliussss.com"},{"name":"一粒微尘","link":"https://blog.667408.xyz"},{"name":"清羽飞扬","link":"https://blog.liushen.fun/"},{"name":"❖星港◎Star☆","link":"https://blog.starsharbor.com"},{"name":"煮雪话河山","link":"https://blog.cent1pedee.top/"},{"name":"前尘小筑","link":"https://mnchen.cn/"},{"name":"唐志远","link":"https://fe32.top/"},{"name":"Akilarの糖果屋","link":"https://akilar.top/"},{"name":"铭心石刻","link":"https://blog.kouseki.cn/"},{"name":"小旦","link":"https://satera.cn"},{"name":"Leonus","link":"https://blog.leonus.cn/"},{"name":"小植同学","link":"https://blog.xiaoztx.top"},{"name":"Fomalhaut🥝","link":"https://www.fomal.cc/"},{"name":"茗辰原 の 异世界","link":"https://h.liyy.us.kg/"},{"name":"小智の空间站","link":"https://blog.cuixinyu.com"},{"name":"百里飞扬","link":"https://blog.meta-code.top"},{"name":"山岳库博","link":"https://kmar.top/"},{"name":"轻笑Chuckle","link":"https://www.qcqx.cn"},{"name":"isYangs Blog","link":"https://isyangs.cn"},{"name":"Spark の Blog","link":"https://www.aspark.cc"},{"name":"杜老师说","link":"https://dusays.com"},{"name":"凌尘K-Blog","link":"https://blog.lck68.xyz/"},{"name":"别亦难","link":"https://lazyingman.cn"},{"name":"Nuyoah","link":"https://262259.xyz/"},{"name":"無名小栈","link":"https://blog.imsyy.top/"},{"name":"GanSer","link":"https://www.gan1ser.top/"},{"name":"cosの博客","link":"https://ysx.cosine.ren/"},{"name":"随风起","link":"https://blog.bywind.xyz/"},{"name":"Tianli","link":"https://tianli-blog.club/"},{"name":"王貔貅","link":"https://blog.wpixiu.cn/"},{"name":"Revincx","link":"https://blog.revincx.icu/"},{"name":"Calyee","link":"https://blog.calyee.top/"},{"name":"小冰博客","link":"https://zfe.space/"},{"name":"IMyself","link":"https://blog.lmyself.top/"},{"name":"polar-bear～Blog","link":"https://polar-bear.eu.org/"},{"name":"青云志","link":"https://blog.811520.xyz/"},{"name":"周润发","link":"https://blog.aizrf.com/"},{"name":"古明地こいし的小屋","link":"https://hlo.7374520.xyz"},{"name":"又见苍岚","link":"https://www.zywvvd.com"},{"name":"chfychin","link":"https://blog.chfychin.cn"},{"name":"Eurkon","link":"https://blog.eurkon.com"},{"name":"GnaixEuy","link":"https://blog.gnaixeuy.cn/"},{"name":"爱吃肉的猫","link":"https://meuicat.com/"},{"name":"李小白","link":"https://blog.lxb.icu/"},{"name":"青稚の空间","link":"https://blog.linux-qitong.top/"},{"name":"TWindyの小站","link":"https://www.twindy.top/"},{"name":"XingJiのBlog","link":"https://love.xingji.fun/"},{"name":"Imz’s Blog","link":"https://blog.imz.me/"},{"name":"OvO","link":"https://www.qqe4.com"},{"name":"KasumiTech","link":"https://sakurablogs.top/"},{"name":"胜天半子","link":"https://blog.291055.xyz/"}]
+const randomText = '点击前往按钮进入随机一个友链，不保证跳转网站的安全性和可用性。本次随机到的是本站友链：⌈ ${name} ⌋'
+function travelling() {
+    const link = links[utils.randomNum(links.length)];
+    Snackbar.show({
+        text: randomText.replace(/\$\{name}/,link.name),
+        duration: 8000,
+        pos: 'top-center',
+        actionText: '前往',
+        onActionClick: function(element) {
+            element.style.opacity = 0;
+            window.open(link.link, '_blank');
+        }
+    });
+}
+</script><script>function randomLinksList() {
+    const linkcard = document.getElementById('friend-links-in-footer');
+    if (linkcard == null) return;
+
+    let data = '';
+    let linksCopy = [...links];
+    let count = Math.min(3, linksCopy.length);
+
+    for (let i = 0; i < count; i++) {
+        let index = utils.randomNum(linksCopy.length);
+        const {link, name} = linksCopy[index];
+        data += `<a class="footer-item" href="${link}" target="_blank" rel="noopener noreferrer nofollow">${name}</a>`;
+        linksCopy.splice(index, 1);
+    }
+
+    linkcard.innerHTML = data + '<a class="footer-item" href="/links/">更多</a>';
+}</script><!-- pjax--><script>const pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: ["title","#body-wrap","#site-config","meta[name=\"description\"]",".js-pjax","meta[property^=\"og:\"]","#config-diff",".rs_show",".rs_hide"],
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+})
+
+document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+})
+
+document.addEventListener('pjax:complete', () => {
+    window.refreshFn()
+
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+        const newScript = document.createElement('script')
+        const content = item.text || item.textContent || item.innerHTML || ""
+        Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+        newScript.appendChild(document.createTextNode(content))
+        item.parentNode.replaceChild(newScript, item)
+    })
+
+    GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+})
+
+document.addEventListener('pjax:error', (e) => {
+    if (e.request.status === 404) {
+        pjax.loadUrl('/404.html')
+    }
+})</script><!-- google adsense--><!-- search--><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><button class="search-close-button"><i class="solitude fa-solid fa-xmark"></i></button></nav><div class="search-wrap"><div class="search-box"><input class="search-box-input" id="search-input" type="text" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off" placeholder="输入关键词快速查找"></div><div id="search-results"><div id="search-hits"></div></div><div id="search-pagination"></div><div id="search-tips"></div></div></div><div id="search-mask"></div></div><script src="/js/search/local.js?v=2.1.10"></script><!-- Tianli-Talk--><!-- music--><div class="needEndHide" id="nav-music"><div id="nav-music-hoverTips" onclick="sco.musicToggle()">音乐已暂停</div><meting-js id="8407304077" server="netease" type="playlist" mutex="true" preload="none" theme="var(--efu-main)" data-lrctype="0" order="random" volume="0.8"></meting-js></div></body></html>
+        <script>
+            const posts = ["posts/6054.html","posts/bcd2.html","posts/af99.html","posts/f199.html","posts/6702.html","posts/e6b7.html","posts/55f0.html","posts/6213.html","posts/655f.html","posts/285c.html","posts/9231.html","posts/bdbd.html","posts/6317.html","posts/f219.html","posts/4729.html","posts/2ede.html","posts/78c2.html","posts/4618.html","posts/21c2.html","posts/86e1.html","posts/624d.html"];
+            function toRandomPost() {
+                const randomPost = posts[Math.floor(Math.random() * posts.length)];
+                pjax.loadUrl(GLOBAL_CONFIG.root + randomPost);
+            }
+        </script>
