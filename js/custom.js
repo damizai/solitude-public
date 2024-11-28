@@ -1,7 +1,7 @@
 let ipLocation; // 确保 ipLocation 在全局范围内定义
 
 // 进行 fetch 请求
-fetch('https://api.nsmao.net/api/ip/query?key=qx9sB0WG5yYlZYuNZubjDm3w9m') //申请key:https://api.nsmao.net
+fetch('https://api.nsmao.net/api/ip/query?key=NLLnke6U23qAli70KPwxyKmeMD') //申请key:https://api.nsmao.net
 .then(response => {
 if (!response.ok) {
 throw new Error('Network response was not ok');
