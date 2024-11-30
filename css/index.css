@@ -2127,7 +2127,7 @@ body {
   background: var(--efu-background);
   color: var(--efu-fontcolor);
   font-size: 16px;
-  font-family: PingFang SC, Hiragino Sans GB, Microsoft YaHei;
+  font-family: LXGW WenKai, PingFang SC, Hiragino Sans GB, Microsoft YaHei;
   line-height: 2;
   -webkit-tap-highlight-color: transparent;
   margin: 0;
@@ -2225,7 +2225,7 @@ code,
 kbd,
 samp,
 pre {
-  font-family: "monospace", monospace;
+  font-family: LXGW WenKai, "monospace", monospace;
   font-size: 16px;
 }
 small {
@@ -10083,7 +10083,7 @@ div#banners .bannerText {
   border-color: #d44040;
 }
 .social-share .icon-weibo:hover {
-  background-color: #d44040;
+  background-color: #eb50e0;
 }
 .social-share .icon-facebook {
   color: #415dc9;
@@ -11294,7 +11294,7 @@ div#banners .bannerText {
   --efu-theme-none: rgba(227,128,61,0);
   --efu-blue: #0084ff;
   --efu-red: #ff3842;
-  --efu-pink: #d44040;
+  --efu-pink: #c4bec4;
   --efu-green: #3e9f50;
   --efu-purple: #7a60d2;
   --efu-yellow: #ffc93e;
