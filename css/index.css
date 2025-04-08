@@ -8868,78 +8868,6 @@ body[data-type=music] #nav-music {
 #about-page .aboutsiteTips .mask span:nth-child(4) {
   background-image: linear-gradient(45deg, #fa7671 50%, #f45f7f);
 }
-#about-page .author-content-item.skills {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: column;
-  min-height: 450px;
-}
-#about-page .author-content-item.skills .tags-group-all {
-  display: flex;
-  transform: rotate(0);
-  transition: 0.3s;
-}
-#about-page .author-content-item.skills .tags-group-wrapper {
-  margin-top: 40px;
-  display: flex;
-  flex-wrap: nowrap;
-  animation: rowleft 60s linear infinite;
-}
-#about-page .author-content-item.skills .skills-style-group {
-  position: relative;
-}
-#about-page .author-content-item.skills .skills-list {
-  display: flex;
-  opacity: 0;
-  transition: 0.3s;
-  position: absolute;
-  width: 100%;
-  top: 0;
-  left: 0;
-  flex-wrap: wrap;
-  flex-direction: row;
-  margin-top: 10px;
-}
-#about-page .author-content-item.skills:hover .skills-style-group .tags-group-all {
-  opacity: 0;
-}
-#about-page .author-content-item.skills:hover .skills-style-group .skills-list {
-  opacity: 1;
-}
-#about-page .author-content-item.skills .skill-info {
-  display: flex;
-  align-items: center;
-  margin-right: 10px;
-  margin-top: 10px;
-  background: var(--efu-background);
-  border-radius: 40px;
-  padding: 4px 12px 4px 8px;
-  border: var(--style-border);
-  box-shadow: var(--efu-shadow-border);
-}
-#about-page .author-content-item.skills .etc {
-  margin-right: 10px;
-  margin-top: 10px;
-}
-#about-page .author-content-item.skills .skill-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 8px;
-  user-select: none;
-}
-#about-page .author-content-item.skills .skill-icon img {
-  width: 18px;
-  height: 18px;
-}
-#about-page .author-content-item.skills .skill-name {
-  font-weight: 700;
-  line-height: 1;
-}
 #about-page .author-content-item-group.column {
   display: flex;
   flex-direction: column;
@@ -9179,33 +9107,6 @@ body[data-type=music] #nav-music {
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: blur(20px);
   transform: translateZ(0);
-}
-#about-page .author-content-item.careers {
-  min-height: 400px;
-}
-#about-page .author-content-item.careers img {
-  position: absolute;
-  left: 0;
-  bottom: 20px;
-  width: 100%;
-  transition: 0.6s;
-  user-select: none;
-}
-#about-page .author-content-item.careers .careers-group {
-  margin-top: 12px;
-}
-#about-page .author-content-item.careers .careers-item {
-  display: flex;
-  align-items: center;
-}
-#about-page .author-content-item.careers .careers-item .circle {
-  width: 16px;
-  height: 16px;
-  margin-right: 8px;
-  border-radius: 16px;
-}
-#about-page .author-content-item.careers .careers-item .name {
-  color: var(--efu-secondtext);
 }
 #about-page .author-content-item.like-technology {
   background-size: cover;
