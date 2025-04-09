@@ -2522,6 +2522,21 @@ span.tags-punctuation i {
   font-size: 14px;
   line-height: 32px;
 }
+#global_bg {
+  position: fixed;
+  z-index: 999;
+  opacity: 0.2;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://serv.200038.xyz/2024/09/19/410885.webp");
+  background-size: cover;
+  background-position: center;
+  pointer-events: none;
+  background-repeat: no-repeat;
+}
+[data-theme=dark] #global_bg {
+  background-image: url("https://serv.200038.xyz/2024/09/19/481552.webp");
+}
 .article-container {
   overflow-wrap: break-word;
 }
@@ -4507,132 +4522,6 @@ span.tags-punctuation i {
 }
 #footer-bar > div > div.footer-bar-left > span {
   margin-right: 1rem;
-}
-#loading-box {
-  user-select: none;
-}
-#loading-box .loading-bg {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  background: var(--efu-background);
-  z-index: 1999;
-  opacity: 1;
-  transition: 0.2s;
-  pointer-events: all;
-  animation: showLoading 0.3s 0s backwards;
-}
-#loading-box.loaded .loading-bg {
-  pointer-events: none;
-  transition: 0.2s;
-  animation: hideLoading 0.3s 0s forwards;
-}
-#loading-box .loading-img {
-  width: 100px;
-  height: 100px;
-  margin: auto;
-  animation-duration: 0.2s;
-  animation-name: loadingAction;
-  border-radius: 50px;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-}
-@-moz-keyframes loadingAction {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0.6;
-  }
-}
-@-webkit-keyframes loadingAction {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0.6;
-  }
-}
-@-o-keyframes loadingAction {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0.6;
-  }
-}
-@keyframes loadingAction {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0.6;
-  }
-}
-@-moz-keyframes hideLoading {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-@-webkit-keyframes hideLoading {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-@-o-keyframes hideLoading {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-@keyframes hideLoading {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-@-moz-keyframes showLoading {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@-webkit-keyframes showLoading {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@-o-keyframes showLoading {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@keyframes showLoading {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 #page-header {
   position: relative;
