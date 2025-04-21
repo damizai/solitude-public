@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", ( () => {
       , o = () => {
         caches.match("https://id.v3/").then((e => {
             e ? e.json().then((e => {
-                utils && utils.snackbarShow(`已刷新缓存，更新为${e.escape + "." + e.global + "." + e.local}版本最新内容`, !1, 2e3)
+                utils && utils.snackbarShow(`已刷新缓存，更新为${e.escape + ".0." + e.global + "." + e.local}版本最新内容`, !1, 2500)
             }
             )) : console.info("未找到缓存")
         }
