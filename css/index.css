@@ -2522,21 +2522,6 @@ span.tags-punctuation i {
   font-size: 14px;
   line-height: 32px;
 }
-#global_bg {
-  position: fixed;
-  z-index: 999;
-  opacity: 0.2;
-  width: 100%;
-  height: 100%;
-  background-image: url("https://serv.200038.xyz/2024/09/19/410885.webp");
-  background-size: cover;
-  background-position: center;
-  pointer-events: none;
-  background-repeat: no-repeat;
-}
-[data-theme=dark] #global_bg {
-  background-image: url("https://serv.200038.xyz/2024/09/19/481552.webp");
-}
 .article-container {
   overflow-wrap: break-word;
 }
