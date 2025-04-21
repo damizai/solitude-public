@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="/rss/atom.xsl" ?>
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="/config/feed/atom.xsl" ?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>东方月初</title>
   
   <subtitle>涂山红红</subtitle>
-  <link href="https://blog.biuxin.com/rss/atom.xml" rel="self"/>
+  <link href="https://blog.biuxin.com/atom.xml" rel="self"/>
   
   <link href="https://blog.biuxin.com/"/>
   <updated>2025-04-20T00:00:00.000Z</updated>
