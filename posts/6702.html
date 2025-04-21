@@ -138,6 +138,7 @@ initTheme()</script><!-- global head--><script>const GLOBAL_CONFIG = {
     ai_text: '这篇文章详细介绍了在 Hexo solitude主题 中使用各种标签的方法，帮助你在博客或网站中集成丰富的内容展示功能。通过内置标签和插件标签，你可以轻松实现文章列表、图表、图片、视频、音频等多种多媒体内容的展示，还可以使用一些动画效果和交互式功能来提升页面的用户体验。',
     color: false,
 }</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="东方月初" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="东方月初" type="application/rss+xml">
 </head><body id="body"><!-- universe--><!-- background img--><!-- loading--><!-- console--><div id="console"><div class="close-btn" onclick="sco.hideConsole()"><i class="solitude fa-solid fa-xmark"></i></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments" onclick="sco.hideConsole()"><div class="card-content"><div class="author-content-item-tips">互动</div><div class="author-content-item-title">最新评论<a class="recent-comment-more" href="/recentcomments/" title="最近评论"><i class="solitude fa-solid fa-circle-chevron-right"></i></a></div></div><div class="console_recentcomments"><script pjax="">(async () => {
     document.querySelector('.console-card .console_recentcomments').textContent = `加载中...`
     const emojiReg = /<img class="tk-owo-emotion" [^>]+>/g
@@ -239,11 +240,11 @@ initTheme()</script><!-- global head--><script>const GLOBAL_CONFIG = {
 <figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">chart:</span> <span class="literal">true</span></span><br></pre></td></tr></tbody></table></figure>
 
 <div class="tabs" id="chart"><ul class="nav-tabs"><li class="tab active"><button type="button" data-href="#chart-0">语法</button></li><li class="tab"><button type="button" data-href="#chart-1">参数</button></li><li class="tab"><button type="button" data-href="#chart-2">示例</button></li><li class="tab"><button type="button" data-href="#chart-3">效果</button></li></ul><div class="tab-contents"><div class="tab-item-content active" id="chart-0"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% chart %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="chart-1"><p>不需要参数。</p><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="chart-2"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">{% chart %}</span><br><span class="line">{% endchart %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="chart-3"><div class="chart">
-    <canvas id="chart-3rq12f5vr"></canvas>
+    <canvas id="chart-22npv8ien"></canvas>
     <script>
     !function() {
       const chart = () => {
-        const canvas = document.getElementById("chart-3rq12f5vr");
+        const canvas = document.getElementById("chart-22npv8ien");
         if (!canvas) return;
         const ctx = canvas.getContext("2d");
         new Chart(ctx, {type: 'bar',
@@ -346,13 +347,13 @@ options: {
 <td>无</td>
 </tr>
 </tbody></table><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="typeit-2"><figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">{% typeit 'div' }</span><br><span class="line">waitUntilVisible: true,</span><br><span class="line">strings: "Alex MacArthur",</span><br><span class="line">{% endtypeit %}</span><br></pre></td></tr></tbody></table></figure><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="solitude fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="typeit-3"><div class="typeit">
-    <div id="typeit-fpa700tbu"></div>
+    <div id="typeit-qfheo1qam"></div>
     <script>
     !function() {
       const typeit = () => {
-        const ctx = document.getElementById("typeit-fpa700tbu");
+        const ctx = document.getElementById("typeit-qfheo1qam");
         if (!ctx) return;
-        new TypeIt("#typeit-fpa700tbu", {waitUntilVisible: true,
+        new TypeIt("#typeit-qfheo1qam", {waitUntilVisible: true,
 strings: "Alex MacArthur"})
           .go();
       }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>东方月初</title>
-  
+  <icon>https://blog.biuxin.com/icon.png</icon>
   <subtitle>涂山红红</subtitle>
   <link href="https://blog.biuxin.com/atom.xml" rel="self"/>
   
@@ -26,7 +26,10 @@
     
       
       
-    <summary type="html">&lt;h3 id=&quot;自己部署的一些项目&quot;&gt;&lt;a href=&quot;#自己部署的一些项目&quot; </summary>
+        
+        
+    <summary type="html">&lt;h3 id=&quot;自己部署的一些项目&quot;&gt;&lt;a href=&quot;#自己部署的一些项目&quot; class=&quot;headerlink&quot; title=&quot;自己部署的一些项目&quot;&gt;&lt;/a&gt;自己部署的一些项目&lt;/h3&gt;&lt;center style=&quot;color: #a259ff; font-size:</summary>
+        
       
     
     
@@ -48,7 +51,11 @@
     
       
       
-    <summary type="html">&lt;p&gt;一个用于创建、签署和管理性行为同意协议的 Web 应用程序。该应用允许用户</summary>
+        
+        
+    <summary type="html">&lt;p&gt;一个用于创建、签署和管理性行为同意协议的 Web 应用程序。该应用允许用户在线创建详细的性行为同意协议，并通过数字签名方式进行签署，同时支持导出为 PDF 格式保存。&lt;/p&gt;
+&lt;p&gt;&lt;a</summary>
+        
       
     
     
@@ -70,9 +77,16 @@
     
       
       
+        
+        
     <summary type="html">&lt;p&gt;📝 记得：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;准备好 UV 图、网站信息、</summary>
+&lt;li&gt;&lt;p&gt;准备好 UV 图、网站信息、开源项目等证明材料&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;登录 NodeSupport 填好资料&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;发 Issue 到</summary>
+        
       
     
     
@@ -94,8 +108,12 @@
     
       
       
+        
+        
     <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;由于版权的地域限制，像优酷、爱奇艺、腾讯视频等国</summary>
+&lt;p&gt;由于版权的地域限制，像优酷、爱奇艺、腾讯视频等国内平台在美国、英国、加拿大、澳大利亚、新加坡等地总是被限制播放。但在国外留学或者生活，怀念国内的电影、电视剧、综艺、动漫的时候，可以使用一下推荐的免费网站看视频。&lt;/p&gt;
+&lt;p&gt;免责声明</summary>
+        
       
     
     
@@ -117,8 +135,11 @@
     
       
       
+        
+        
     <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;感谢&lt;a href=&quot;https://blog.</summary>
+&lt;p&gt;感谢&lt;a href=&quot;https://blog.bsgun.cn/posts/609bcdb9&quot;&gt;梦爱吃鱼&lt;/a&gt;提供的关于页魔改和&lt;a</summary>
+        
       
     
     
@@ -142,7 +163,11 @@
     
       
       
-    <summary type="html">&lt;h3 id=&quot;首先注册-Fastly-账号&quot;&gt;&lt;a href=&quot;#首先注册-F</summary>
+        
+        
+    <summary type="html">&lt;h3 id=&quot;首先注册-Fastly-账号&quot;&gt;&lt;a href=&quot;#首先注册-Fastly-账号&quot; class=&quot;headerlink&quot; title=&quot;首先注册 Fastly 账号:&quot;&gt;&lt;/a&gt;首先注册 Fastly 账号:&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a</summary>
+        
       
     
     
@@ -166,7 +191,10 @@
     
       
       
-    <summary type="html">&lt;h3 id=&quot;功能特点&quot;&gt;&lt;a href=&quot;#功能特点&quot; class=&quot;hea</summary>
+        
+        
+    <summary type="html">&lt;h3 id=&quot;功能特点&quot;&gt;&lt;a href=&quot;#功能特点&quot; class=&quot;headerlink&quot;</summary>
+        
       
     
     
@@ -190,7 +218,12 @@
     
       
       
-    <summary type="html">&lt;div class=&quot;note danger modern no-icon&quot;&gt;</summary>
+        
+        
+    <summary type="html">&lt;div class=&quot;note danger modern no-icon&quot;&gt;&lt;p&gt;内置的外挂标签满足大部分用户的需求，不需要额外安装插件。&lt;br&gt;插件的外挂标签需要安装对应的插件，满足部分用户的特殊需求。&lt;/p&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;内置标签&quot;&gt;&lt;a</summary>
+        
       
     
     
@@ -212,7 +245,10 @@
     
       
       
-    <summary type="html">&lt;h3 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerl</summary>
+        
+        
+    <summary type="html">&lt;h3 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h3&gt;&lt;p&gt;Rin 是一个基于 Cloudflare Pages + Workers + D1 + R2</summary>
+        
       
     
     
@@ -234,7 +270,10 @@
     
       
       
-    <summary type="html">&lt;h2 id=&quot;Serv00上搭建一个PixPro图床-内存太小-我们可以接入到</summary>
+        
+        
+    <summary type="html">&lt;h2 id=&quot;Serv00上搭建一个PixPro图床-内存太小-我们可以接入到CFR2-足够个人使用。自己有VPS的也可在宝塔上面部署&quot;&gt;&lt;a</summary>
+        
       
     
     
@@ -258,7 +297,10 @@
     
       
       
-    <summary type="html">&lt;h2 id=&quot;大家都申请了nyc-mn-这个域名吧-看说明需要一个活动状态，下</summary>
+        
+        
+    <summary type="html">&lt;h2 id=&quot;大家都申请了nyc-mn-这个域名吧-看说明需要一个活动状态，下来教大家部署一个简单的网页-起始页&quot;&gt;&lt;a href=&quot;#大家都申请了nyc-mn-这个域名吧-看说明需要一个活动状态，下来教大家部署一个简单的网页-起始页&quot; class=&quot;headerlink&quot;</summary>
+        
       
     
     
@@ -280,7 +322,10 @@
     
       
       
-    <summary type="html">&lt;h2 id=&quot;留言板全屏弹幕介绍&quot;&gt;&lt;a href=&quot;#留言板全屏弹幕介绍&quot; </summary>
+        
+        
+    <summary type="html">&lt;h2 id=&quot;留言板全屏弹幕介绍&quot;&gt;&lt;a href=&quot;#留言板全屏弹幕介绍&quot; class=&quot;headerlink&quot; title=&quot;留言板全屏弹幕介绍&quot;&gt;&lt;/a&gt;留言板全屏弹幕介绍&lt;/h2&gt;&lt;h3 id=&quot;功能概述：&quot;&gt;&lt;a href=&quot;#功能概述：&quot;</summary>
+        
       
     
     
@@ -302,8 +347,13 @@
     
       
       
+        
+        
     <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;此功能参考自&lt;a href=&quot;https://z</summary>
+&lt;p&gt;此功能参考自&lt;a href=&quot;https://zfe.space/post/hexo-history-calendar.html&quot;&gt;小冰博客&lt;/a&gt;,记录方便以后学习。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2</summary>
+        
       
     
     
@@ -325,7 +375,10 @@
     
       
       
-    <summary type="html">&lt;h2 id=&quot;项目官方文档&quot;&gt;&lt;a href=&quot;#项目官方文档&quot; class=</summary>
+        
+        
+    <summary type="html">&lt;h2 id=&quot;项目官方文档&quot;&gt;&lt;a href=&quot;#项目官方文档&quot; class=&quot;headerlink&quot; title=&quot;项目官方文档&quot;&gt;&lt;/a&gt;项目官方文档&lt;/h2&gt;&lt;p&gt;&lt;a</summary>
+        
       
     
     
@@ -347,7 +400,10 @@
     
       
       
-    <summary type="html">&lt;h2 id=&quot;本文详细介绍了如何使用Hexo框架搭建一个个人博客，并将其部署到</summary>
+        
+        
+    <summary type="html">&lt;h2 id=&quot;本文详细介绍了如何使用Hexo框架搭建一个个人博客，并将其部署到GitHub-Pages和Cloudflare-Pages上。主要内容包括：&quot;&gt;&lt;a</summary>
+        
       
     
     
@@ -373,7 +429,11 @@
     
       
       
-    <summary type="html">&lt;h2 id=&quot;1-首先注册一个Serv00账号&quot;&gt;&lt;a href=&quot;#1-首先</summary>
+        
+        
+    <summary type="html">&lt;h2 id=&quot;1-首先注册一个Serv00账号&quot;&gt;&lt;a href=&quot;#1-首先注册一个Serv00账号&quot; class=&quot;headerlink&quot; title=&quot;1. 首先注册一个Serv00账号&quot;&gt;&lt;/a&gt;1. 首先注册一个Serv00账号&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a</summary>
+        
       
     
     
@@ -397,7 +457,11 @@
     
       
       
-    <summary type="html">&lt;h3 id=&quot;1-首先注册一个Serv00账号&quot;&gt;&lt;a href=&quot;#1-首先</summary>
+        
+        
+    <summary type="html">&lt;h3 id=&quot;1-首先注册一个Serv00账号&quot;&gt;&lt;a href=&quot;#1-首先注册一个Serv00账号&quot; class=&quot;headerlink&quot; title=&quot;1. 首先注册一个Serv00账号&quot;&gt;&lt;/a&gt;1. 首先注册一个Serv00账号&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a</summary>
+        
       
     
     
@@ -423,7 +487,10 @@
     
       
       
-    <summary type="html">&lt;h2 id=&quot;Serv00登录的方式-1&quot;&gt;&lt;a href=&quot;#Serv00登</summary>
+        
+        
+    <summary type="html">&lt;h2 id=&quot;Serv00登录的方式-1&quot;&gt;&lt;a href=&quot;#Serv00登录的方式-1&quot; class=&quot;headerlink&quot; title=&quot;Serv00登录的方式 1&quot;&gt;&lt;/a&gt;Serv00登录的方式 1&lt;/h2&gt;&lt;h3 id=&quot;GitHub&quot;&gt;&lt;a</summary>
+        
       
     
     
@@ -449,7 +516,11 @@
     
       
       
-    <summary type="html">&lt;h2 id=&quot;Serv00搭建影视站&quot;&gt;&lt;a href=&quot;#Serv00搭建影</summary>
+        
+        
+    <summary type="html">&lt;h2 id=&quot;Serv00搭建影视站&quot;&gt;&lt;a href=&quot;#Serv00搭建影视站&quot; class=&quot;headerlink&quot; title=&quot;Serv00搭建影视站&quot;&gt;&lt;/a&gt;Serv00搭建影视站&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;演示网站&lt;/strong&gt;     </summary>
+        
       
     
     
@@ -471,7 +542,11 @@
     
       
       
-    <summary type="html">&lt;p&gt;此前我的图床是基于 &lt;code&gt;Cloudflare + Telegrap</summary>
+        
+        
+    <summary type="html">&lt;p&gt;此前我的图床是基于 &lt;code&gt;Cloudflare + Telegraph&lt;/code&gt; 这两位大善人的，我本以为他们会比我的博客活得更久，因此我默认这是一个长期的解决方案，足够可靠易用，最重要的是免费。&lt;/p&gt;
+&lt;p&gt;但最近 Telegram CEO</summary>
+        
       
     
     
@@ -480,98 +555,6 @@
     
     
     <category term="Cloudflare" scheme="https://blog.biuxin.com/tags/Cloudflare/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Serv00搭建Alist个人网盘</title>
-    <link href="https://blog.biuxin.com/posts/4618.html"/>
-    <id>https://blog.biuxin.com/posts/4618.html</id>
-    <published>2024-07-11T12:49:52.000Z</published>
-    <updated>2024-07-11T12:49:52.000Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h3 id=&quot;Serv00搭建Alist个人网盘&quot;&gt;&lt;a href=&quot;#Ser</summary>
-      
-    
-    
-    
-    <category term="Serv00" scheme="https://blog.biuxin.com/categories/Serv00/"/>
-    
-    
-    <category term="Serv00" scheme="https://blog.biuxin.com/tags/Serv00/"/>
-    
-    <category term="Alist" scheme="https://blog.biuxin.com/tags/Alist/"/>
-    
-    <category term="云盘" scheme="https://blog.biuxin.com/tags/%E4%BA%91%E7%9B%98/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>安装小雅Alist</title>
-    <link href="https://blog.biuxin.com/posts/21c2.html"/>
-    <id>https://blog.biuxin.com/posts/21c2.html</id>
-    <published>2024-07-11T12:49:52.000Z</published>
-    <updated>2024-10-07T16:00:00.000Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;小雅项目地址&lt;/strong&gt;        </summary>
-      
-    
-    
-    
-    <category term="学习中" scheme="https://blog.biuxin.com/categories/%E5%AD%A6%E4%B9%A0%E4%B8%AD/"/>
-    
-    
-    <category term="小雅Alist" scheme="https://blog.biuxin.com/tags/%E5%B0%8F%E9%9B%85Alist/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>jinx</title>
-    <link href="https://blog.biuxin.com/posts/86e1.html"/>
-    <id>https://blog.biuxin.com/posts/86e1.html</id>
-    <published>2024-07-10T08:51:57.000Z</published>
-    <updated>2024-07-09T16:00:00.000Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;&lt;img src= &quot;https://serv.200038.xyz/20</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>VPS命令</title>
-    <link href="https://blog.biuxin.com/posts/624d.html"/>
-    <id>https://blog.biuxin.com/posts/624d.html</id>
-    <published>2024-07-06T13:55:31.000Z</published>
-    <updated>2024-11-27T16:00:00.000Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;小姐姐视频&lt;/p&gt;
-&lt;/blockquote&gt;
-</summary>
-      
-    
-    
-    
-    <category term="学习中" scheme="https://blog.biuxin.com/categories/%E5%AD%A6%E4%B9%A0%E4%B8%AD/"/>
-    
-    
-    <category term="VPS工具箱" scheme="https://blog.biuxin.com/tags/VPS%E5%B7%A5%E5%85%B7%E7%AE%B1/"/>
     
   </entry>
   

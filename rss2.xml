@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>东方月初</title>
+    <link>https://blog.biuxin.com/</link>
+    
+    <image>
+      <url>https://blog.biuxin.com/icon.png</url>
+      <title>东方月初</title>
+      <link>https://blog.biuxin.com/</link>
+    </image>
+    
+    <atom:link href="https://blog.biuxin.com/rss2.xml" rel="self" type="application/rss+xml"/>
+    
+    <description>我是一位正在努力学习的小白。感谢你的到访，希望这里可以有你需要的东西</description>
+    <pubDate>Sun, 20 Apr 2025 00:00:00 GMT</pubDate>
+    <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>个人部署的一些项目</title>
+      <link>https://blog.biuxin.com/posts/6b9a.html</link>
+      <guid>https://blog.biuxin.com/posts/6b9a.html</guid>
+      <pubDate>Sun, 20 Apr 2025 00:00:00 GMT</pubDate>
+      
+        
+        
+          
+          
+      <description>&lt;h3 id=&quot;自己部署的一些项目&quot;&gt;&lt;a href=&quot;#自己部署的一些项目&quot; class=&quot;headerlink&quot; title=&quot;自己部署的一些项目&quot;&gt;&lt;/a&gt;自己部署的一些项目&lt;/h3&gt;&lt;center style=&quot;color: #a259ff; font-size:</description>
+          
+        
+      
+      
+      
+      
+      <category domain="https://blog.biuxin.com/categories/%E5%AD%A6%E4%B9%A0%E4%B8%AD/">学习中</category>
+      
+      
+      <category domain="https://blog.biuxin.com/tags/%E9%83%A8%E7%BD%B2%E7%9A%84%E9%A1%B9%E7%9B%AE/">部署的项目</category>
+      
+      
+      <comments>https://blog.biuxin.com/posts/6b9a.html#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>性行为同意协议系统</title>
+      <link>https://blog.biuxin.com/posts/648e.html</link>
+      <guid>https://blog.biuxin.com/posts/648e.html</guid>
+      <pubDate>Wed, 16 Apr 2025 10:05:28 GMT</pubDate>
+      
+        
+        
+          
+          
+      <description>&lt;p&gt;一个用于创建、签署和管理性行为同意协议的 Web 应用程序。该应用允许用户在线创建详细的性行为同意协议，并通过数字签名方式进行签署，同时支持导出为 PDF 格式保存。&lt;/p&gt;
+&lt;p&gt;&lt;a</description>
+          
+        
+      
+      
+      
+      
+      <category domain="https://blog.biuxin.com/categories/Cloudflare/">Cloudflare</category>
+      
+      
+      <category domain="https://blog.biuxin.com/tags/Cloudflare/">Cloudflare</category>
+      
+      
+      <comments>https://blog.biuxin.com/posts/648e.html#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>YxVm博客申请的方式和赞助更改</title>
+      <link>https://blog.biuxin.com/posts/96a0.html</link>
+      <guid>https://blog.biuxin.com/posts/96a0.html</guid>
+      <pubDate>Tue, 08 Apr 2025 13:55:31 GMT</pubDate>
+      
+        
+        
+          
+          
+      <description>&lt;p&gt;📝 记得：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;准备好 UV 图、网站信息、开源项目等证明材料&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;登录 NodeSupport 填好资料&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;发 Issue 到</description>
+          
+        
+      
+      
+      
+      
+      <category domain="https://blog.biuxin.com/categories/YxVm/">YxVm</category>
+      
+      
+      <category domain="https://blog.biuxin.com/tags/%E5%AD%A6%E4%B9%A0%E4%B8%AD/">学习中</category>
+      
+      
+      <comments>https://blog.biuxin.com/posts/96a0.html#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>追剧必备 - 免费在线观看国内电影/电视剧/综艺的网站</title>
+      <link>https://blog.biuxin.com/posts/6054.html</link>
+      <guid>https://blog.biuxin.com/posts/6054.html</guid>
+      <pubDate>Mon, 11 Nov 2024 12:32:18 GMT</pubDate>
+      
+        
+        
+          
+          
+      <description>&lt;blockquote&gt;
+&lt;p&gt;由于版权的地域限制，像优酷、爱奇艺、腾讯视频等国内平台在美国、英国、加拿大、澳大利亚、新加坡等地总是被限制播放。但在国外留学或者生活，怀念国内的电影、电视剧、综艺、动漫的时候，可以使用一下推荐的免费网站看视频。&lt;/p&gt;
+&lt;p&gt;免责声明</description>
+          
+        
+      
+      
+      
+      
+      <category domain="https://blog.biuxin.com/categories/%E5%AD%A6%E4%B9%A0%E4%B8%AD/">学习中</category>
+      
+      
+      <category domain="https://blog.biuxin.com/tags/%E5%BD%B1%E8%A7%86%E7%AB%99%E6%8E%A8%E8%8D%90%E5%90%88%E9%9B%86/">影视站推荐合集</category>
+      
+      
+      <comments>https://blog.biuxin.com/posts/6054.html#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>使用带有PHP的主机 + Cloudflare + Worker 搭建一个Umami API</title>
+      <link>https://blog.biuxin.com/posts/bcd2.html</link>
+      <guid>https://blog.biuxin.com/posts/bcd2.html</guid>
+      <pubDate>Wed, 30 Oct 2024 04:39:27 GMT</pubDate>
+      
+        
+        
+          
+          
+      <description>&lt;blockquote&gt;
+&lt;p&gt;感谢&lt;a href=&quot;https://blog.bsgun.cn/posts/609bcdb9&quot;&gt;梦爱吃鱼&lt;/a&gt;提供的关于页魔改和&lt;a</description>
+          
+        
+      
+      
+      
+      
+      <category domain="https://blog.biuxin.com/categories/Serv00/">Serv00</category>
+      
+      
+      <category domain="https://blog.biuxin.com/tags/Cloudflare/">Cloudflare</category>
+      
+      <category domain="https://blog.biuxin.com/tags/Umami/">Umami</category>
+      
+      
+      <comments>https://blog.biuxin.com/posts/bcd2.html#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>使用 FastyCDN 加速 Cloudflare + pages 部署的博客项目</title>
+      <link>https://blog.biuxin.com/posts/af99.html</link>
+      <guid>https://blog.biuxin.com/posts/af99.html</guid>
+      <pubDate>Sun, 13 Oct 2024 14:28:16 GMT</pubDate>
+      
+        
+        
+          
+          
+      <description>&lt;h3 id=&quot;首先注册-Fastly-账号&quot;&gt;&lt;a href=&quot;#首先注册-Fastly-账号&quot; class=&quot;headerlink&quot; title=&quot;首先注册 Fastly 账号:&quot;&gt;&lt;/a&gt;首先注册 Fastly 账号:&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a</description>
+          
+        
+      
+      
+      
+      
+      <category domain="https://blog.biuxin.com/categories/Cloudflare/">Cloudflare</category>
+      
+      
+      <category domain="https://blog.biuxin.com/tags/Cloudflare/">Cloudflare</category>
+      
+      <category domain="https://blog.biuxin.com/tags/Fastly-CDN/">Fastly CDN</category>
+      
+      
+      <comments>https://blog.biuxin.com/posts/af99.html#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>基于IP地址的真实地址生成器</title>
+      <link>https://blog.biuxin.com/posts/f199.html</link>
+      <guid>https://blog.biuxin.com/posts/f199.html</guid>
+      <pubDate>Thu, 10 Oct 2024 13:32:46 GMT</pubDate>
+      
+        
+        
+          
+          
+      <description>&lt;h3 id=&quot;功能特点&quot;&gt;&lt;a href=&quot;#功能特点&quot; class=&quot;headerlink&quot;</description>
+          
+        
+      
+      
+      
+      
+      <category domain="https://blog.biuxin.com/categories/Cloudflare/">Cloudflare</category>
+      
+      
+      <category domain="https://blog.biuxin.com/tags/Cloudflare/">Cloudflare</category>
+      
+      <category domain="https://blog.biuxin.com/tags/%E5%9C%B0%E5%9D%80%E7%94%9F%E6%88%90%E5%99%A8/">地址生成器</category>
+      
+      
+      <comments>https://blog.biuxin.com/posts/f199.html#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>主题外挂标签使用</title>
+      <link>https://blog.biuxin.com/posts/6702.html</link>
+      <guid>https://blog.biuxin.com/posts/6702.html</guid>
+      <pubDate>Mon, 07 Oct 2024 16:00:00 GMT</pubDate>
+      
+        
+        
+          
+          
+      <description>&lt;div class=&quot;note danger modern no-icon&quot;&gt;&lt;p&gt;内置的外挂标签满足大部分用户的需求，不需要额外安装插件。&lt;br&gt;插件的外挂标签需要安装对应的插件，满足部分用户的特殊需求。&lt;/p&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;内置标签&quot;&gt;&lt;a</description>
+          
+        
+      
+      
+      
+      
+      <category domain="https://blog.biuxin.com/categories/Hexo/">Hexo</category>
+      
+      
+      <category domain="https://blog.biuxin.com/tags/%E5%A4%96%E6%8C%82%E6%A0%87%E7%AD%BE/">外挂标签</category>
+      
+      
+      <comments>https://blog.biuxin.com/posts/6702.html#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>Rin 是一个基于 Cloudflare Pages + Workers + D1 + R2 的博客，只需要一个解析到CF的域名即可部署</title>
+      <link>https://blog.biuxin.com/posts/e6b7.html</link>
+      <guid>https://blog.biuxin.com/posts/e6b7.html</guid>
+      <pubDate>Fri, 13 Sep 2024 08:24:20 GMT</pubDate>
+      
+        
+        
+          
+          
+      <description>&lt;h3 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h3&gt;&lt;p&gt;Rin 是一个基于 Cloudflare Pages + Workers + D1 + R2</description>
+          
+        
+      
+      
+      
+      
+      <category domain="https://blog.biuxin.com/categories/Cloudflare/">Cloudflare</category>
+      
+      
+      <category domain="https://blog.biuxin.com/tags/Cloudflare/">Cloudflare</category>
+      
+      
+      <comments>https://blog.biuxin.com/posts/e6b7.html#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>Serv00上搭建一个 PixPro 若梦图床 + 接入Cloudflare R2</title>
+      <link>https://blog.biuxin.com/posts/55f0.html</link>
+      <guid>https://blog.biuxin.com/posts/55f0.html</guid>
+      <pubDate>Tue, 10 Sep 2024 04:00:57 GMT</pubDate>
+      
+        
+        
+          
+          
+      <description>&lt;h2 id=&quot;Serv00上搭建一个PixPro图床-内存太小-我们可以接入到CFR2-足够个人使用。自己有VPS的也可在宝塔上面部署&quot;&gt;&lt;a</description>
+          
+        
+      
+      
+      
+      
+      <category domain="https://blog.biuxin.com/categories/Serv00/">Serv00</category>
+      
+      
+      <category domain="https://blog.biuxin.com/tags/Serv00/">Serv00</category>
+      
+      <category domain="https://blog.biuxin.com/tags/%E5%9B%BE%E5%BA%8A/">图床</category>
+      
+      
+      <comments>https://blog.biuxin.com/posts/55f0.html#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>大家都申请了nyc.mn 这个域名吧,看说明需要一个活动状态，下来教大家部署一个简单的网页,起始页</title>
+      <link>https://blog.biuxin.com/posts/6213.html</link>
+      <guid>https://blog.biuxin.com/posts/6213.html</guid>
+      <pubDate>Thu, 05 Sep 2024 12:30:15 GMT</pubDate>
+      
+        
+        
+          
+          
+      <description>&lt;h2 id=&quot;大家都申请了nyc-mn-这个域名吧-看说明需要一个活动状态，下来教大家部署一个简单的网页-起始页&quot;&gt;&lt;a href=&quot;#大家都申请了nyc-mn-这个域名吧-看说明需要一个活动状态，下来教大家部署一个简单的网页-起始页&quot; class=&quot;headerlink&quot;</description>
+          
+        
+      
+      
+      
+      
+      <category domain="https://blog.biuxin.com/categories/Cloudflare/">Cloudflare</category>
+      
+      
+      <category domain="https://blog.biuxin.com/tags/Cloudflare/">Cloudflare</category>
+      
+      
+      <comments>https://blog.biuxin.com/posts/6213.html#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>anzhiyu 主题 留言板页添加全屏弹幕</title>
+      <link>https://blog.biuxin.com/posts/655f.html</link>
+      <guid>https://blog.biuxin.com/posts/655f.html</guid>
+      <pubDate>Fri, 30 Aug 2024 13:12:21 GMT</pubDate>
+      
+        
+        
+          
+          
+      <description>&lt;h2 id=&quot;留言板全屏弹幕介绍&quot;&gt;&lt;a href=&quot;#留言板全屏弹幕介绍&quot; class=&quot;headerlink&quot; title=&quot;留言板全屏弹幕介绍&quot;&gt;&lt;/a&gt;留言板全屏弹幕介绍&lt;/h2&gt;&lt;h3 id=&quot;功能概述：&quot;&gt;&lt;a href=&quot;#功能概述：&quot;</description>
+          
+        
+      
+      
+      
+      
+      <category domain="https://blog.biuxin.com/categories/Hexo/">Hexo</category>
+      
+      
+      <category domain="https://blog.biuxin.com/tags/%E7%95%99%E8%A8%80%E6%9D%BF%E6%B7%BB%E5%8A%A0%E5%85%A8%E5%B1%8F%E5%BC%B9%E5%B9%95/">留言板添加全屏弹幕</category>
+      
+      
+      <comments>https://blog.biuxin.com/posts/655f.html#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>hexo-history-calendar 那年今日侧边栏卡片</title>
+      <link>https://blog.biuxin.com/posts/285c.html</link>
+      <guid>https://blog.biuxin.com/posts/285c.html</guid>
+      <pubDate>Sat, 24 Aug 2024 10:05:28 GMT</pubDate>
+      
+        
+        
+          
+          
+      <description>&lt;blockquote&gt;
+&lt;p&gt;此功能参考自&lt;a href=&quot;https://zfe.space/post/hexo-history-calendar.html&quot;&gt;小冰博客&lt;/a&gt;,记录方便以后学习。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2</description>
+          
+        
+      
+      
+      
+      
+      <category domain="https://blog.biuxin.com/categories/Hexo/">Hexo</category>
+      
+      
+      <category domain="https://blog.biuxin.com/tags/Hexo%E7%BE%8E%E5%8C%96/">Hexo美化</category>
+      
+      
+      <comments>https://blog.biuxin.com/posts/285c.html#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>利用cloudflare+worker+pages部署一个简易的临时邮件系统</title>
+      <link>https://blog.biuxin.com/posts/9231.html</link>
+      <guid>https://blog.biuxin.com/posts/9231.html</guid>
+      <pubDate>Wed, 07 Aug 2024 04:28:34 GMT</pubDate>
+      
+        
+        
+          
+          
+      <description>&lt;h2 id=&quot;项目官方文档&quot;&gt;&lt;a href=&quot;#项目官方文档&quot; class=&quot;headerlink&quot; title=&quot;项目官方文档&quot;&gt;&lt;/a&gt;项目官方文档&lt;/h2&gt;&lt;p&gt;&lt;a</description>
+          
+        
+      
+      
+      
+      
+      <category domain="https://blog.biuxin.com/categories/Cloudflare/">Cloudflare</category>
+      
+      
+      <category domain="https://blog.biuxin.com/tags/Cloudflare/">Cloudflare</category>
+      
+      
+      <comments>https://blog.biuxin.com/posts/9231.html#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>Hexo博客搭建 Hexo + GitHub Pages + Cloudflare Pages 搭建教程</title>
+      <link>https://blog.biuxin.com/posts/bdbd.html</link>
+      <guid>https://blog.biuxin.com/posts/bdbd.html</guid>
+      <pubDate>Sat, 03 Aug 2024 04:20:08 GMT</pubDate>
+      
+        
+        
+          
+          
+      <description>&lt;h2 id=&quot;本文详细介绍了如何使用Hexo框架搭建一个个人博客，并将其部署到GitHub-Pages和Cloudflare-Pages上。主要内容包括：&quot;&gt;&lt;a</description>
+          
+        
+      
+      
+      
+      
+      <category domain="https://blog.biuxin.com/categories/%E5%AD%A6%E4%B9%A0%E4%B8%AD/">学习中</category>
+      
+      
+      <category domain="https://blog.biuxin.com/tags/Hexo/">Hexo</category>
+      
+      <category domain="https://blog.biuxin.com/tags/Github/">Github</category>
+      
+      <category domain="https://blog.biuxin.com/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">个人博客</category>
+      
+      
+      <comments>https://blog.biuxin.com/posts/bdbd.html#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>Serv00 搭建网站监控 Uptime-Kuma</title>
+      <link>https://blog.biuxin.com/posts/6317.html</link>
+      <guid>https://blog.biuxin.com/posts/6317.html</guid>
+      <pubDate>Thu, 01 Aug 2024 16:18:06 GMT</pubDate>
+      
+        
+        
+          
+          
+      <description>&lt;h2 id=&quot;1-首先注册一个Serv00账号&quot;&gt;&lt;a href=&quot;#1-首先注册一个Serv00账号&quot; class=&quot;headerlink&quot; title=&quot;1. 首先注册一个Serv00账号&quot;&gt;&lt;/a&gt;1. 首先注册一个Serv00账号&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a</description>
+          
+        
+      
+      
+      
+      
+      <category domain="https://blog.biuxin.com/categories/Serv00/">Serv00</category>
+      
+      
+      <category domain="https://blog.biuxin.com/tags/Serv00/">Serv00</category>
+      
+      <category domain="https://blog.biuxin.com/tags/%E7%BD%91%E7%AB%99%E7%9B%91%E6%8E%A7/">网站监控</category>
+      
+      
+      <comments>https://blog.biuxin.com/posts/6317.html#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>Serv00最简单的哪吒搭建方式</title>
+      <link>https://blog.biuxin.com/posts/f219.html</link>
+      <guid>https://blog.biuxin.com/posts/f219.html</guid>
+      <pubDate>Fri, 26 Jul 2024 14:23:31 GMT</pubDate>
+      
+        
+        
+          
+          
+      <description>&lt;h3 id=&quot;1-首先注册一个Serv00账号&quot;&gt;&lt;a href=&quot;#1-首先注册一个Serv00账号&quot; class=&quot;headerlink&quot; title=&quot;1. 首先注册一个Serv00账号&quot;&gt;&lt;/a&gt;1. 首先注册一个Serv00账号&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a</description>
+          
+        
+      
+      
+      
+      
+      <category domain="https://blog.biuxin.com/categories/Serv00/">Serv00</category>
+      
+      
+      <category domain="https://blog.biuxin.com/tags/Serv00/">Serv00</category>
+      
+      <category domain="https://blog.biuxin.com/tags/%E4%B8%80%E9%94%AE%E5%93%AA%E5%90%92%E8%84%9A%E6%9C%AC/">一键哪吒脚本</category>
+      
+      <category domain="https://blog.biuxin.com/tags/%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E5%93%AA%E5%90%92%E6%95%99%E7%A8%8B/">最简单的哪吒教程</category>
+      
+      
+      <comments>https://blog.biuxin.com/posts/f219.html#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>Serv00登录保活</title>
+      <link>https://blog.biuxin.com/posts/4729.html</link>
+      <guid>https://blog.biuxin.com/posts/4729.html</guid>
+      <pubDate>Tue, 23 Jul 2024 01:03:55 GMT</pubDate>
+      
+        
+        
+          
+          
+      <description>&lt;h2 id=&quot;Serv00登录的方式-1&quot;&gt;&lt;a href=&quot;#Serv00登录的方式-1&quot; class=&quot;headerlink&quot; title=&quot;Serv00登录的方式 1&quot;&gt;&lt;/a&gt;Serv00登录的方式 1&lt;/h2&gt;&lt;h3 id=&quot;GitHub&quot;&gt;&lt;a</description>
+          
+        
+      
+      
+      
+      
+      <category domain="https://blog.biuxin.com/categories/Serv00/">Serv00</category>
+      
+      
+      <category domain="https://blog.biuxin.com/tags/Serv00/">Serv00</category>
+      
+      <category domain="https://blog.biuxin.com/tags/GitHub/">GitHub</category>
+      
+      <category domain="https://blog.biuxin.com/tags/Vercel/">Vercel</category>
+      
+      
+      <comments>https://blog.biuxin.com/posts/4729.html#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>Serv00 搭建影视站</title>
+      <link>https://blog.biuxin.com/posts/2ede.html</link>
+      <guid>https://blog.biuxin.com/posts/2ede.html</guid>
+      <pubDate>Thu, 18 Jul 2024 14:10:01 GMT</pubDate>
+      
+        
+        
+          
+          
+      <description>&lt;h2 id=&quot;Serv00搭建影视站&quot;&gt;&lt;a href=&quot;#Serv00搭建影视站&quot; class=&quot;headerlink&quot; title=&quot;Serv00搭建影视站&quot;&gt;&lt;/a&gt;Serv00搭建影视站&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;演示网站&lt;/strong&gt;     </description>
+          
+        
+      
+      
+      
+      
+      <category domain="https://blog.biuxin.com/categories/Serv00/">Serv00</category>
+      
+      
+      <category domain="https://blog.biuxin.com/tags/Serv00%E5%BD%B1%E8%A7%86%E7%AB%99%E6%90%AD%E5%BB%BA/">Serv00影视站搭建</category>
+      
+      
+      <comments>https://blog.biuxin.com/posts/2ede.html#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>图床解决方案：Cloudflare R2+PicGo+WebP Cloudflare</title>
+      <link>https://blog.biuxin.com/posts/78c2.html</link>
+      <guid>https://blog.biuxin.com/posts/78c2.html</guid>
+      <pubDate>Thu, 11 Jul 2024 12:49:52 GMT</pubDate>
+      
+        
+        
+          
+          
+      <description>&lt;p&gt;此前我的图床是基于 &lt;code&gt;Cloudflare + Telegraph&lt;/code&gt; 这两位大善人的，我本以为他们会比我的博客活得更久，因此我默认这是一个长期的解决方案，足够可靠易用，最重要的是免费。&lt;/p&gt;
+&lt;p&gt;但最近 Telegram CEO</description>
+          
+        
+      
+      
+      
+      
+      <category domain="https://blog.biuxin.com/categories/Cloudflare/">Cloudflare</category>
+      
+      
+      <category domain="https://blog.biuxin.com/tags/Cloudflare/">Cloudflare</category>
+      
+      
+      <comments>https://blog.biuxin.com/posts/78c2.html#disqus_thread</comments>
+      
+    </item>
+    
+  </channel>
+</rss>
