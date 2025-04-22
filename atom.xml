@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="/rss/atom.xsl" ?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>BiuXin&#39;s Blog</title>
-  
+  <icon>https://blog.biuxin.com/rss/icon.png</icon>
   <subtitle>东方月初</subtitle>
   <link href="https://blog.biuxin.com/atom.xml" rel="self"/>
   
