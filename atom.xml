@@ -36,6 +36,25 @@
   </entry>
   
   <entry>
+    <title>LibreTV 是一个轻量级、免费的在线视频搜索与观看平台</title>
+    <link href="https://blog.biuxin.com/posts/4109.html"/>
+    <id>https://blog.biuxin.com/posts/4109.html</id>
+    <published>2025-04-18T08:00:00.000Z</published>
+    <updated>2025-04-20T08:00:00.000Z</updated>
+    
+    
+    <summary type="html">LibreTV 是一个轻量级、免费的在线视频搜索与观看平台，提供来自多个视频源的内容搜索与播放服务。无需注册，即开即用，支持多种设备访问。项目结合了前端技术和后端代理功能，可部署在支持服务端功能的各类网站托管服务上。</summary>
+    
+    
+    
+    <category term="学习中" scheme="https://blog.biuxin.com/categories/%E5%AD%A6%E4%B9%A0%E4%B8%AD/"/>
+    
+    
+    <category term="部署的项目" scheme="https://blog.biuxin.com/tags/%E9%83%A8%E7%BD%B2%E7%9A%84%E9%A1%B9%E7%9B%AE/"/>
+    
+  </entry>
+  
+  <entry>
     <title>性行为同意协议系统</title>
     <link href="https://blog.biuxin.com/posts/648e.html"/>
     <id>https://blog.biuxin.com/posts/648e.html</id>
@@ -190,27 +209,6 @@
     
     
     <category term="Cloudflare" scheme="https://blog.biuxin.com/tags/Cloudflare/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Serv00上搭建一个 PixPro 若梦图床 + 接入Cloudflare R2</title>
-    <link href="https://blog.biuxin.com/posts/55f0.html"/>
-    <id>https://blog.biuxin.com/posts/55f0.html</id>
-    <published>2024-09-10T04:00:57.000Z</published>
-    <updated>2024-09-18T16:00:00.000Z</updated>
-    
-    
-    <summary type="html">这是一个基于 Serv00 服务器和 PixPro 图床系统的完整安装和部署教程。通过这个项目，用户可以搭建一个图床系统，并支持接入 Cloudflare R2 存储，便捷地上传和管理图片。项目为用户提供了一个简单易用的界面，并且支持个性化封面的生成与管理。</summary>
-    
-    
-    
-    <category term="Serv00" scheme="https://blog.biuxin.com/categories/Serv00/"/>
-    
-    
-    <category term="Serv00" scheme="https://blog.biuxin.com/tags/Serv00/"/>
-    
-    <category term="图床" scheme="https://blog.biuxin.com/tags/%E5%9B%BE%E5%BA%8A/"/>
     
   </entry>
   
