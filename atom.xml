@@ -6,7 +6,7 @@
   <link href="https://blog.biuxin.com/atom.xml" rel="self"/>
   
   <link href="https://blog.biuxin.com/"/>
-  <updated>2025-04-20T00:00:00.000Z</updated>
+  <updated>2025-05-03T08:00:00.000Z</updated>
   <id>https://blog.biuxin.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>美化你的博客RSS订阅地址</title>
+    <link href="https://blog.biuxin.com/posts/47bc.html"/>
+    <id>https://blog.biuxin.com/posts/47bc.html</id>
+    <published>2025-05-03T08:00:00.000Z</published>
+    <updated>2025-05-03T08:00:00.000Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerl</summary>
+      
+    
+    
+    
+    <category term="学习中" scheme="https://blog.biuxin.com/categories/%E5%AD%A6%E4%B9%A0%E4%B8%AD/"/>
+    
+    
+    <category term="Hexo" scheme="https://blog.biuxin.com/tags/Hexo/"/>
+    
+    <category term="RSS美化" scheme="https://blog.biuxin.com/tags/RSS%E7%BE%8E%E5%8C%96/"/>
+    
+  </entry>
   
   <entry>
     <title>个人部署的一些项目</title>
@@ -190,25 +214,6 @@
     
     
     <category term="外挂标签" scheme="https://blog.biuxin.com/tags/%E5%A4%96%E6%8C%82%E6%A0%87%E7%AD%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Rin 是一个基于 Cloudflare Pages + Workers + D1 + R2 的博客，只需要一个解析到CF的域名即可部署</title>
-    <link href="https://blog.biuxin.com/posts/e6b7.html"/>
-    <id>https://blog.biuxin.com/posts/e6b7.html</id>
-    <published>2024-09-13T08:24:20.000Z</published>
-    <updated>2024-09-13T08:24:20.000Z</updated>
-    
-    
-    <summary type="html">Rin 是一个使用 Cloudflare Pages、Workers、D1 和 R2 等 Cloudflare 全家桶构建的现代博客系统。无需服务器，无需备案，仅需要一个解析到 Cloudflare 的域名即可完成部署，极大简化了博客搭建过程。唯一的小缺点是 CDN 在国内的速度较慢，但对于个人博客来说，仍然可以接受。</summary>
-    
-    
-    
-    <category term="Cloudflare" scheme="https://blog.biuxin.com/categories/Cloudflare/"/>
-    
-    
-    <category term="Cloudflare" scheme="https://blog.biuxin.com/tags/Cloudflare/"/>
     
   </entry>
   
