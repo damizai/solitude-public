@@ -2620,14 +2620,14 @@ span.tags-punctuation i {
   opacity: 0.2;
   width: 100%;
   height: 100%;
-  background-image: url("https://biu.biuxin.com/2025/05/04/709846.webp");
+  background-image: url("https://biu.biuxin.com/2025/04/26/921920.webp");
   background-size: cover;
   background-position: center;
   pointer-events: none;
   background-repeat: no-repeat;
 }
 [data-theme=dark] #global_bg {
-  background-image: url("https://biu.200038.xyz/2025/04/26/521119.webp");
+  background-image: url("https://biu.biuxin.com/2025/05/04/903004.webp");
 }
 .article-container {
   overflow-wrap: break-word;
@@ -2840,12 +2840,6 @@ span.tags-punctuation i {
   margin: 0.5rem 0;
   border-width: 0;
   border-top: 1px dashed var(--efu-theme-op);
-}
-.medium-zoom--opened .medium-zoom-overlay {
-  z-index: 10;
-}
-.medium-zoom-image--opened {
-  z-index: 11;
 }
 .article-sort-title {
   font-weight: 700;
