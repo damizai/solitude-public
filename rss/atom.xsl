@@ -262,10 +262,10 @@
             </div>
 
             <p class="header-description-cn">
-    东方月初的小白博客，提供建站教程、编程实战笔记、生活点滴，个人经验，融合技术开发与人文思考，定期更新深度指南与创意灵感，给大家提供更多帮助。
+    东方月初的小白博客，提供建站教程、分享应用、生活点滴，个人经验，融合技术开发与人文思考，不定期更新深度指南与创意灵感，给大家提供更多帮助。
             </p>
             <p class="header-description-en">
-    LiuShen’s Tech Blog, Sharing tutorials, coding notes, life moments, personal experiences, blending tech and humanities, with regularly updated guides and creative inspiration.
+    BiuXin’s Tech Blog, Sharing tutorials, coding notes, life moments, personal experiences, blending tech and humanities, with regularly updated guides and creative inspiration.
             </p>
 
             <div class="header-subscribe">
